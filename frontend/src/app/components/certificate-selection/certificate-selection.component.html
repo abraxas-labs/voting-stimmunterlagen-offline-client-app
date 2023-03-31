@@ -1,0 +1,26 @@
+<div class="info-text">
+  {{ 'CRYPTO.SELECT_SIGNING_CERTIFICATE' | translate }}
+</div>
+
+<div class="abra-form-group file-group">
+  <input type="file" (change)="changeCertificatePath($event.target.files[0])" />
+</div>
+
+<div class="abra-form-group">
+  <label>{{ 'CRYPTO.SIGNING_CERTIFICATE_PASSWORD' | translate }}</label>
+  <input class="abra" type="password" [ngModel]="certificatePassword" (ngModelChange)="changeCertificatePassword($event)" required="true" />
+</div>
+
+<button class="abra-button-secondary" [disabled]="!certificatePath || !certificatePassword" (click)="loadCertificateSubject()">
+  {{ 'CRYPTO.CHECK_CERTIFICATE' | translate }}
+</button>
+
+<div *ngIf="showCertificateSubject">
+  <ul *ngIf="!!certificateSubject; else invalidCertificateSubjectTemplate">
+    <li>{{ certificateSubject }}</li>
+  </ul>
+
+  <ng-template #invalidCertificateSubjectTemplate>
+    <p>{{ 'CRYPTO.CANNOT_LOAD_CERTIFICATE' | translate }}</p>
+  </ng-template>
+</div>

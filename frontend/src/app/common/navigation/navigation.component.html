@@ -1,0 +1,13 @@
+<button class="navigation-menu-button" (click)="visible = true">
+  <div class="navigation-menu-button-container">
+    <div class="fa fa-bars"></div>
+    <div class="navigation-menu-button-content">Menu</div>
+  </div>
+  <div class="navigation-menu-button-corner"></div>
+</button>
+<div class="navigation" [ngClass]="{ 'navigation-closed': !visible }" [style.width]="visible ? width : '0'">
+  <div class="navigation-close">
+    <button (click)="closeNavigation()" class="fa fa-chevron-left navigation-close-button"></button>
+  </div>
+  <ng-content></ng-content>
+</div>

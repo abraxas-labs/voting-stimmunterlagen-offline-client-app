@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>VotingCardGenerator</AssemblyName>
+    <StartupObject>VotingCardGenerator.Program</StartupObject>
+    <RuntimeIdentifiers>win-x64;win-x86;osx-x64</RuntimeIdentifiers>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+
+    <!-- Razor runtime compilation does not support publish single file https://github.com/dotnet/aspnetcore/issues/38493 -->
+    <PublishSingleFile>false</PublishSingleFile>  
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\HtmlGeneration.RazorLight\HtmlGeneration.RazorLight.csproj" />
+    <ProjectReference Include="..\..\src\PdfGeneration.Prince\PdfGeneration.Prince.csproj" />
+    <ProjectReference Include="..\..\src\Voting.Stimmunterlagen.OfflineClient.Logging\Voting.Stimmunterlagen.OfflineClient.Logging.csproj" />
+  </ItemGroup>
+
+  <!-- Make sure prince executables are copied on build and publish -->
+  <Import Project="..\..\3rdPartyLibs\prince.targets" />
+</Project>

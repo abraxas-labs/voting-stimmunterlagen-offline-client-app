@@ -1,0 +1,9 @@
+@import 'variables';
+
+.error-msg {
+  border: solid 1px $color-signal-error;
+  border-radius: 3px;
+  background: $color-light-red-25;
+  color: $color-signal-error;
+  padding: 15px;
+}

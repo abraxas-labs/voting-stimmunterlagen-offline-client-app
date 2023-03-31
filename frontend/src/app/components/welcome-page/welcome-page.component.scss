@@ -1,0 +1,51 @@
+.imported {
+  color: green;
+}
+
+.failed {
+  color: red;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex1 {
+  flex: 1;
+  width: 50%;
+}
+
+.list {
+  border-left: 1px lightgray solid;
+  padding-left: 5px;
+}
+
+.list-title {
+  margin: 10px 5px 5px;
+  font-weight: bold;
+}
+
+.list-item {
+  padding: 3px;
+  margin-left: 15px;
+
+  .filename {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  &:hover {
+    background: #eee;
+
+    .remove {
+      visibility: visible;
+    }
+  }
+}
+
+.remove {
+  cursor: pointer;
+  visibility: hidden;
+  padding: 0 3px;
+}

@@ -1,0 +1,44 @@
+@import 'variables';
+@import 'input';
+
+.abra-form-group {
+  @extend .abra;
+
+  margin-bottom: calc(#{$font-size} + 4px);
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+
+  label {
+    font-size: $font-size-form-label;
+    display: block;
+    font-weight: bold;
+    margin-bottom: 3px;
+  }
+
+  .info-group {
+    display: flex;
+  }
+
+  .abra-error-msg {
+    display: none;
+    color: $color-red-dark;
+  }
+
+  &.input-invalid.input-dirty,
+  .abra-form-invalid &.input-invalid {
+    .abra-error-msg {
+      display: block;
+    }
+
+    label {
+      color: $color-red-dark;
+    }
+  }
+
+  &.optional {
+    label {
+      color: #979797;
+    }
+  }
+}

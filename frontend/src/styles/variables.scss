@@ -1,0 +1,42 @@
+/** font **/
+$font-size: 13px;
+$font-family: 'Roboto', arial, helvetica, sans-serif;
+$font-size-h1: 18px;
+$font-size-h2: 16px;
+$font-size-h3: $font-size;
+$font-size-form-label: 11px;
+
+/** color **/
+$color-key: #005d76;
+$color-secondary: #4cc1ae;
+$color-daren: #3b5063;
+$color-red: #ffd0ce;
+$color-red-dark: #b90000;
+$error-color-dark-hover: lighten(saturate($color-red-dark, 15%), 10%); // stylelint-disable-line
+$color-light-red: #df4b64;
+$color-signal-error: #c60000;
+$color-green: #cce4d9;
+$color-light-red-25: mix(white, $color-light-red, 75); // stylelint-disable-line
+$color-green-dark: #008a34;
+$color-yellow: #fff4cf;
+$color-yellow-dark: #c38100;
+$color-blue: #b3daeb;
+$color-blue-dark: #006db6;
+$color-gray: #b9b9b9;
+$color-gray-light: #eee;
+$color-shadow: #666;
+$color-primary: #005d76;
+$color-hover: #409cb5;
+
+// $color-hover:   lighten(saturate($color-primary, 15%),10%);
+// $color-hover:  lighten($color-primary, 25%);
+$color-hover-light: #7fdbf4;
+$color-active: #4cc1ae;
+$color-disabled: #b9b9b9;
+$color-secondary-disabled: #b7b7b7;
+$color-white: #fff;
+$color-input-border: #b7b7b7;
+$color-page-background: #ccc;
+
+/** button **/
+$button-radius: 3px;

@@ -1,0 +1,88 @@
+<h2>{{ 'VOTING_CARDS_CONFIGURATION_TITLE' | translate }}</h2>
+
+<div class="container">
+  <div class="abra-form-group" *ngIf="fingerprintRequired">
+    <label>{{ 'FINGERPRINT_LABEL' | translate }}</label>
+    <input class="abra" type="text" [(ngModel)]="fingerprint" required="true" />
+  </div>
+</div>
+
+<div class="container">
+  <div>
+    <div class="abra-form-group">
+      <label>{{ 'GROUPING_LABEL' | translate }} 1</label>
+      <section>
+        <select class="abra" [(ngModel)]="context.groupe1">
+          <option></option>
+          <option *ngFor="let groupOption of getGroupOptions(this.context.groupe1)" [ngValue]="groupOption">
+            {{ 'GROUPING_' + groupOption.description | translate }}
+          </option>
+        </select>
+      </section>
+    </div>
+    <div class="abra-form-group">
+      <label>{{ 'GROUPING_LABEL' | translate }} 2</label>
+      <section>
+        <select class="abra" [(ngModel)]="this.context.groupe2">
+          <option></option>
+          <option *ngFor="let groupOption of getGroupOptions(this.context.groupe2)" [ngValue]="groupOption">
+            {{ 'GROUPING_' + groupOption.description | translate }}
+          </option>
+        </select>
+      </section>
+    </div>
+    <div class="abra-form-group">
+      <label>{{ 'GROUPING_LABEL' | translate }} 3</label>
+      <section>
+        <select class="abra" [(ngModel)]="this.context.groupe3">
+          <option></option>
+          <option *ngFor="let groupOption of getGroupOptions(this.context.groupe3)" [ngValue]="groupOption">
+            {{ 'GROUPING_' + groupOption.description | translate }}
+          </option>
+        </select>
+      </section>
+    </div>
+  </div>
+  <div>
+    <div class="abra-form-group">
+      <label>{{ 'SORT_LABEL' | translate }} 1</label>
+      <section>
+        <select class="abra" [(ngModel)]="sort1.reference">
+          <option></option>
+          <option *ngFor="let sortOption of getSortOptions(sort1.reference)" [ngValue]="sortOption">
+            {{ 'GROUPING_' + sortOption.description | translate }}
+          </option>
+        </select>
+        <button
+          class="fa abra-button-secondary icon"
+          [class.fa-arrow-up]="sort1.isASC"
+          [class.fa-arrow-down]="!sort1.isASC"
+          (click)="sort1.isASC = !sort1.isASC"
+          [title]="(sort1.isASC ? 'ASC' : 'DSC') | translate"
+        ></button>
+      </section>
+    </div>
+    <div class="abra-form-group">
+      <label>{{ 'SORT_LABEL' | translate }} 2</label>
+      <section>
+        <select class="abra" [(ngModel)]="sort2.reference">
+          <option></option>
+          <option *ngFor="let sortOption of getSortOptions(sort2.reference)" [ngValue]="sortOption">
+            {{ 'GROUPING_' + sortOption.description | translate }}
+          </option>
+        </select>
+        <button
+          class="fa abra-button-secondary icon"
+          [class.fa-arrow-up]="sort2.isASC"
+          [class.fa-arrow-down]="!sort2.isASC"
+          (click)="sort2.isASC = !sort2.isASC"
+          [title]="(sort2.isASC ? 'ASC' : 'DSC') | translate"
+        ></button>
+      </section>
+    </div>
+  </div>
+</div>
+<span *ngIf="isGrouping">running</span>
+<button class="abra-button-primary" (click)="createGroup()" [disabled]="fingerprintRequired && !fingerprint">
+  {{ 'NEXT_TO_PREVIEW' | translate }}
+</button>

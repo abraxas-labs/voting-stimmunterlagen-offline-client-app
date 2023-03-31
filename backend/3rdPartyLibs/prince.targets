@@ -1,0 +1,15 @@
+<Project>
+  <!-- Copy over 3rd party lib contents to out dir -->
+  <ItemGroup>
+    <PrinceFiles Include="$(MSBuildThisFileDirectory)\prince\**\*" Visible="false" />
+  </ItemGroup>
+  <Target Name="CopyPrinceExecutablesOnBuild" AfterTargets="AfterBuild">
+    <Copy SourceFiles="@(PrinceFiles)" DestinationFiles="@(PrinceFiles -> '$(OutDir)\prince\%(RecursiveDir)\%(Filename)%(Extension)')" />
+  </Target>
+  <Target Name="CopyPrinceExecutablesOnPublish" AfterTargets="Publish">
+    <Copy SourceFiles="@(PrinceFiles)" DestinationFiles="@(PrinceFiles -> '$(PublishDir)\prince\%(RecursiveDir)\%(Filename)%(Extension)')" />
+  </Target>
+  <Target Name="CleanupPrinceExecutables" BeforeTargets="Clean">
+    <RemoveDir Directories="$(OutDir)\prince;$(PublishDir)\prince" />
+  </Target>
+</Project>

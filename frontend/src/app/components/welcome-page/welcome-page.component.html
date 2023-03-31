@@ -1,0 +1,25 @@
+<h2>{{ 'ROUTES./welcome' | translate }}</h2>
+<div class="flex">
+  <app-select-files
+    class="flex1"
+    icon="fa-file-zip-o"
+    [description]="'SELECT_FILES.DATA' | translate"
+    (fileChanged)="addFiles($event)"
+  ></app-select-files>
+  <div class="flex1 list">
+    <ng-container *ngFor="let group of fileGrouped">
+      <div class="list-title">
+        {{ 'FILE_CATEGORY_' + group.name | translate }}
+      </div>
+      <div class="list-item flex" *ngFor="let item of group.values" (click)="logger(item)">
+        <div [title]="item.file.name" class="flex1 filename">{{ item.file.name }}</div>
+        <span *ngIf="item.isRunning"><app-spinner [size]="'13px'"></app-spinner></span>
+        <div title="entfernen" class="remove fa fa-times" (click)="removeElement(item.file.name)"></div>
+      </div>
+      <button *ngIf="group.name === 'CRYPT'" class="abra-button-primary decrypt-button" (click)="displayCertificateSelection = true">
+        {{ 'FILE_DECRYPT' | translate }}
+      </button>
+    </ng-container>
+  </div>
+</div>
+<button *ngIf="enablePreview" class="abra-button-primary" (click)="complete()">{{ 'NEXT_TO_VALIDATE' | translate }}</button>

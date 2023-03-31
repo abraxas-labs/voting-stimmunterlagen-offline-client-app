@@ -1,0 +1,82 @@
+@import 'variables_old';
+@import 'variables';
+
+:host {
+  @include text-selection();
+
+  .check-cell {
+    width: 13px;
+  }
+
+  .title {
+    font-size: 20px;
+    color: $black-color;
+    padding: 24px;
+  }
+
+  .table {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+
+    .row {
+      display: flex;
+      height: 48px;
+      box-shadow: 0 1px 0 $gray-color;
+
+      &.row-title {
+        cursor: pointer;
+      }
+
+      &.header {
+        height: 56px;
+        color: $gray-color-dark;
+      }
+
+      .cell {
+        display: flex;
+        align-items: center;
+        padding: 0 24px;
+        min-width: 0;
+        flex: 1;
+        text-align: center;
+
+        &:first-of-type {
+          flex: 2;
+        }
+
+        &.shrink {
+          flex: 0 1 auto;
+        }
+
+        &.center {
+          justify-content: center;
+        }
+      }
+    }
+  }
+
+  .child {
+    display: none;
+  }
+
+  .expand + .child {
+    display: inherit;
+  }
+
+  .check {
+    min-width: 13px;
+    color: $success-color;
+  }
+
+  .flex {
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .flex1 {
+    flex: 1;
+    overflow: auto;
+  }
+}

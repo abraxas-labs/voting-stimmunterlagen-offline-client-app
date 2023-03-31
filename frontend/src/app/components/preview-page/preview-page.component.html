@@ -1,0 +1,31 @@
+<br />
+<h2>{{ 'PREVIEW_TITLE' | translate }}</h2>
+<div class="flex">
+  <div class="group-navigation">
+    <ng-container *ngIf="context.ech228Grouped">
+      <div
+        class="navigation-element"
+        [ngClass]="{ 'element-focus': previewIndex === i }"
+        (click)="setPreview(i)"
+        *ngFor="let vot of context.ech228Grouped; let i = index"
+      >
+        {{ getGroupDescription(vot[0]) || ('ROUTES./preview' | translate) + ' ' + i }}
+        <span [hidden]="pdfList[i]"><app-spinner [size]="'13px'"></app-spinner></span>
+      </div>
+    </ng-container>
+  </div>
+  <div class="flex1">
+    <div *ngIf="!pdfList[previewIndex]" class="center">
+      <app-spinner></app-spinner>
+    </div>
+    <app-pdf-viewer *ngIf="pdfList[previewIndex]" [pdf]="pdfList[previewIndex]" (pdfLoaded)="numberOfPages = $event.numPages">
+    </app-pdf-viewer>
+  </div>
+</div>
+<div class="space">
+  <input type="checkbox" [name]="'goodForPrinting'" [(ngModel)]="isValid" />
+  <span>{{ 'GOOD_FOR_PRINTING' | translate }}</span>
+</div>
+<div [ngClass]="{ 'visible-none': !isValid }">
+  <button class="abra-button-primary" routerLink="/job-overview">{{ 'NEXT_TO_GENERATE' | translate }}</button>
+</div>

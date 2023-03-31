@@ -1,0 +1,13 @@
+@import 'variables';
+
+.navigation-item {
+  font-size: $font-size-h2;
+  color: $color-primary;
+  border-left: solid 10px transparent;
+  padding: 5px 20px;
+}
+
+.navigation-item-active {
+  border-left-color: $color-primary;
+  font-weight: bold;
+}

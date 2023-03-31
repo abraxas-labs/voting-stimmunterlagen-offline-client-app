@@ -1,0 +1,49 @@
+<h2>{{ 'ROUTES./download' | translate }}</h2>
+<input type="checkbox" [ngModel]="allChecked" (click)="toggleAllChecked()" [disabled]="cryptFilesIsRunning" />
+<div *ngFor="let checkablePdf of checkablePdfs">
+  <input
+    type="checkbox"
+    [ngModel]="checkablePdf.checked"
+    (change)="togglePdfChecked(checkablePdf)"
+    [disabled]="checkablePdf.file.status === 'verschlüsselt' || cryptFilesIsRunning"
+  />
+  <app-spinner *ngIf="checkablePdf.file.status === 'running'" [size]="'13px'"></app-spinner>
+  <span *ngIf="checkablePdf.file.status === 'unverschlüsselt'" class="fa fa-unlock"></span>
+  <span *ngIf="checkablePdf.file.status === 'verschlüsselt'" class="fa fa-lock"></span>
+  <a [href]="'file:///' + checkablePdf.file.filePath" download>{{ checkablePdf.file.fileName }}</a>
+</div>
+
+<app-vct-popup [(visible)]="displayEncryptionCertificatesPreview">
+  <app-certificate-preview [certificatePaths]="encryptionCertificatePaths"></app-certificate-preview>
+  <button class="abra-button-primary" (click)="confirmEncryptionCertificates()">
+    {{ 'CRYPTO.CONFIRM_ENCRYPTION_CERTIFICATES' | translate }}
+  </button>
+</app-vct-popup>
+
+<app-vct-popup [(visible)]="displaySigningCertificateSelection">
+  <app-certificate-selection
+    [(certificatePath)]="selectedCertificatePath"
+    [(certificatePassword)]="selectedCertificatePassword"
+    (certificateSubjectChange)="selectedCertificateSubject = $event"
+  ></app-certificate-selection>
+  <button
+    class="abra-button-primary"
+    (click)="encryptFiles()"
+    *ngIf="!!selectedCertificatePath && !!selectedCertificatePassword && !!selectedCertificateSubject"
+  >
+    {{ 'CRYPTO.SIGN_AND_ENCRYPT' | translate }}
+  </button>
+</app-vct-popup>
+
+<app-vct-popup [(visible)]="isBackQuestionVisible">
+  <div>{{ 'BACK_TO_FILE_SELECTION' | translate }}</div>
+  <br />
+  <button class="abra-button-secondary" [routerLink]="['/welcome']">{{ 'YES' | translate }}</button>
+  <button class="abra-button-primary" (click)="isBackQuestionVisible = false">{{ 'NO' | translate }}</button>
+</app-vct-popup>
+<br />
+<button class="abra-button-secondary" (click)="displayEncryptionCertificatesPreview = true">
+  {{ 'CRYPTO.SIGN_AND_ENCRYPT' | translate }}
+</button>
+<button class="abra-button-secondary" (click)="openDirectoryPickerDialog()">{{ 'DOWNLOAD_ALL' | translate }}</button>
+<button class="abra-button-secondary" (click)="isBackQuestionVisible = true">{{ 'BACK_TO_FILE_SELECTION' | translate }}</button>

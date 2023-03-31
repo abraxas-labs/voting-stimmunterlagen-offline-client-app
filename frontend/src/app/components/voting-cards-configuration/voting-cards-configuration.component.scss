@@ -1,0 +1,26 @@
+.code {
+  white-space: pre;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+}
+
+select,
+input {
+  min-width: 200px;
+}
+
+.container {
+  padding: 5px;
+  display: flex;
+
+  > div {
+    flex: 1;
+  }
+}
+
+.icon {
+  min-width: auto;
+}

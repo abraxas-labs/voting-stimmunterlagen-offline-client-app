@@ -1,0 +1,14 @@
+<app-step-navigation direction="horizontal">
+  <app-step-navigation-item [active]="currentRouting === '/welcome'" routerLink="welcome">{{
+    'ROUTES./welcome' | translate
+  }}</app-step-navigation-item>
+  <app-step-navigation-item [active]="currentRouting === '/prepare'">{{ 'ROUTES./prepare' | translate }}</app-step-navigation-item>
+  <app-step-navigation-item [active]="currentRouting === '/voting-cards-configuration'">{{
+    'ROUTES./voting-cards-configuration' | translate
+  }}</app-step-navigation-item>
+  <app-step-navigation-item [active]="currentRouting === '/preview'">{{ 'ROUTES./preview' | translate }}</app-step-navigation-item>
+  <app-step-navigation-item [active]="currentRouting === '/job-overview'">{{
+    'ROUTES./job-overview' | translate
+  }}</app-step-navigation-item>
+  <app-step-navigation-item [active]="currentRouting === '/download'">{{ 'ROUTES./download' | translate }}</app-step-navigation-item>
+</app-step-navigation>

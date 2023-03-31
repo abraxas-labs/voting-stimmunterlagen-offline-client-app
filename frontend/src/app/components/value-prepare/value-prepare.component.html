@@ -1,0 +1,23 @@
+<h2>{{ 'ROUTES./prepare' | translate }}</h2>
+
+<div *ngIf="hasErrors && !isRunning" class="error-msg">
+  <span class="fa fa-exclamation-circle"></span>
+  <span>
+    {{ 'ERROR.' + errorValue?.ErrorCode | translate }} {{ errorValue?.RelatedId }}
+    {{ isNotFoundError ? ('ERROR.NOT_FOUND' | translate) : '' }}</span
+  >
+  <span *ngIf="!errorValue">{{ 'ERROR.GENERIC' | translate }}</span>
+</div>
+<div *ngIf="!hasErrors && !isRunning">
+  {{ 'NUBER_OF_VALIDATION' | translate }}: {{ jobContext.ech228?.votingCardDelivery?.votingCardData?.length }}
+</div>
+<span *ngIf="isRunning"><app-spinner></app-spinner></span>
+<br />
+<div>
+  <button class="abra-button-primary" *ngIf="!hasErrors && !isRunning" [routerLink]="['/voting-cards-configuration']">
+    {{ 'NEXT_TO_VOTING_CARDS_CONFIGURATION' | translate }}
+  </button>
+  <button class="abra-button-secondary" *ngIf="hasErrors && !isRunning" [routerLink]="['/welcome']">
+    {{ 'BACK_TO_FILE_SELECTION' | translate }}
+  </button>
+</div>

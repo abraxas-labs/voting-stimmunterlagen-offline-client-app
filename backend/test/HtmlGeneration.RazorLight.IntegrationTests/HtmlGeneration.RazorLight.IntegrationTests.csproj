@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\HtmlGeneration.RazorLight\HtmlGeneration.RazorLight.csproj" />
+    <ProjectReference Include="..\..\src\HtmlGeneration\HtmlGeneration.csproj" />
+  </ItemGroup>
+
+</Project>

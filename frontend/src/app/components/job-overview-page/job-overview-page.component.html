@@ -1,0 +1,39 @@
+<div class="flex">
+  <app-indeterminate-progress *ngIf="isLoading"></app-indeterminate-progress>
+  <h2>{{ 'ROUTES./job-overview' | translate }}</h2>
+  <div class="table flex1">
+    <div>
+      <div class="row header">
+        <div class="cell center shrink check-cell"><span class="fa fa-check check"></span></div>
+        <div class="cell center">{{ 'JOB_OVERVIEW.COLUMN.ITEM_RANGE' | translate }}</div>
+        <div class="cell center">{{ 'JOB_OVERVIEW.COLUMN.START' | translate }}</div>
+        <div class="cell center">{{ 'JOB_OVERVIEW.COLUMN.END' | translate }}</div>
+      </div>
+    </div>
+    <div *ngFor="let jobGroup of jobGroups; let i = index">
+      <div class="row row-title" (click)="expandSwitch($event)">
+        <div class="cell center shrink check-cell">
+          <app-spinner *ngIf="generateJobTitle(jobGroup)?.start && !generateJobTitle(jobGroup)?.end" [size]="'13px'"></app-spinner>
+          <span *ngIf="generateJobTitle(jobGroup)?.completed" class="fa fa-check check"></span>
+        </div>
+        <div class="cell center">{{ generateJobTitle(jobGroup)?.title }}</div>
+        <div class="cell center">{{ generateJobTitle(jobGroup)?.start }}</div>
+        <div class="cell center">{{ generateJobTitle(jobGroup)?.end }}</div>
+      </div>
+      <div class="child">
+        <div class="row" *ngFor="let job of jobGroup">
+          <div class="cell center shrink check-cell">
+            <span *ngIf="job.completed" class="fa fa-check check"></span>
+            <app-spinner *ngIf="job.start && !job.end" [size]="'13px'"></app-spinner>
+          </div>
+          <div class="cell center">{{ job.range.from }} - {{ job.range.to }}</div>
+          <div class="cell center">{{ getTime(job.start) }}</div>
+          <div class="cell center">{{ getTime(job.end) }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <button *ngIf="!isLoading" [routerLink]="['/download']" class="abra-button-primary">{{ 'NEXT_TO_DOWNLOAD' | translate }}</button>
+  </div>
+</div>

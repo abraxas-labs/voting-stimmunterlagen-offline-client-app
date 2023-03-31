@@ -1,0 +1,31 @@
+<div class="abra-header">
+  <div class="abra-header-left" routerLink="/">
+    <div class="abra-logo">
+      <svg
+        width="100%"
+        height="100%"
+        viewBox="0 0 42 37"
+        xml:space="preserve"
+        style="fill-rule: evenodd; clip-rule: evenodd; stroke-linejoin: round; stroke-miterlimit: 1.41421"
+      >
+        <g transform="matrix(0.588756,0,0,0.588756,-170.739,-157.787)">
+          <!-- eslint-disable -->
+          <path
+            d="M343.5,320.274C337.867,326.27 329.866,330 321,330C303.891,330 290,316.109 290,299C290,281.891 303.891,268 321,268C329.866,268 337.867,271.73 343.5,277.726L343.5,320.274ZM360.5,268.5L360.5,329.5L343.5,329.5L343.5,320.274C348.775,314.74 352,307.243 352,299C352,290.757 348.775,283.26 343.5,277.726L343.5,268.5L360.5,268.5ZM321,282C330.383,282 338,289.617 338,299C338,308.383 330.383,316 321,316C311.617,316 304,308.383 304,299C304,289.617 311.617,282 321,282Z"
+            style="fill: rgb(254, 255, 254)"
+          />
+          <!-- eslint-enable -->
+        </g>
+      </svg>
+    </div>
+    <div class="abra-application-title">VOTING Stimmunterlagen Offline</div>
+  </div>
+
+  <div class="abra-header-center">
+    <ng-content></ng-content>
+  </div>
+
+  <div class="abra-header-right">
+    <button class="abra-header-button fa fa-cog" title="{{ 'PAGE.SETTINGS.TITLE' | translate }}" routerLink="settings"></button>
+  </div>
+</div>

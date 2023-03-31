@@ -1,0 +1,20 @@
+<div>
+  {{ 'CRYPTO.PREVIEW_ENCRYPTION_CERTIFICATE' | translate }}
+</div>
+
+<div class="content">
+  <table *ngIf="certificates.length > 0; else noCertificatesTemplate">
+    <tr>
+      <th>{{ 'CRYPTO.COMMON_NAME' | translate }}</th>
+      <th>{{ 'CRYPTO.THUMBPRINT' | translate }}</th>
+    </tr>
+    <tr *ngFor="let certificate of certificates">
+      <td>{{ certificate.commonName }}</td>
+      <td>{{ certificate.thumbprint }}</td>
+    </tr>
+  </table>
+
+  <ng-template #noCertificatesTemplate>
+    <em>{{ 'CRYPTO.NO_CERTIFICATES_FOUND' | translate }}</em>
+  </ng-template>
+</div>

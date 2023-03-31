@@ -1,0 +1,20 @@
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+
+@Component({
+  selector: 'app-navigation',
+  templateUrl: './navigation.component.html',
+  styleUrls: ['./navigation.component.scss'],
+})
+export class NavigationComponent {
+  @Input() set width(width) {
+    this.displayWidth = width;
+  }
+
+  @Input() visible = true;
+  @Output() visibleChange = new EventEmitter();
+  public displayWidth: string;
+
+  public closeNavigation(): void {
+    this.visible = false;
+  }
+}

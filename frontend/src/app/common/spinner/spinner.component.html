@@ -1,0 +1,17 @@
+<div class="container" [ngStyle]="{ width: size, height: size }">
+  <svg class="spinner" [class.bright]="bright" viewBox="0 0 50 50">
+    <circle class="path-background" cx="25" cy="25" r="20" stroke-width="4" fill="none" />
+    <circle
+      [attr.stroke-dasharray]="dashProgress"
+      [ngClass]="{ infinite: infinite }"
+      class="path"
+      cx="25"
+      cy="25"
+      r="20"
+      fill="none"
+      stroke="blue"
+      stroke-width="4"
+    ></circle>
+  </svg>
+  <span *ngIf="showLabel && !infinite" class="progress">{{ label }}</span>
+</div>

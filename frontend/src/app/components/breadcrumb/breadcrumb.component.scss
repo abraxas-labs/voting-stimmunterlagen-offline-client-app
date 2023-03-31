@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  padding: 10px;
+  font-size: 18px;
+
+  .breadcrumb-item {
+    cursor: pointer;
+    white-space: nowrap;
+
+    + .breadcrumb-item {
+      margin-left: 10px;
+
+      &::before {
+        content: '>';
+        margin-right: 10px;
+      }
+    }
+
+    &:last-of-type {
+      cursor: default;
+    }
+  }
+}

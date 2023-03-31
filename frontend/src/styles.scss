@@ -1,0 +1,44 @@
+/* You can add global styles to this file, and also import other style files */
+$fa-font-path: '~font-awesome/fonts';
+
+@import '~font-awesome/scss/font-awesome';
+@import 'styles/variables';
+@import 'styles/variables_old';
+@import 'styles/font';
+@import 'styles/button';
+@import 'styles/input';
+@import 'styles/form';
+@import 'styles/toast';
+@import 'styles/table';
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  color: $font-color;
+  font-size: $font-size;
+  font-family: $font-family;
+
+  @include no-text-selection();
+}
+
+h2 {
+  font-size: 2.5rem;
+  color: #777;
+  font-weight: 400;
+  margin-bottom: 1.25rem;
+}
+
+.display-none {
+  display: none;
+}
+
+.text-overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

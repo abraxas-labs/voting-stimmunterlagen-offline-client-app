@@ -1,0 +1,36 @@
+.vct-popup-click-block {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgb(35 35 35 / 35%);
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vct-popup-container {
+  max-width: 100%;
+  background: white;
+  padding: 10px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+
+  .vct-popup-toolbar {
+    display: flex;
+
+    .vct-popup-title {
+      flex: 1;
+    }
+
+    .vct-popup-close {
+      padding: 3px;
+      cursor: pointer;
+    }
+  }
+}

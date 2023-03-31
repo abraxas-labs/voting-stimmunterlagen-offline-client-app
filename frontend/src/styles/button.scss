@@ -1,0 +1,72 @@
+@import 'variables';
+
+.abra-button-primary {
+  margin: 2px;
+  background-color: $color-primary;
+  border: solid 1px $color-primary;
+  border-radius: $button-radius;
+  min-width: 125px;
+  padding: 6px;
+  color: $color-white;
+  transition: 0.3s;
+  cursor: pointer;
+  outline: none;
+
+  &:hover,
+  &:focus {
+    background-color: $color-hover;
+    border-color: $color-hover;
+  }
+
+  &:active {
+    background-color: $color-active;
+    border-color: $color-active;
+    outline: none;
+  }
+
+  &[disabled] {
+    background-color: $color-disabled;
+    border-color: $color-disabled;
+    font-style: italic;
+    cursor: not-allowed;
+  }
+}
+
+.abra-button-secondary {
+  margin: 2px;
+  background-color: $color-white;
+  border: solid 1px $color-primary;
+  border-radius: $button-radius;
+  min-width: 125px;
+  padding: 6px;
+  color: $color-primary;
+  transition: 0.3s;
+  cursor: pointer;
+  outline: none;
+
+  &:hover,
+  &:focus {
+    background-color: $color-hover-light;
+  }
+
+  &:active {
+    background-color: $color-active;
+    color: $color-white;
+  }
+
+  &[disabled] {
+    border-color: $color-secondary-disabled;
+    background-color: $color-white;
+    color: $color-secondary-disabled;
+    font-style: italic;
+    cursor: not-allowed;
+  }
+}
+
+.abra-button-super-primary {
+  @extend .abra-button-primary;
+
+  padding: 18px;
+  min-width: 100%;
+  font-size: $font-size-h2;
+}

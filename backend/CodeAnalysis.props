@@ -1,0 +1,13 @@
+<Project>
+    <PropertyGroup>
+        <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)/project.ruleset</CodeAnalysisRuleSet>
+        <TreatWarningsAsErrors Condition="'$(Configuration)' == 'Release'">true</TreatWarningsAsErrors>
+        <MSBuildTreatWarningsAsErrors Condition="'$(Configuration)' == 'Release'">true</MSBuildTreatWarningsAsErrors>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <SonarQubeSetting Include="sonar.cpd.exclusions">
+            <Value>**/*.cshtml, **/Program.cs, **/Argument.cs, **/Arguments.cs</Value>
+        </SonarQubeSetting>
+    </ItemGroup>
+</Project>

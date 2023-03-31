@@ -1,0 +1,10 @@
+<div class="abra-step-item" [ngClass]="{ 'abra-step-item-active': active && !disabled, 'abra-step-item-disabled': disabled }">
+  <div class="abra-step-indicator">
+    <div class="abra-step-up"></div>
+    <div class="abra-step-toggle"></div>
+    <div class="abra-step-down"></div>
+  </div>
+  <div class="abra-step-content">
+    <ng-content></ng-content>
+  </div>
+</div>

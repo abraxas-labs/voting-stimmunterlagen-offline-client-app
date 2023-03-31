@@ -1,0 +1,10 @@
+package-lock.json
+node_modules
+dist
+.angular
+
+# ignore translations files
+src/app/translations/
+
+# ignore assets
+src/assets/

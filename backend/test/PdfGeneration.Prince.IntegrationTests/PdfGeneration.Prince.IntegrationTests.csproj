@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\PdfGeneration.Prince\PdfGeneration.Prince.csproj" />
+  </ItemGroup>
+
+  <!-- Make sure prince executables are copied on build and publish -->
+  <Import Project="..\..\3rdPartyLibs\prince.targets" />
+</Project>

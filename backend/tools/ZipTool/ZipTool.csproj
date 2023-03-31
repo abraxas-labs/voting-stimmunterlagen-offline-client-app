@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+	  <PackageReference Include="Voting.Lib.Common" Version="$(VotingLibVersion)" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Voting.Stimmunterlagen.OfflineClient.Logging\Voting.Stimmunterlagen.OfflineClient.Logging.csproj" />
+  </ItemGroup>
+  
+</Project>

@@ -1,0 +1,51 @@
+@import 'variables';
+
+/** button **/
+$button-radius: 5px;
+
+// Colors
+$primary-color: #3c6582;
+$primary-color-hover-old: #3288ac;
+$primary-color-hover: lighten(saturate($primary-color, 15%), 10%); // stylelint-disable-line
+$primary-color-highlight: #b5e2de;
+$error-color-dark: #d2232a;
+$error-color-dark-hover: lighten(saturate($error-color-dark, 15%), 10%); // stylelint-disable-line
+$error-color-light: #ffc8b9;
+$warn-color: #ffa000;
+$warn-color-hover: lighten(saturate($warn-color, 15%), 10%); // stylelint-disable-line
+$info-color: #1c69ce;
+$info-color-hover: lighten(saturate($info-color, 15%), 10%); // stylelint-disable-line
+$success-color: #1c9048;
+$success-color-hover: lighten(saturate($success-color, 15%), 10%); // stylelint-disable-line
+$local-environment: #936;
+$sta-environment: #5b9bd5;
+$pre-environment: #ffc000;
+$prod-environment: #da321f;
+$black-color: #232323;
+$white-color: #fff;
+$gray-color: #ccc;
+$gray-color-dark: #969696;
+$gray-color-light: #e9e9e9;
+$font-color: $black-color;
+
+// font
+$font-size: 13px;
+$font-family: 'Open Sans', arial, helvetica, sans-serif;
+
+// size
+$screen-sm-min: 768px;
+$screen-md-min: 992px;
+$screen-lg-min: 1200px;
+$headerHeight: 54px; // stylelint-disable-line
+$navigation-width: 245px;
+$btn-border-radius: 4px;
+
+@mixin no-text-selection {
+  -webkit-touch-callout: none; /* iOS Safari */
+  user-select: none;
+}
+
+@mixin text-selection {
+  -webkit-touch-callout: initial; /* iOS Safari */
+  user-select: initial;
+}

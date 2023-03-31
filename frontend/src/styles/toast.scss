@@ -1,0 +1,209 @@
+@import 'variables';
+
+// stylelint-disable-next-line
+#vrsgToastContainer {
+  position: fixed;
+  z-index: 4;
+  overflow: hidden;
+  right: 0;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.vrsg-toast {
+  z-index: 1;
+  display: flex;
+  position: relative;
+  min-width: 250px;
+  max-width: 400px;
+  margin: 5px 20px 10px 5px;
+  padding: 5px;
+  color: $color-white;
+  box-shadow: 0 3px 5px rgb(0 0 0 / 25%);
+  animation-timing-function: linear, ease-out;
+  animation-delay: 0s, 0.45s;
+  animation-duration: 0.5s, 0.5s;
+  animation-name: top-down, fadeIn;
+
+  .vrsg-toast-icon {
+    padding: 5px 10px 5px 5px;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .vrsg-toast-icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .vrsg-toast-text-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  // stylelint-disable-next-line
+  .vrsg-toast-Title {
+    font-weight: bold;
+  }
+
+  .vrsg-toast-close {
+    @extend .fa;
+    @extend .fa-times;
+
+    cursor: pointer;
+    opacity: 0.5;
+  }
+
+  &:hover {
+    .vrsg-toast-close {
+      opacity: 1;
+    }
+  }
+}
+
+/***  toast timeline  ***/
+// stylelint-disable-next-line
+div#vrsgToastContainer:hover .time-line {
+  animation-play-state: paused;
+}
+
+.time-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background-color: blue;
+  width: 100%;
+  animation-delay: 2s;
+  animation-name: time-line-animate;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+
+  .vrsg-toast-hidden & {
+    border: none;
+  }
+}
+
+/*****  toast Typen  *******/
+.vrsg-toast-error {
+  color: $color-red-dark;
+  background-color: $color-red;
+
+  .vrsg-toast-icon {
+    @extend .fa;
+    @extend .fa-times-circle;
+  }
+
+  .time-line {
+    background-color: $color-red-dark;
+  }
+}
+
+.vrsg-toast-warning {
+  color: $color-yellow-dark;
+  background-color: $color-yellow;
+
+  .vrsg-toast-icon {
+    @extend .fa;
+    @extend .fa-exclamation-circle;
+  }
+
+  .time-line {
+    background-color: $color-yellow-dark;
+  }
+}
+
+.vrsg-toast-info {
+  color: $color-blue-dark;
+  background-color: $color-blue;
+
+  .vrsg-toast-icon {
+    @extend .fa;
+    @extend .fa-info-circle;
+  }
+
+  .time-line {
+    background-color: $color-blue-dark;
+  }
+}
+
+.vrsg-toast-success {
+  color: $color-green-dark;
+  background-color: $color-green;
+
+  .vrsg-toast-icon {
+    @extend .fa;
+    @extend .fa-check-circle;
+  }
+
+  .time-line {
+    background-color: $color-green-dark;
+  }
+}
+
+.vrsg-toast-hidden {
+  animation: fadeOut 0.5s linear;
+}
+
+/**** animation *****/
+// stylelint-disable-next-line
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    margin: 5px 20px 10px 5px;
+    padding: 5px;
+  }
+
+  50% {
+    margin: 5px 20px 10px 5px;
+    padding: 5px;
+    opacity: 0;
+    max-height: 300px;
+  }
+
+  100% {
+    max-height: 0;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/**** animation in **/
+// stylelint-disable-next-line
+@keyframes fadeIn {
+  0% {
+    transform: translate(450px);
+  }
+
+  100% {
+    transform: translate(0);
+  }
+}
+
+@keyframes top-down {
+  0% {
+    visibility: hidden;
+    max-height: 0;
+  }
+
+  100% {
+    visibility: hidden;
+    max-height: 300px;
+  }
+}
+
+@keyframes time-line-animate {
+  0% {
+    width: 100%;
+  }
+
+  100% {
+    width: 0%;
+  }
+}

@@ -1,0 +1,33 @@
+<h2>{{ 'PAGE.SETTINGS.TITLE' | translate }}</h2>
+<form #settingsForm="ngForm">
+  <div class="settings-content">
+    <div class="abra-form-group">
+      <app-language-switch></app-language-switch>
+    </div>
+    <div class="abra-form-group">
+      <label>{{ 'NUMBER_OF_PAGES_PREVIEW' | translate }}</label>
+      <input name="numberOfPreview" class="abra" type="number" min="1" max="10" [(ngModel)]="numberOfPreview" [required]="true" />
+    </div>
+    <div class="abra-form-group">
+      <label>{{ 'NUMBER_OF_PAGES_JOB' | translate }}</label>
+      <input
+        name="jobSize"
+        class="abra"
+        type="number"
+        [min]="1"
+        [max]="1000"
+        step="1"
+        [(ngModel)]="jobSize"
+        [required]="true"
+        [disabled]="disableSettingJobSize"
+      />
+    </div>
+    <div class="abra-form-group">
+      <button class="abra-button-secondary" (click)="sDelete()">Sicheres Löschen aller Daten</button>
+      <span>{{ deleteMsg }}</span>
+    </div>
+    v{{ appVersion }}
+  </div>
+  <br />
+  <button class="abra-button-primary" (click)="save()" [disabled]="!settingsForm.valid">{{ 'CLOSE' | translate }}</button>
+</form>
