@@ -92,5 +92,6 @@ export const TRANSLATIONS: Translations = {
   'ERROR.QUESTION_NOT_FOUND': 'Question with id',
   'ERROR.ANSWERE_NOT_FOUND': 'Answer with id',
   'ERROR.CONTEST_DUPLICATES': 'Contest duplicates with id',
+  'ERROR.COUNTRY_NOT_FOUND': 'Country',
   'ERROR.NOT_FOUND': 'could not be found',
 };

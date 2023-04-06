@@ -31,4 +31,5 @@ public static class TransformationErrorCode
     public static string QuestionNotFound => "QUESTION_NOT_FOUND";
     public static string AnswereNotFound => "ANSWERE_NOT_FOUND";
     public static string ContestDuplicates => "CONTEST_DUPLICATES";
+    public static string CountryNotFound => "COUNTRY_NOT_FOUND";
 }

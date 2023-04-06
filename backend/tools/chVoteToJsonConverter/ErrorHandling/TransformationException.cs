@@ -27,7 +27,8 @@ public class TransformationException : Exception
             new KeyValuePair<string, string>(TransformationErrorCode.ContestNotFound, "Contest with id {0} could not be found"),
             new KeyValuePair<string, string>(TransformationErrorCode.AnswereNotFound, "Answere with id {0} could not be found"),
             new KeyValuePair<string, string>(TransformationErrorCode.AuthorizationNotFound, "Authorization with id {0} could not be found"),
-            new KeyValuePair<string, string>(TransformationErrorCode.ContestDuplicates, "Contest duplicates with id {0}")
+            new KeyValuePair<string, string>(TransformationErrorCode.ContestDuplicates, "Contest duplicates with id {0}"),
+            new KeyValuePair<string, string>(TransformationErrorCode.CountryNotFound, "Country {0} could not be found"),
         });
     }
 

@@ -15,6 +15,7 @@ using CantonAbbreviation = eCH_0007_5_0.CantonAbbreviation;
 using ContestType = eCH_0155_4_0.ContestType;
 using SwissMunicipality = eCH_0007_6_0.SwissMunicipality;
 using Voting.Stimmunterlagen.OfflineClient.Shared.ContestConfiguration;
+using chVoteToJsonConverter.Configurations.Country;
 
 namespace chVoteToJsonConverter;
 
@@ -292,6 +293,8 @@ public static class DataTransformer
         var country10 = CountryType.Create(null, voterType.person.residenceCountryId, voterType.person.residenceCountryId);
         var country08 = Country.Create(null, voterType.person.residenceCountryId, voterType.person.residenceCountryId);
 
+        var physicalAddressCountryConfig = CountryConfigurationProvider.GetCountryConfiguration(voterType.person.physicalAddress.country)
+            ?? throw new TransformationException(TransformationErrorCode.CountryNotFound, voterType.person.physicalAddress.country);
 
         var sexType = personInfo.sex == personTypeSex.Item1 ? SexType.Männlich : SexType.Weiblich;
         var dateOfBirth = DatePartiallyKnown.Create(personInfo.dateOfBirth);
@@ -303,7 +306,7 @@ public static class DataTransformer
         var swissPersonType =
             SwissPersonType.Create(personIdentification, (LanguageType)personInfo.languageOfCorrespondance, new List<PlaceOfOrigin>() { PlaceOfOrigin.Create("Beispielstadt", CantonAbbreviation.SG) });
 
-        var addressExtension = GetAddressExtension(voterType);
+        var addressExtension = GetAddressExtension(voterType, physicalAddressCountryConfig);
 
         swissPersonType.Extension = new AddressOnEnvelope() { Address = addressExtension };
 
@@ -365,7 +368,7 @@ public static class DataTransformer
         return votingPerson;
     }
 
-    private static PersonTypeAddressExtension GetAddressExtension(voterType voterType)
+    private static PersonTypeAddressExtension GetAddressExtension(voterType voterType, CountryConfiguration physicalAddressCountryConfig)
     {
         var addressExtension = new PersonTypeAddressExtension();
 
@@ -377,40 +380,45 @@ public static class DataTransformer
             ? "Frau"
             : mrMrsItem2String;
 
-        if (voterType.voterType1 != voterTypeType.SWISSABROAD)
-        {
-            addressExtension.Line1 = mrMrsString;
-            addressExtension.Line2 = voterType.person.physicalAddress.firstName + " " +
-                                     voterType.person.physicalAddress.lastName;
-            if (voterType.person.physicalAddress.belowNameLine != null &&
-                voterType.person.physicalAddress.belowNameLine.Length > 0)
-                addressExtension.Line3 = string.Join(" ", voterType.person.physicalAddress.belowNameLine);
-            addressExtension.Line4 = voterType.person.physicalAddress.street + " " +
-                                     voterType.person.physicalAddress.houseNumber;
-            if (voterType.person.physicalAddress.belowStreetLine != null &&
-                voterType.person.physicalAddress.belowStreetLine.Length > 0)
-                addressExtension.Line5 = string.Join(" ", voterType.person.physicalAddress.belowStreetLine);
-            addressExtension.Line6 = voterType.person.physicalAddress.postOfficeBoxText + " " +
+        var townLine = physicalAddressCountryConfig.ZipCodeTownControl
+            ? $"{voterType.person.physicalAddress.town} {voterType.person.physicalAddress.zipCode}"
+            : $"{voterType.person.physicalAddress.zipCode} {voterType.person.physicalAddress.town}";
+
+        var streetLine = physicalAddressCountryConfig.StreetNrControl
+            ? $"{voterType.person.physicalAddress.houseNumber} {voterType.person.physicalAddress.street}"
+            : $"{voterType.person.physicalAddress.street} {voterType.person.physicalAddress.houseNumber}";
+
+        var postOfficeLine = voterType.person.physicalAddress.postOfficeBoxText + " " +
                                      (voterType.person.physicalAddress.postOfficeBoxNumber == 0
                                          ? ""
                                          : voterType.person.physicalAddress.postOfficeBoxNumber.ToString());
-            addressExtension.Line7 = voterType.person.physicalAddress.zipCode + " " +
-                                     voterType.person.physicalAddress.town;
+
+        addressExtension.Line1 = mrMrsString;
+        addressExtension.Line2 = $"{voterType.person.physicalAddress.firstName} {voterType.person.physicalAddress.lastName}";
+        addressExtension.Line4 = streetLine;
+
+        if (voterType.voterType1 != voterTypeType.SWISSABROAD)
+        {
+            if (voterType.person.physicalAddress.belowNameLine != null &&
+                voterType.person.physicalAddress.belowNameLine.Length > 0)
+            {
+                addressExtension.Line3 = string.Join(" ", voterType.person.physicalAddress.belowNameLine);
+            }
+
+            if (voterType.person.physicalAddress.belowStreetLine != null &&
+                voterType.person.physicalAddress.belowStreetLine.Length > 0)
+            {
+                addressExtension.Line5 = string.Join(" ", voterType.person.physicalAddress.belowStreetLine);
+            }
+
+            addressExtension.Line6 = postOfficeLine;
+            addressExtension.Line7 = townLine;
         }
         else
         {
-            addressExtension.Line1 = mrMrsString;
-            addressExtension.Line2 = voterType.person.physicalAddress.firstName + " " +
-                                     voterType.person.physicalAddress.lastName;
-            addressExtension.Line4 = voterType.person.physicalAddress.street + " " +
-                                     voterType.person.physicalAddress.houseNumber;
-            addressExtension.Line5 = voterType.person.physicalAddress.postOfficeBoxText + " " +
-                                     (voterType.person.physicalAddress.postOfficeBoxNumber == 0
-                                         ? ""
-                                         : voterType.person.physicalAddress.postOfficeBoxNumber.ToString());
-            addressExtension.Line6 = voterType.person.physicalAddress.zipCode + " " +
-                                     voterType.person.physicalAddress.town;
-            addressExtension.Line7 = voterType.person.physicalAddress.country?[..2];
+            addressExtension.Line5 = postOfficeLine;
+            addressExtension.Line6 = townLine;
+            addressExtension.Line7 = physicalAddressCountryConfig.Name.ToUpperInvariant();
         }
 
         return addressExtension;

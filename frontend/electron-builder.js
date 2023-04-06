@@ -19,7 +19,6 @@ module.exports = {
     },
   ],
   extraResources: [
-    './node_modules/@electron/remote/**',
     {
       from: '../backend/dist',
       to: 'tools',
@@ -27,5 +26,6 @@ module.exports = {
   ],
   win: {
     target: ['dir'],
+    icon: 'src/favicon.ico'
   },
 };

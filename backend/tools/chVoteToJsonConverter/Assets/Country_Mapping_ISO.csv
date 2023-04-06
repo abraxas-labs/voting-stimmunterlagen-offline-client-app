@@ -1,0 +1,257 @@
+BFS;ISO2;Name;StreetNr;ZipCode
+8100;CH;Switzerland;;
+8201;AL;Albania;;
+8202;AD;Andorra;x;
+8204;BE;Belgium;;
+8205;BG;Bulgaria;;
+8206;DK;Denmark;;
+8207;DE;Germany;;
+8210;FO;Faeroe Islands;;
+8211;FI;Finland;;
+8212;FR;France;x;
+8213;GI;Gibraltar;x;
+8214;GR;Greece;x;
+8215;GB;United Kingdom;x;x
+8216;IE;Ireland;x;x
+8217;IS;Iceland;;
+8218;IT;Italy;;
+8222;LI;Liechtenstein;;
+8223;LU;Luxembourg;x;
+8224;MT;Malta;x;x
+8225;IM;Isle of Man;;
+8226;MC;Monaco;x;
+8227;NL;Netherlands;;
+8228;NO;Norway;;
+8229;AT;Austria;;
+8230;PL;Poland;;
+8231;PT;Portugal;;
+8232;RO;Romania;;
+8233;SM;San Marino;;
+8234;SE;Sweden;;
+8236;ES;Spain;;
+8239;TR;Turkey;;
+8240;HU;Hungary;;
+8241;VA;Vatican City;;
+8242;CY;Cyprus;;
+8243;SK;Slovakia;;
+8244;CZ;Czech Republic;;
+8248;RS;Serbia;;
+8250;HR;Croatia;;
+8251;SI;Slovenia;;
+8252;BA;Bosnia and Herzegovina;;
+8254;ME;Montenegro;;
+8255;MK;North Macedonia;;
+8256;XK;Kosovo;;
+8256;XZ;Kosovo;;
+8260;EE;Estonia;;
+8261;LV;Latvia;;
+8262;LT;Lithuania;;
+8263;MD;Moldova;;
+8264;RU;Russia;;
+8265;UA;Ukraine;;
+8266;BY;Belarus;;
+8271;JE;Jersey;;
+8272;GG;Guernsey;;
+8273;SJ;Svalbard and Jan Mayen;;
+8274;AX;Aland Islands;;
+8301;GQ;Equatorial Guinea;;
+8302;ET;Ethiopia;;
+8303;DJ;Djibouti;;
+8304;DZ;Algeria;x;
+8305;AO;Angola;;
+8307;BW;Botswana;;
+8308;BI;Burundi;;
+8309;BJ;Benin;;
+8310;CI;Côte d'Ivoire;;
+8311;GA;Gabon;;
+8312;GM;Gambia;x;
+8313;GH;Ghana;;
+8314;GW;Guinea-Bissau;;
+8315;GN;Guinea;;
+8317;CM;Cameroon;;
+8318;ES;Canary Islands;;
+8319;CV;Cape Verde;;
+8320;KE;Kenya;;
+8321;KM;Comoros;;
+8322;CG;Congo, Republic;;
+8323;CD;Congo, Democratic Republic;x;
+8324;LS;Lesotho;;
+8325;LR;Liberia;;
+8326;LY;Libya;;
+8327;MG;Madagascar;;x
+8329;MW;Malawi;;
+8330;ML;Mali;;
+8331;MA;Morocco;x;
+8332;MR;Mauritania;;
+8333;MU;Mauritius;x;
+8334;MZ;Mozambique;;
+8335;NE;Niger;;
+8336;NG;Nigeria;;
+8337;BF;Burkina Faso;;
+8339;RE;Réunion;x;
+8340;ZW;Zimbabwe;x;
+8341;RW;Rwanda;;
+8343;ZM;Zambia;x;
+8344;ST;São Tomé and Príncipe;;
+8345;SN;Senegal;x;
+8346;SC;Seychelles;;
+8347;SL;Sierra Leone;x;
+8348;SO;Somalia;;
+8349;ZA;South Africa;x;x
+8350;SD;Sudan;;
+8351;NA;Namibia;x;
+8352;SZ;Swaziland;;
+8353;TZ;Tanzania;x;
+8354;TG;Togo;;
+8356;TD;Chad;;
+8357;TN;Tunisia;x;
+8358;UG;Uganda;;
+8359;EG;Egypt;x;x
+8360;CF;Central African Republic;;
+8361;YT;Mayotte;x;
+8362;ER;Eritrea;;
+8363;SS;South Sudan;;
+8371;IO;British Territories in the Indian Ocean;;
+8372;EH;Western Sahara;;
+8373;SH;Saint Helena;x;
+8374;SH;Ascension;x;
+8375;SH;Tristan da Cunha;x;
+8401;AR;Argentina;;
+8402;BS;Bahamas;;
+8403;BB;Barbados;x;
+8404;BM;Bermuda;x;x
+8405;BO;Bolivia;;
+8406;BR;Brazil;;x
+8407;CL;Chile;;
+8408;CR;Costa Rica;;
+8409;DO;Dominican Republic;;
+8410;EC;Ecuador;;
+8411;SV;El Salvador;;
+8412;FK;Falkland Islands;x;
+8413;GL;Greenland;;
+8414;GP;Guadeloupe;x;
+8415;GT;Guatemala;x;
+8416;GF;French Guyana;;
+8417;GY;Guyana;;
+8418;HT;Haiti;;
+8419;BZ;Belize;x;
+8420;HN;Honduras;;
+8421;JM;Jamaica;x;
+8423;CA;Canada;x;x
+8424;CO;Colombia;;x
+8425;CU;Cuba;;x
+8426;MQ;Martinique;x;
+8427;MX;Mexico;;
+8429;NI;Nicaragua;;
+8430;PA;Panama;;
+8431;PY;Paraguay;;
+8432;PE;Peru;;
+8433;PR;Puerto Rico;x;
+8434;PM;Saint Pierre and Miquelon;x;
+8435;SR;Suriname;;
+8436;TT;Trinidad and Tobago;x;
+8437;UY;Uruguay;;
+8438;VE;Venezuela;;x
+8439;US;United States;x;x
+8440;DM;Dominica;;
+8441;GD;Grenada;;
+8442;AG;Antigua and Barbuda;;
+8443;LC;Saint Lucia;;
+8444;VC;Saint Vincent and the Grenadines;;
+8445;KN;Saint Kitts and Nevis;;
+8446;AI;Anguilla;x;
+8448;MF;Saint Martin (France);x;
+8449;BL;Saint Barthélemy;x;
+8472;VI;US Virgin Islands;x;
+8473;KY;Cayman Islands;;
+8474;TC;Turks and Caicos Islands;x;
+8475;MS;Montserrat;;
+8476;VG;British Virgin Islands;x;
+8482;AW;Aruba;;
+8483;GS;South Georgia and the South Sandwich Islands;;
+8484;CW;Curaçao;;
+8485;SX;Sint Maarten (Netherlands);;
+8486;BQ;Bonaire, Saint Eustatius and Saba;;
+8501;AF;Afghanistan;;
+8502;BH;Bahrain;;
+8503;BT;Bhutan;;
+8504;BN;Brunei;;
+8505;MM;Myanmar;x;
+8506;LK;Sri Lanka;x;x
+8507;TW;Taiwan (Chinese Taipei);x;x
+8508;CN;China;x;
+8509;HK;Hong Kong;x;
+8510;IN;India;x;x
+8511;ID;Indonesia;;x
+8512;IQ;Iraq;x;
+8513;IR;Iran;;
+8514;IL;Israel;x;
+8515;JP;Japan;x;x
+8516;YE;Yemen;;
+8517;JO;Jordan;;
+8518;KH;Cambodia;;x
+8519;QA;Qatar;;
+8521;KW;Kuwait;;
+8522;LA;Laos;x;
+8523;LB;Lebanon;x;
+8524;MO;Macao;;
+8525;MY;Malaysia;x;
+8526;MV;Maldives;x;
+8527;OM;Oman;;x
+8528;MN;Mongolia;;
+8529;NP;Nepal;x;
+8530;KP;North Korea;x;
+8532;AE;United Arab Emirates;;
+8533;PK;Pakistan;;
+8534;PH;Philippines;x;
+8535;SA;Saudi Arabia;x;x
+8537;SG;Singapore;x;x
+8539;KR;Korea (Rep.);x;
+8541;SY;Syria;;
+8542;TH;Thailand;;x
+8545;VN;Vietnam;x;
+8546;BD;Bangladesh;;x
+8547;TL;Timor-Leste;;
+8550;PS;Palestine;;
+8560;AM;Armenia;;
+8561;AZ;Azerbaijan;;
+8562;GE;Georgia;;
+8563;KZ;Kazakhstan;;x
+8564;KG;Kyrgyzstan;x;
+8565;TJ;Tajikistan;;
+8566;TM;Turkmenistan;x;
+8567;UZ;Uzbekistan;;
+8601;AU;Australia;x;x
+8602;FJ;Fiji;x;
+8604;NR;Nauru;;
+8605;VU;Vanuatu;;
+8606;NC;New Caledonia;x;
+8607;NZ;New Zealand;x;x
+8608;PG;Papua New Guinea;;
+8610;TO;Tonga;;
+8611;WF;Wallis and Futuna;x;
+8612;WS;Samoa;;
+8614;SB;Solomon Islands;;
+8615;TV;Tuvalu;;
+8616;KI;Kiribati;;
+8617;MH;Marshall Islands;x;
+8618;FM;Micronesia;x;
+8619;PW;Palau;x;
+8621;AS;American Samoa;x;
+8630;MP;Northern Marianas;x;
+8632;GU;Guam;x;
+8633;UM;Johnston Island;;
+8635;UM;Midway Island;;
+8636;UM;Wake Island;;
+8652;CC;Cocos (Keeling) Islands;;
+8653;HM;Heard Island and McDonald Islands;;
+8654;NF;Norfolk Island;;
+8655;CX;Christmas Island;;
+8671;PF;French Polynesia;x;
+8682;CK;Cook Islands;;
+8683;NU;Niue;x;
+8684;TK;Tokelau;x;
+8685;PN;Pitcairn Islands;x;
+8701;AQ;Antarctica;;
+8702;BV;Bouvet Island;;
+8703;TF;French Southern and Antarctic Lands;;
