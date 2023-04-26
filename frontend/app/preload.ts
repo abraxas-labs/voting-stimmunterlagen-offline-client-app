@@ -21,4 +21,5 @@ contextBridge.exposeInMainWorld('backend', {
   getUserDataPathSync: () => ipcRenderer.sendSync('getUserDataPathSync'),
   getOsArchSync: () => ipcRenderer.sendSync('getOsArchSync'),
   isProdSync: () => ipcRenderer.sendSync('isProdSync'),
+  getAppVersionSync: () => ipcRenderer.sendSync('getAppVersionSync'),
 });

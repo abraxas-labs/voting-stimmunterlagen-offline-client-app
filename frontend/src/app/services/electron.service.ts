@@ -69,6 +69,10 @@ export class ElectronService {
     return this.backend.isProdSync();
   }
 
+  public getAppVersion(): boolean {
+    return this.backend.getAppVersionSync();
+  }
+
   private mergeUInt8Arrays(myArrays: Uint8Array[]): Uint8Array {
     let length = 0;
     myArrays.forEach(item => {

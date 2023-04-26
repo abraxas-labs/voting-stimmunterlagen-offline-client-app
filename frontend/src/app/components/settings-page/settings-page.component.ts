@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SettingsService } from '../../services/settings.service';
 import { AppStateService } from '../../services/app-state.service';
 import { AppStateStep } from '../../models/app-state.model';
+import { ElectronService } from '../../services/electron.service';
 
 @Component({
   selector: 'app-settings-page',
@@ -16,12 +17,12 @@ export class SettingsPageComponent {
   public numberOfPreview: number;
   public jobSize: number;
 
-  constructor(public readonly settingsService: SettingsService, private readonly appStateService: AppStateService) {
-    try {
-      this.appVersion = process.env.APP_VERSION;
-    } catch (err) {
-      this.appVersion = '0.0.0-dev';
-    }
+  constructor(
+    public readonly settingsService: SettingsService,
+    private readonly appStateService: AppStateService,
+    electronService: ElectronService,
+  ) {
+    this.appVersion = electronService.getAppVersion();
 
     this.disableSettingJobSize = appStateService.state.step >= AppStateStep.Generation;
     this.numberOfPreview = this.settingsService.numberOfPreview;

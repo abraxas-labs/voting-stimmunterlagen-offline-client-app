@@ -416,6 +416,7 @@ public static class DataTransformer
         }
         else
         {
+            addressExtension.Line1 = string.Empty;
             addressExtension.Line5 = postOfficeLine;
             addressExtension.Line6 = townLine;
             addressExtension.Line7 = physicalAddressCountryConfig.Name.ToUpperInvariant();

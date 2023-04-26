@@ -17,6 +17,7 @@ export function initIpcHandlers() {
   ipcMain.on('getUserDataPathSync', handleGetUserDataPathSync);
   ipcMain.on('getOsArchSync', handleGetOsArchSync);
   ipcMain.on('isProdSync', handleIsProdSync);
+  ipcMain.on('getAppVersionSync', handleGetAppVersionSync);
 }
 
 function handleShellExecute(e, toolsDirectory, commandInfo, commandParameters, input): Promise<any> {
@@ -88,6 +89,10 @@ function handleGetOsArchSync(e): void {
 
 function handleIsProdSync(e): void {
   e.returnValue = !isDevelopment;
+}
+
+function handleGetAppVersionSync(e): void {
+  e.returnValue = process.env.APP_VERSION ?? '0.0.0-dev';
 }
 
 function processInput(process: ChildProcess, input?: any) {
