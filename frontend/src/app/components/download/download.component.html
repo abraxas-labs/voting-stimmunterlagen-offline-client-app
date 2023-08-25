@@ -5,11 +5,11 @@
     type="checkbox"
     [ngModel]="checkablePdf.checked"
     (change)="togglePdfChecked(checkablePdf)"
-    [disabled]="checkablePdf.file.status === 'verschlüsselt' || cryptFilesIsRunning"
+    [disabled]="checkablePdf.file.status === 'encrypted' || cryptFilesIsRunning"
   />
   <app-spinner *ngIf="checkablePdf.file.status === 'running'" [size]="'13px'"></app-spinner>
-  <span *ngIf="checkablePdf.file.status === 'unverschlüsselt'" class="fa fa-unlock"></span>
-  <span *ngIf="checkablePdf.file.status === 'verschlüsselt'" class="fa fa-lock"></span>
+  <span *ngIf="checkablePdf.file.status === 'unencrypted'" class="fa fa-unlock"></span>
+  <span *ngIf="checkablePdf.file.status === 'encrypted'" class="fa fa-lock"></span>
   <a [href]="'file:///' + checkablePdf.file.filePath" download>{{ checkablePdf.file.fileName }}</a>
 </div>
 

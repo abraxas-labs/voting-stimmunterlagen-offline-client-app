@@ -39,7 +39,7 @@ export class DownloadComponent implements OnInit {
     this.encryptionCertificatePaths = jobContext.ech228?.extension.Certificates ?? [];
     this.checkablePdfs = appStateService.state.downloadPdfs.map(f => ({
       file: f,
-      checked: f.status === 'verschlüsselt',
+      checked: f.status === 'encrypted',
     }));
   }
 
@@ -56,7 +56,7 @@ export class DownloadComponent implements OnInit {
   public toggleAllChecked(): void {
     this.allChecked = !this.allChecked;
 
-    for (const checkablePdf of this.checkablePdfs.filter(c => c.file.status === 'unverschlüsselt')) {
+    for (const checkablePdf of this.checkablePdfs.filter(c => c.file.status === 'unencrypted')) {
       checkablePdf.checked = this.allChecked;
     }
   }
@@ -69,7 +69,7 @@ export class DownloadComponent implements OnInit {
   public async encryptFiles(): Promise<void> {
     this.displaySigningCertificateSelection = false;
     this.cryptFilesIsRunning = true;
-    const files = this.checkablePdfs.filter(c => c.checked && c.file.status === 'unverschlüsselt').map(c => c.file);
+    const files = this.checkablePdfs.filter(c => c.checked && c.file.status === 'unencrypted').map(c => c.file);
 
     if (files.length === 0) {
       return;
@@ -86,9 +86,9 @@ export class DownloadComponent implements OnInit {
     );
 
     if (response) {
-      files.forEach(file => (file.status = 'verschlüsselt'));
+      files.forEach(file => (file.status = 'encrypted'));
     } else {
-      files.forEach(file => (file.status = 'unverschlüsselt'));
+      files.forEach(file => (file.status = 'unencrypted'));
       throw new Error('error while encrypt files');
     }
 

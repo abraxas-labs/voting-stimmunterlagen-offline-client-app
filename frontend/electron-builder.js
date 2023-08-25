@@ -3,6 +3,7 @@ module.exports = {
   extraMetadata: {
     version: process.env.APP_VERSION,
   },
+  buildNumber: '0',
   directories: {
     buildResources: 'src/assets',
     output: 'dist',

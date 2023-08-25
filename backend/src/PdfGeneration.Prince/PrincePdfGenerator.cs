@@ -22,7 +22,7 @@ public class PrincePdfGenerator : IPdfGenerator
 
     public async Task GeneratePdfAsync(IStream htmlStream, IStream outStream, string? resourceBasePath = null)
     {
-        Initialize();
+        await Initialize();
 
         var job = new JobDefinition();
         job.AddSource(htmlStream);
@@ -33,12 +33,12 @@ public class PrincePdfGenerator : IPdfGenerator
         await outStream.FlushAsync();
     }
 
-    private void Initialize()
+    private async Task Initialize()
     {
         if (!_isInitialized)
         {
             _processManager.Initialize();
-            _processManager.Start();
+            await _processManager.Start();
 
             _isInitialized = true;
         }

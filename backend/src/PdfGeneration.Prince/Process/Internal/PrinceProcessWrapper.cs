@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using Thinktecture.IO;
 using Thinktecture.IO.Adapters;
 
-public class PrinceProcessWrapper : IPrinceProcessWrapper, IDisposable
+public class PrinceProcessWrapper : IPrinceProcessWrapper, IAsyncDisposable
 {
     private readonly ILogger<PrinceProcessWrapper>? _logger;
     private readonly IPath _path;
@@ -40,24 +40,24 @@ public class PrinceProcessWrapper : IPrinceProcessWrapper, IDisposable
         _logger?.LogInformation("Initialized with the path to prince: {PrincePath}", _princePath);
     }
 
-    public void Start()
+    public Task Start()
     {
         if (string.IsNullOrWhiteSpace(_princePath))
             throw new InvalidOperationException($"{nameof(PrinceProcessManager)} is not initialized. Make sure to call {nameof(Initialize)} first.");
 
         CreateProcess();
-        StartProcess();
+        return StartProcess();
     }
 
-    public void Stop()
+    public async Task Stop()
     {
         if (_princeProcess == null)
             return;
 
         _logger?.LogInformation("Stopping external Prince process {ProcessId}", _princeProcess.Id);
 
-        // this does not end the external prince process, but it should be sent
-        _communicator.SendEndAsync();
+        // Sends string end to the Prince process standard input which terminates the job while the Prince process itself remains.
+        await _communicator.SendEndAsync();
 
         try
         {
@@ -130,7 +130,7 @@ public class PrinceProcessWrapper : IPrinceProcessWrapper, IDisposable
         };
     }
 
-    private void StartProcess()
+    private async Task StartProcess()
     {
         if (_princeProcess == null)
             throw new InvalidOperationException("Create the prince process first");
@@ -145,12 +145,12 @@ public class PrinceProcessWrapper : IPrinceProcessWrapper, IDisposable
                 _logger?.LogInformation("External Prince process {ProcessId} was started ", _princeProcess.Id);
 
                 // this needs to be awaited, because the single chunks need to be read sequentially.
-                var version = _communicator.ReadVersionChunkAsync().GetAwaiter().GetResult();
+                var version = await _communicator.ReadVersionChunkAsync();
                 _logger?.LogInformation("External Prince process has version {PrinceVersion}", version);
 
                 if (_logger != null)
                 {
-                    Task.Run(LogProcessInfo);
+                    await Task.Run(LogProcessInfo);
                 }
             }
             else
@@ -189,17 +189,17 @@ public class PrinceProcessWrapper : IPrinceProcessWrapper, IDisposable
 
     #region Dispose pattern
 
-    public void Dispose()
+    async ValueTask IAsyncDisposable.DisposeAsync()
     {
-        Dispose(true);
+        await DisposeAsync(true);
         GC.SuppressFinalize(this);
     }
 
-    protected virtual void Dispose(bool disposing)
+    protected virtual async Task DisposeAsync(bool disposing)
     {
         if (disposing)
         {
-            Stop();
+            await Stop();
             _communicator.Dispose();
         }
     }

@@ -12,6 +12,8 @@ import { contextBridge, ipcRenderer } from 'electron';
 contextBridge.exposeInMainWorld('backend', {
   shellExecute: (toolsDir, commandInfo, commandParameters, input) =>
     ipcRenderer.invoke('shellExecute', toolsDir, commandInfo, commandParameters, input),
+  requestShellExecuteChunked: (toolsDir, commandInfo, commandParameters, input) =>
+    ipcRenderer.invoke('requestShellExecuteChunked', toolsDir, commandInfo, commandParameters, input),
   createDirectory: path => ipcRenderer.invoke('createDirectory', path),
   createOrUpdateFile: (path, content) => ipcRenderer.invoke('createOrUpdateFile', path, content),
   copyFile: (sourcePath, targetPath) => ipcRenderer.invoke('copyFile', sourcePath, targetPath),
@@ -22,4 +24,11 @@ contextBridge.exposeInMainWorld('backend', {
   getOsArchSync: () => ipcRenderer.sendSync('getOsArchSync'),
   isProdSync: () => ipcRenderer.sendSync('isProdSync'),
   getAppVersionSync: () => ipcRenderer.sendSync('getAppVersionSync'),
+
+  // add listener by using:     removeListener = emitter(fn);
+  // remove listener by using:  removeListener()
+  shellExecuteChunkedEmitter: (fn) => {
+    ipcRenderer.on('shellExecuteChunkedEmit', fn);
+    return () => ipcRenderer.removeListener('shellExecuteChunkedEmit', fn)
+  },
 });

@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\EchDeliveryGeneration\EchDeliveryGeneration.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Generator\TestFiles\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

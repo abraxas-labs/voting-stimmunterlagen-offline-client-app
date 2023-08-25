@@ -3,7 +3,7 @@
 This repository contains the source code of the `VOTING Stimmunterlagen Offline-Client`. The client is used to
 generate e-voting voting cards based on input files (e-voting codes, print data, layout, contest, etc.) supplied by subsystems.
 
-The VOTING Stimmunterlagen Offline-Client is used for generating e-voting voting cards. The generation of e-voting voting cards requires high security standards. For the generation, raw data from the online application VOTING Stimmunterlagen (Abraxas Informatik AG) and the e-voting application (Post AG) must be imported into the application. Before generation, various configurations such as the sorting of the voting cards can be specified. One of the most importantn features beside the generation of voting cards is the process of securing the voting cards by encrypting and singing the data. This ensures that the voting cards cannot be changed until they are printed.
+The generation of e-voting voting cards requires high security standards. For the generation, raw data from the online application VOTING Stimmunterlagen (Abraxas Informatik AG) and the e-voting application (Post AG) must be imported into the application. Before generation, various configurations such as the sorting of the voting cards can be specified. One of the most important features beside the generation of voting cards is the process of securing the voting cards by encrypting and signing the data. This ensures that the voting cards cannot be changed until they are printed.
 
 ## Project parts
 

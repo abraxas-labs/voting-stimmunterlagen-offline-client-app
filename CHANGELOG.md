@@ -1,4 +1,4 @@
-# ✨ Changelog (`v1.13.4`)
+# ✨ Changelog (`v1.17.2`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,92 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v1.13.4
-Previous version ---- v1.13.0
+This version -------- v1.17.2
+Previous version ---- v1.13.4
 Initial version ----- v1.12.12
-Total commits ------- 4
+Total commits ------- 14
 ```
+
+## [v1.17.2] - 2023-08-24
+
+### 🔄 Changed
+
+- hide internal registry information in bug bounty artifact preparation.
+
+## [v1.17.1] - 2023-08-23
+
+### 🔄 Changed
+
+- Fix async issue in pdf generator
+
+## [v1.17.0] - 2023-08-23
+
+### 🔄 Changed
+
+- Publish dotnet packages as multi file packages
+
+## [v1.16.0] - 2023-08-22
+
+### 🔄 Changed
+
+- Update eai and lib dependency to deterministic version
+
+## [v1.15.6] - 2023-08-22
+
+### 🔄 Changed
+
+- Process elections with write ins and without candidates correctly
+
+## [v1.15.5] - 2023-08-17
+
+### 🔄 Changed
+
+- refactor security and code review findings
+
+## [v1.15.4] - 2023-08-15
+
+### 🔄 Changed
+
+- skip signing process if certificate is not provided.
+
+## [v1.15.3] - 2023-08-11
+
+### 🔄 Changed
+
+- fix typo in readme, update code docs
+
+## [v1.15.2] - 2023-07-25
+
+### 🆕 Added
+
+- Deterministic code signing
+
+## [v1.15.1] - 2023-07-24
+
+### 🔒 Security
+
+- Only accept .p12 certificates as signing certificate
+
+## [v1.15.0] - 2023-07-10
+
+### 🆕 Added
+
+- Support for large input files (several gb)
+
+## [v1.14.0] - 2023-05-23
+
+### 🔄 Changed
+
+- Update Post XSD schema
+- Rename chVoteToJsonConverter to EchDeliveryJsonConverter and refactor
+- Ech-0045 upload for swiss abroad addresses
+- Display accumulated candidate in proportional election correctly on the voting card
+
+## [v1.13.5] - 2023-05-22
+
+### 🔄 Changed
+
+- Deterministic build number
 
 ## [v1.13.4] - 2023-04-26
 
@@ -43,6 +124,140 @@ Total commits ------- 4
 ### 🆕 Added
 
 - Physical address mapping of the voter according ISO
+
+### 🔒 Security
+
+- create hash for release package
+- use sha245sum tool for generating and verifying hash values
+
+### 🔄 Changed
+
+- App icon
+
+### 🔄 Changed
+
+- Fixed settings page
+- Updated shared lib
+
+### 🔄 Changed
+
+- update crypto library and readme
+
+### 🔄 Changed
+
+- Use latest dockerfile to build
+- Update shared library
+
+### 🔄 Changed
+
+- Prevent invalid settings input
+
+### 🔒 Security
+
+- Increase number of overwrite passes for sDelete to '10'
+
+### 🆕 Added
+
+- add hash generated before signing as part of the release
+
+### 🔒 Security
+
+- fix(VOTING-2505): pin docker base image to digest
+
+### 🔄 Changed
+
+- Fixed SCR findings
+
+### 🆕 Added
+
+- add additional hash file for non-signed artefacts
+
+### 🆕 Added
+
+- add frontend and backend linting
+
+### 🔄 Changed
+
+- Display callname instead of firstname of a candidate on a voting card
+
+### 🔄 Changed
+
+- Deterministic raw build
+- Fixed Logging
+
+### 🔒 Security
+
+- Removed shell access in production to prevent remote code execution
+- Added command whitelist
+
+### 🔄 Changed
+
+- Updated prince to v15
+
+### 🔒 Security
+
+- apply signature to assemblies for every release.
+
+### 🔄 Changed
+
+- show certificate thumprint on preview
+
+### 🔒 Security
+
+- Separated main and renderer process responsibilities
+
+### 🔄 Changed
+
+- apply security review and sonarqube report refinments.
+
+### 🔄 Changed
+
+- Publish backend tools as single file
+
+### 🔒 Security
+
+- Hardened xml parser configuration
+
+### 🔄 Changed
+
+- Cleanup the frontend package jsons
+- Restructured the backend
+
+### 🔒 Security
+
+- Added new encryption algorithm
+
+### 🔄 Changed
+
+- Update PDF.js dependency
+
+### 🔄 Changed
+
+- get application version from electron app context.
+
+### 🔒 Security
+
+- protect logging against log forging attacks
+
+### 🔄 Changed
+
+- Updated frontend and backend dependencies
+
+### 🔄 Changed
+
+- include not electable candidates from empty list in majority election
+
+### 🔄 Changed
+
+- set custom technology and source directory for front- and backend Inventaria jobs
+
+### 🆕 Added
+
+- integrate inventaria in ci pipeline
+
+### 🔒 Security
+
+- integrate dependency check for front- and backend part.
 
 ## [v1.12.14] - 2023-04-05
 

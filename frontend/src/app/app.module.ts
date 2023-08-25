@@ -32,8 +32,8 @@ import { PDFMERGE_SERVICE } from './services/pdf-merge.service';
 import { AbraStepNavigationModule } from './common/step-navigation/step-navigation.module';
 import { BreadcrumbService } from './services/breadcrumb.service';
 import { VotingPropertyService } from './services/voting-property.service';
-import { CH_VOTE_DATA_SERVICE } from './services/ch-vote-data.service';
-import { ChVoteDataServiceFactory } from './factories/ch-vote-data-service.factory';
+import { ECH_DELIVERY_SERVICE } from './services/ech-delivery.service';
+import { EchDeliveryServiceFactory } from './factories/ech-delivery-service.factory';
 import { VotingCardService } from './services/voting-card.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CRYPTIC_SERVICE } from './services/cryptic.service';
@@ -67,7 +67,7 @@ registerLocaleData(localeEn);
     { provide: SECURE_DELETE_SERVICE, useFactory: SecureDeleteServiceFactory, deps: [ElectronService] },
     { provide: ZIP_SERVICE, useFactory: ZipServiceFactory, deps: [ElectronService] },
     { provide: PDF_CREATOR_SERVCE, useFactory: PdfCreatorServiceFactory, deps: [ElectronService, LogService] },
-    { provide: CH_VOTE_DATA_SERVICE, useFactory: ChVoteDataServiceFactory, deps: [ElectronService, LogService] },
+    { provide: ECH_DELIVERY_SERVICE, useFactory: EchDeliveryServiceFactory, deps: [ElectronService, LogService] },
     { provide: CRYPTIC_SERVICE, useFactory: CrypticServiceFactory, deps: [ElectronService, LogService] },
     { provide: PDFMERGE_SERVICE, useFactory: PdfMergeServiceFactory, deps: [ElectronService] },
     AppStateService,

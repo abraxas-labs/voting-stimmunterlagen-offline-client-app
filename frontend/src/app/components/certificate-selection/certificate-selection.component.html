@@ -3,7 +3,7 @@
 </div>
 
 <div class="abra-form-group file-group">
-  <input type="file" (change)="changeCertificatePath($event.target.files[0])" />
+  <input type="file" (change)="changeCertificatePath($event.target.files[0])" [accept]="allowedCertificateFileExtensions" />
 </div>
 
 <div class="abra-form-group">

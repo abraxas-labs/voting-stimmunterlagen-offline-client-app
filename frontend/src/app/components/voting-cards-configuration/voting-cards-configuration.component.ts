@@ -2,7 +2,6 @@ import { Ech0228MappingService } from '../../services/ech0228-mapping.service';
 import { Component, OnInit } from '@angular/core';
 import { AppStateStep } from '../../models/app-state.model';
 import { AppStateService } from '../../services/app-state.service';
-import { firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
 import { JobContext } from '../../services/jobs/job-context';
 import { VotingCardService } from '../../services/voting-card.service';
@@ -89,7 +88,7 @@ export class VotingCardsConfigurationComponent implements OnInit {
       this.stepActionsService.addFingerprintToMunicipalities(this.fingerprint);
     }
 
-    await firstValueFrom(this.votingCardService.groupValue(this.context));
+    await this.votingCardService.initVotingCardGroups(this.context);
     this.isGrouping = false;
 
     await this.appStateService.update(s => {

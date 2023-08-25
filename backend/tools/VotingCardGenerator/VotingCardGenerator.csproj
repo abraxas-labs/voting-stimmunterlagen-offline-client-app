@@ -5,9 +5,6 @@
     <StartupObject>VotingCardGenerator.Program</StartupObject>
     <RuntimeIdentifiers>win-x64;win-x86;osx-x64</RuntimeIdentifiers>
     <PreserveCompilationContext>true</PreserveCompilationContext>
-
-    <!-- Razor runtime compilation does not support publish single file https://github.com/dotnet/aspnetcore/issues/38493 -->
-    <PublishSingleFile>false</PublishSingleFile>  
   </PropertyGroup>
 
   <ItemGroup>

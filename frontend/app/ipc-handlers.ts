@@ -1,13 +1,14 @@
 import { ipcMain, app, dialog } from 'electron';
 import * as fs from 'fs';
 import * as pathModule from 'path';
-import { ChildProcess, spawn } from 'child_process';
+import { ChildProcess, ChildProcessWithoutNullStreams, spawn } from 'child_process';
 import * as os from 'os';
 import { validateCommand } from './shell-validation';
 import { isDevelopment } from './env';
 
 export function initIpcHandlers() {
   ipcMain.handle('shellExecute', handleShellExecute);
+  ipcMain.handle('requestShellExecuteChunked', handleRequestShellExecuteChunked);
   ipcMain.handle('createDirectory', handleCreateDirectory);
   ipcMain.handle('createOrUpdateFile', handleCreateOrUpdateFile);
   ipcMain.handle('copyFile', handleCopyFile);
@@ -20,19 +21,13 @@ export function initIpcHandlers() {
   ipcMain.on('getAppVersionSync', handleGetAppVersionSync);
 }
 
+const shellExecuteChunkedEmitChannel = 'shellExecuteChunkedEmit';
+
 function handleShellExecute(e, toolsDirectory, commandInfo, commandParameters, input): Promise<any> {
   return new Promise((resolve, reject) => {
     const result = [] as any[];
-    const cwd = pathModule.join(toolsDirectory, commandInfo.directory);
-    const commandArgs = buildCommandArgs(commandParameters);
+    const command = createAndValidateCommand(toolsDirectory, commandInfo, commandParameters);
 
-    validateCommand(commandInfo.fileName, commandParameters, isDevelopment);
-
-    const command = spawn(commandInfo.fileName, commandArgs, {
-      cwd: cwd,
-      shell: isDevelopment,
-      windowsHide: true,
-    });
     processInput(command, input);
     command.stdout.on('data', data => {
       result.push(data);
@@ -95,6 +90,37 @@ function handleGetAppVersionSync(e): void {
   e.returnValue = process.env.APP_VERSION ?? '0.0.0-dev';
 }
 
+// Supports only text output
+// Returns values by sending them to the shellExecuteChunkedEmitChannel, which can be listened to by the renderer.
+function handleRequestShellExecuteChunked(e, toolsDirectory, commandInfo, commandParameters, input): void {
+  console.log('request');
+  const command = createAndValidateCommand(toolsDirectory, commandInfo, commandParameters);
+  processInput(command, input);
+  command.stdout.setEncoding('utf-8');
+
+  let expectedChunkNumber = 1;
+  let incompleteChunk = '';
+
+  command.stdout.on('data', (data: string) => {
+    incompleteChunk += data;
+    const chunks = incompleteChunk.split(`\n--- CHUNK ${expectedChunkNumber} ---\n`);
+
+    for(let i = 0; i < chunks.length - 1; i++) {
+      const chunk = chunks[i];
+      expectedChunkNumber++;
+      e.sender.send(shellExecuteChunkedEmitChannel, chunk);
+    }
+
+    incompleteChunk = chunks[chunks.length - 1];
+  });
+  command.stderr.on('data', data => {
+    e.sender.send(shellExecuteChunkedEmitChannel, data);
+  });
+  command.on('close', code => {
+    e.sender.send(shellExecuteChunkedEmitChannel, { exitCode: code });
+  });
+}
+
 function processInput(process: ChildProcess, input?: any) {
   if (input && !!process.stdin) {
     process.stdin.setDefaultEncoding('utf-8');
@@ -127,4 +153,17 @@ function buildCommandArgs(commandParameters) {
   }
 
   return args;
+}
+
+function createAndValidateCommand(toolsDirectory, commandInfo, commandParameters): ChildProcessWithoutNullStreams {
+  const cwd = pathModule.join(toolsDirectory, commandInfo.directory);
+  const commandArgs = buildCommandArgs(commandParameters);
+
+  validateCommand(commandInfo.fileName, commandParameters, isDevelopment);
+
+  return spawn(commandInfo.fileName, commandArgs, {
+    cwd: cwd,
+    shell: isDevelopment,
+    windowsHide: true,
+  });
 }

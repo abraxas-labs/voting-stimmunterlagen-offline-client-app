@@ -25,14 +25,14 @@ public class PrinceProcessManager : IPrinceProcessManager
         _processWrapper.Initialize();
     }
 
-    public void Start()
+    public Task Start()
     {
-        _processWrapper.Start();
+        return _processWrapper.Start();
     }
 
-    public void Stop()
+    public Task Stop()
     {
-        _processWrapper.Stop();
+        return _processWrapper.Stop();
     }
 
     public async Task<bool> ProcessJob(JobDefinition jobDefinition, IStream output)
@@ -71,17 +71,17 @@ public class PrinceProcessManager : IPrinceProcessManager
         throw new IOException($"Got unexpected unknown chunk from external Prince process: {chunk.Tag}");
     }
 
-    public void Dispose()
+    async ValueTask IAsyncDisposable.DisposeAsync()
     {
-        Dispose(true);
+        await DisposeAsync(true);
         GC.SuppressFinalize(this);
     }
 
-    protected virtual void Dispose(bool disposing)
+    protected virtual async Task DisposeAsync(bool disposing)
     {
         if (disposing)
         {
-            Stop();
+            await Stop();
         }
     }
 }

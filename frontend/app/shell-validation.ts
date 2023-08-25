@@ -2,7 +2,7 @@ const whitelistedCommands = [
   'VotingCardGenerator',
   'CryptoTool',
   'ZipTool',
-  'chVoteToJsonConverter',
+  'EchDeliveryJsonConverter',
   'PdfMerger',
 
   'sdelete.exe',

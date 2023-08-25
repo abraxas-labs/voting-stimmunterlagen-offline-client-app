@@ -1,8 +1,8 @@
 export interface Ech228Model {
-  DeliveryHeader?: any;
+  deliveryHeader?: any;
   votingCardDelivery: VotingCardDelivery;
   minorVersion?: any;
-  extension: Extension;
+  extension: Ech228Extension;
 }
 
 export interface Ech228MappingPath {
@@ -24,7 +24,7 @@ export interface EVotingPeriod {
   eVotingPeriodTill?: string;
 }
 
-export interface Item {
+export interface ContestItem {
   contestIdentification?: string;
   contestDate?: string;
   contestDescription?: ContestDescription;
@@ -34,7 +34,7 @@ export interface Item {
 export interface ContestData {
   eVotingContestCodes?: any;
   eVotingUrlInfo?: any;
-  Item?: Item;
+  Item?: ContestItem;
 }
 
 export interface LocalPersonId {
@@ -44,14 +44,6 @@ export interface LocalPersonId {
 
 export interface DateOfBirth {
   yearMonthDay?: string;
-}
-
-export interface Item2 {
-  localPersonId?: LocalPersonId;
-  officialName?: string;
-  firstName?: string;
-  sex?: number;
-  dateOfBirth?: DateOfBirth;
 }
 
 export interface IndividualContestCode {
@@ -168,21 +160,26 @@ export interface Municipality {
   vcteVotingFingerprint?: string;
 }
 
-export interface Extension {
-  Printing?: Printing;
-  Municipality?: Municipality;
+export interface Ech228Extension {
+  Printings: Record<string, Printing>;
+  Municipalities: Record<string, Municipality>;
   Certificates: string[];
+}
+
+export interface VotingCardDataExtension {
+  MunicipalityRef: string;
+  PrintingRef: string;
 }
 
 export interface VotingCardData {
   votingCardSequenceNumber?: string;
   frankingArea?: any;
-  Item?: Item2;
+  Item: any;
   votingPlaceInformation?: any;
   votingCardIndividualCodes?: VotingCardIndividualCodes;
   VotingCardReturnAddress?: any;
   individualLogisticCode?: any;
-  extension?: Extension;
+  Extension: VotingCardDataExtension;
 }
 
 export interface VotingCardDelivery {

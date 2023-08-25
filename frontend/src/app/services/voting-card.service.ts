@@ -15,12 +15,10 @@ import { pathCombine } from './utils/path.utils';
 import { AppStateService } from './app-state.service';
 import { JobRange } from '../models/generation/job-range';
 import { SettingsService } from './settings.service';
-import { environment } from '../../environments/environment';
+import { resolveValue } from './utils/value-resolver.utils';
 
 @Injectable()
 export class VotingCardService {
-  private debug = environment.production;
-
   constructor(
     @Inject(PDF_CREATOR_SERVCE) private readonly pdfCreatorService: PdfCreatorService,
     @Inject(PDFMERGE_SERVICE) private readonly pdfMergeService: PdfMergeService,
@@ -31,12 +29,12 @@ export class VotingCardService {
   ) {}
 
   public generateVotingCards(jobContext: JobContext): Observable<Job[][] | any> {
-    if (!jobContext.ech228Grouped) {
+    if (!jobContext.votingCardGroups) {
       return of([]);
     }
 
     return from(this.electronService.createDirectory(TEMP_PDF_DIR)).pipe(
-      switchMap(() => from(jobContext.ech228Grouped)),
+      switchMap(() => from(jobContext.votingCardGroups)),
       map((votingData: any) => this.generateJobGroup(jobContext, votingData)),
       toArray(),
       switchMap((jobGroups: Job[][]) => {
@@ -52,64 +50,48 @@ export class VotingCardService {
     );
   }
 
-  public groupValue(jobContext: JobContext): Observable<any> {
+  public async initVotingCardGroups(jobContext: JobContext): Promise<any> {
     if (!jobContext.ech228 || !jobContext.ech228.votingCardDelivery.votingCardData) {
       throw throwError(() => 'missing ech value');
     }
-    jobContext.ech228Grouped = undefined;
+    jobContext.votingCardGroups = undefined;
 
-    return this.chVoteGroup(jobContext.ech228.votingCardDelivery.votingCardData, Ech0228MappingService.PRINTING_NAME.paths).pipe(
+    const obs = of(jobContext.ech228.votingCardDelivery.votingCardData).pipe(
       switchMap(groups => {
         if (jobContext.groupe1 && jobContext.groupe1.description) {
-          return this.chVoteGroup(groups, jobContext.groupe1.paths);
+          return this.groupVotingCards(groups, jobContext.groupe1.paths);
         }
         return of(groups);
       }),
       switchMap(groups => {
         if (jobContext.groupe2 && jobContext.groupe2.description) {
-          return this.chVoteGroup(groups, jobContext.groupe2.paths);
+          return this.groupVotingCards(groups, jobContext.groupe2.paths);
         }
         return of(groups);
       }),
       switchMap(groups => {
         if (jobContext.groupe3 && jobContext.groupe3.description) {
-          return this.chVoteGroup(groups, jobContext.groupe3.paths);
+          return this.groupVotingCards(groups, jobContext.groupe3.paths);
         }
         return of(groups);
       }),
-      switchMap(groups => this.chVoteGroup(groups, jobContext.templateMapping.paths)),
+      switchMap(groups => this.groupVotingCards(groups, jobContext.templateMapping.paths)),
       map(groups => {
         if (!jobContext.sorting || jobContext.sorting.length === 0) {
           return groups;
         }
         const sorted = this.sortValue(groups, jobContext.sorting);
-        /** debug value **/
-        if (this.debug) {
-          this.logGroupAndSortResult(sorted);
-        }
 
         return sorted;
       }),
-
       toArray(),
       map(groupValue => {
-        jobContext.ech228Grouped = groupValue;
+        jobContext.votingCardGroups = groupValue;
         return jobContext;
       }),
     );
-  }
 
-  private logGroupAndSortResult(sorted: VotingCardData[]): void {
-    const debugSortValue: any = [];
-    for (const value of sorted) {
-      const test = {
-        post: this.getGroupObject(value, Ech0228MappingService.POSTAGE_CODE.paths),
-        STREET: this.getGroupObject(value, Ech0228MappingService.STREET.paths),
-        HOUSE_NUMBER: this.getGroupObject(value, Ech0228MappingService.HOUSE_NUMBER.paths),
-      };
-      debugSortValue.push(test);
-    }
-    console.log(debugSortValue);
+    await firstValueFrom(obs);
   }
 
   private applyAppStateToJobGroups(appState: AppState, jobGroups: Job[][]): void {
@@ -150,8 +132,8 @@ export class VotingCardService {
 
   private sort(a: VotingCardData, b: VotingCardData, sortObjects: { isASC: boolean; reference: any }[]): number {
     for (const sortCondition of sortObjects) {
-      const firstValue = this.getGroupObject(a, sortCondition.reference.paths);
-      const secondValue = this.getGroupObject(b, sortCondition.reference.paths);
+      const firstValue = resolveValue(a, sortCondition.reference.paths);
+      const secondValue = resolveValue(b, sortCondition.reference.paths);
       if (sortCondition.reference.description === Ech0228MappingService.HOUSE_NUMBER.description) {
         const firstStreetObject = this.splitNumberAndString(firstValue);
         const secondStreetObject = this.splitNumberAndString(secondValue);
@@ -207,13 +189,11 @@ export class VotingCardService {
     return { number, string };
   }
 
-  // grouping
-  private chVoteGroup(votingCardDatas: VotingCardData[], groupPaths: string[]): Observable<any[]> {
-    const source = from(votingCardDatas);
-    return source.pipe(
+  private groupVotingCards(votingCardDatas: VotingCardData[], groupPaths: string[]): Observable<VotingCardData[]> {
+    return from(votingCardDatas).pipe(
       groupBy(votingCardData => {
         if (votingCardData) {
-          return this.getGroupObject(votingCardData, groupPaths);
+          return resolveValue(votingCardData, groupPaths);
         }
       }),
       mergeMap(groupValue => {
@@ -223,32 +203,11 @@ export class VotingCardService {
     );
   }
 
-  public getGroupObject(votingCardData: VotingCardData, paths: string[]): any {
-    for (const path of paths) {
-      const value = this.getValueFromPaths(votingCardData, path);
-      if (value !== undefined) {
-        return value;
-      }
-    }
-  }
-
-  public getValueFromPaths(votingCardData: VotingCardData, path: string): any {
-    const pathElements = path.split('.');
-    let groupElement = votingCardData;
-    for (const pathElement of pathElements) {
-      groupElement = groupElement[pathElement];
-      if (groupElement === undefined) {
-        return undefined;
-      }
-    }
-    return groupElement;
-  }
-
   public generateJobGroup(context, groupValue: any[]): Job[] {
-    const municipalityRef = this.getGroupObject(groupValue[0], [Ech0228MappingService.MUNICIPALITY_REF.paths[0]]);
+    const municipalityRef = resolveValue(groupValue[0], [Ech0228MappingService.MUNICIPALITY_REF.paths[0]]);
     const template: any = pathCombine(
       E_VOTING_CONFIG_DIR,
-      this.getGroupObject(context.ech228['extension']['Municipalities'][municipalityRef], context.templateMapping.paths) ?? '',
+      resolveValue(context.ech228.extension.Municipalities[municipalityRef], context.templateMapping.paths) ?? '',
     );
     const rangeSize = this.settingsService.jobSize;
     let startFrom = 0;
@@ -334,7 +293,7 @@ export class VotingCardService {
             s.downloadPdfs.push({
               filePath: filePath,
               fileName: fileName + '.pdf',
-              status: 'unverschlüsselt',
+              status: 'unencrypted',
             });
           }),
         ),
@@ -345,20 +304,21 @@ export class VotingCardService {
   }
 
   public createFileName(jobGroup: Job[], jobContext: JobContext): string {
-    const tempDateString = this.getGroupObject(jobGroup[0].model, Ech0228MappingService.CONTEST_DATE.paths);
-    const printingRef = this.getGroupObject(jobGroup[0].voter[0], [Ech0228MappingService.PRINTING_REF.paths[0]]);
+    const tempDateString = resolveValue(jobGroup[0].model, Ech0228MappingService.CONTEST_DATE.paths);
+    const printingRef = resolveValue(jobGroup[0].voter[0], [Ech0228MappingService.PRINTING_REF.paths[0]]);
+
     let fileName = '' + this.convertDate(tempDateString);
 
     const groupBaseValue = jobGroup[0].voter[0];
     fileName += '_' + jobGroup[0].model.extension.Printings[printingRef].name;
     if (jobContext.groupe1 && jobContext.groupe1.description) {
-      fileName += '_' + this.getGroupObject(groupBaseValue, jobContext.groupe1.paths);
+      fileName += '_' + resolveValue(groupBaseValue, jobContext.groupe1.paths);
     }
     if (jobContext.groupe2 && jobContext.groupe2.description) {
-      fileName += '_' + this.getGroupObject(groupBaseValue, jobContext.groupe2.paths);
+      fileName += '_' + resolveValue(groupBaseValue, jobContext.groupe2.paths);
     }
     if (jobContext.groupe3 && jobContext.groupe3.description) {
-      fileName += '_' + this.getGroupObject(groupBaseValue, jobContext.groupe3.paths);
+      fileName += '_' + resolveValue(groupBaseValue, jobContext.groupe3.paths);
     }
 
     fileName += '_' + this.getNumberOfVotes(jobGroup);

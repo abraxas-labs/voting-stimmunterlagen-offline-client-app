@@ -79,6 +79,7 @@ export const TRANSLATIONS: Translations = {
 
   'ERROR.GENERIC': 'An error occured',
   'ERROR.VOTER_NOT_FOUND': 'Voter with id',
+  'ERROR.ECH_VOTER_NOT_FOUND': 'Voter in ECH-0045 with id',
   'ERROR.CANDIDATE_NOT_FOUND': 'candidate with id',
   'ERROR.LIST_NOT_FOUND': 'List with id',
   'ERROR.ELECTION_NOT_FOUND': 'Election with id',

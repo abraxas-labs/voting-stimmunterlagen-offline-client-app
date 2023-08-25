@@ -22,11 +22,8 @@ export class WelcomePageComponent implements OnInit {
     const isRunning = !!this.fileList.find(fileElement => fileElement.isRunning);
     const hasPostConfig = !!this.fileList.find(fileElement => fileElement.fileType === 'POST_CONFIG');
     const hasPostData = !!this.fileList.find(fileElement => fileElement.fileType === 'POST_CODE');
-    const hasChvoteData = !!this.fileList.find(fileElement => fileElement.fileType === 'CHVOTE');
-    const hasECH0045Data = !!this.fileList.find(fileElement => fileElement.fileType === 'ECH0045');
     const hasZip = !!this.fileList.find(fileElement => fileElement.fileType === 'ZIP');
-    const hasCrypt = !!this.fileList.find(fileElement => fileElement.fileType === 'CRYPT');
-    return !isRunning && !hasCrypt && hasZip && (hasChvoteData || (hasPostConfig && hasPostData) || hasECH0045Data);
+    return !isRunning && hasZip && hasPostConfig && hasPostData;
   }
 
   private filePath = VOTING_DATA_DIR;
@@ -155,9 +152,6 @@ export class WelcomePageComponent implements OnInit {
     if (this.isPostVoting(xml)) {
       return 'POST_CODE';
     }
-    if (this.isChVote(xml)) {
-      return 'CHVOTE';
-    }
     if (this.iseCH0045(xml)) {
       return 'ECH0045';
     }
@@ -176,11 +170,6 @@ export class WelcomePageComponent implements OnInit {
 
   private isPostVoting(xmlDom): boolean {
     const config = 'xmlns="http://www.evoting.ch/xmlns/print/';
-    return xmlDom.includes(config);
-  }
-
-  private isChVote(xmlDom): boolean {
-    const config = 'http://www.evote-ch.ch/common/';
     return xmlDom.includes(config);
   }
 

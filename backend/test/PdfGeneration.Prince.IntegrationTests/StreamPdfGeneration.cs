@@ -6,6 +6,7 @@ using Thinktecture.IO;
 using Thinktecture.IO.Adapters;
 using Xunit;
 using PdfGeneration.Prince.Process.Internal;
+using System.Runtime.InteropServices;
 
 namespace PdfGeneration.Prince.IntegrationTests;
 
@@ -14,6 +15,12 @@ public class StreamPdfGeneration
     [Fact]
     public async Task Test_complete_in_memory_pdf_generation()
     {
+        // this test requires prince xml
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            return;
+        }
+
         // arrange
         var directory = new DirectoryAdapter();
         var path = new PathAdapter();

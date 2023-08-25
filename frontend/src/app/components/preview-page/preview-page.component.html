@@ -2,12 +2,12 @@
 <h2>{{ 'PREVIEW_TITLE' | translate }}</h2>
 <div class="flex">
   <div class="group-navigation">
-    <ng-container *ngIf="context.ech228Grouped">
+    <ng-container *ngIf="context.votingCardGroups">
       <div
         class="navigation-element"
         [ngClass]="{ 'element-focus': previewIndex === i }"
         (click)="setPreview(i)"
-        *ngFor="let vot of context.ech228Grouped; let i = index"
+        *ngFor="let vot of context.votingCardGroups; let i = index"
       >
         {{ getGroupDescription(vot[0]) || ('ROUTES./preview' | translate) + ' ' + i }}
         <span [hidden]="pdfList[i]"><app-spinner [size]="'13px'"></app-spinner></span>

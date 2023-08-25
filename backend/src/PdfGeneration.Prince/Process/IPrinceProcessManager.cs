@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using Thinktecture.IO;
 using Job;
 
-public interface IPrinceProcessManager : IDisposable
+public interface IPrinceProcessManager : IAsyncDisposable
 {
     void Initialize();
-    void Start();
-    void Stop();
+    Task Start();
+    Task Stop();
 
     Task<bool> ProcessJob(JobDefinition jobDefinition, IStream output);
 }

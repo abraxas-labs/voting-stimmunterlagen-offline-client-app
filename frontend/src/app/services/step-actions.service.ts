@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { Municipality } from '../models/ech228.model';
 import { AppStateService } from './app-state.service';
-import { ChVoteDataService, CH_VOTE_DATA_SERVICE } from './ch-vote-data.service';
+import { EchDeliveryService, ECH_DELIVERY_SERVICE } from './ech-delivery.service';
 import { Ech0228MappingService } from './ech0228-mapping.service';
 import { JobContext } from './jobs/job-context';
 import { VotingCardService } from './voting-card.service';
@@ -11,13 +11,13 @@ export class StepActionsService {
   constructor(
     private readonly jobContext: JobContext,
     private readonly appStateService: AppStateService,
-    @Inject(CH_VOTE_DATA_SERVICE) private readonly chVoteDataService: ChVoteDataService<any>,
+    @Inject(ECH_DELIVERY_SERVICE) private readonly chVoteDataService: EchDeliveryService<any>,
     private readonly votingCardService: VotingCardService,
   ) {}
 
   public async initializePrepareStep(): Promise<void> {
     this.jobContext.ech228 = undefined;
-    this.jobContext.ech228Grouped = undefined;
+    this.jobContext.votingCardGroups = undefined;
 
     const uploads = this.appStateService.state.uploads;
 
@@ -32,9 +32,10 @@ export class StepActionsService {
       this.jobContext.templateMapping = Ech0228MappingService.ETEMPLATE_REF;
     }
 
-    var response = await this.chVoteDataService.importDataFromPaths(uploads.map(fileItem => fileItem.filePath)).toPromise();
+    let response = await this.chVoteDataService.importDataFromPaths(uploads.map(fileItem => fileItem.filePath)).toPromise();
 
     this.jobContext.ech228 = response;
+    console.log(this.jobContext.ech228);
   }
 
   public async restoreGroupAndSortStep(): Promise<void> {
@@ -48,11 +49,11 @@ export class StepActionsService {
       this.addFingerprintToMunicipalities(state.fingerprint);
     }
 
-    await this.votingCardService.groupValue(this.jobContext).toPromise();
+    await this.votingCardService.initVotingCardGroups(this.jobContext);
   }
 
   public addFingerprintToMunicipalities(fingerprint: string): void {
-    const municipalities = Object.values(this.jobContext.ech228?.['extension']['Municipalities']) as Municipality[];
+    const municipalities = Object.values(this.jobContext.ech228!.extension.Municipalities) as Municipality[];
     for (const municipality of municipalities) {
       if (!!municipality.vcteVotingFingerprint) {
         continue;

@@ -1,4 +1,6 @@
-﻿namespace PdfGeneration.Prince.Process;
+﻿using System.Threading.Tasks;
+
+namespace PdfGeneration.Prince.Process;
 
 public interface IPrinceProcessWrapper
 {
@@ -6,6 +8,6 @@ public interface IPrinceProcessWrapper
     bool Running { get; }
 
     void Initialize();
-    void Start();
-    void Stop();
+    Task Start();
+    Task Stop();
 }

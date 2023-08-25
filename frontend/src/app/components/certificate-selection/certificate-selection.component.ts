@@ -16,6 +16,7 @@ export class CertificateSelectionComponent {
   @Output() certificatePasswordChange = new EventEmitter<string>();
   @Output() certificateSubjectChange = new EventEmitter<string>();
 
+  public readonly allowedCertificateFileExtensions = '.p12';
   public showCertificateSubject = false;
   public certificates: Certificate[] = [];
   public certificateSubject: string;

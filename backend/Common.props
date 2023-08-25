@@ -15,9 +15,10 @@
         <Version>0.0.0.1</Version>
 
         <MsExtensionsVersion>6.0.0</MsExtensionsVersion>
-		<VotingLibVersion>10.6.0</VotingLibVersion>
+		<VotingLibVersion>11.7.0</VotingLibVersion>
 		<ThinktectureVersion>2.5.0</ThinktectureVersion>
-        <VotingOfflineClientSharedVersion>1.3.5</VotingOfflineClientSharedVersion>
+        <VotingOfflineClientSharedVersion>1.4.0</VotingOfflineClientSharedVersion>
+        <EaiEchLibVersion>3.0.0</EaiEchLibVersion>
     </PropertyGroup>
 
     <ItemGroup>

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class Ech0228MappingService {
-  static VOTER_DATA = { description: 'VOTER_DATA', paths: ['votingCardDelivery.votingCardData'] };
   static BFS = { description: 'BFS', paths: ['Extension.MunicipalityRef'] };
   static POSTAGE_CODE = {
     description: 'POSTAGE_CODE',
@@ -19,13 +18,9 @@ export class Ech0228MappingService {
     ],
   };
 
-  static PRINTING = { description: 'PRINTING', paths: ['Extension.Printing'] };
   static PRINTING_REF = { description: 'PRINTING', paths: ['Extension.PrintingRef'] };
-  static PRINTING_NAME = { description: 'PRINTING', paths: ['Extension.Printing.name'] };
-  static TEMPLATE = { description: 'TEMPLATE', paths: ['Extension.Municipality.template'] };
   static TEMPLATE_REF = { description: 'TEMPLATE', paths: ['template'] };
   static MUNICIPALITY_REF = { description: 'MUNICIPALITY', paths: ['Extension.MunicipalityRef'] };
-  static ETEMPLATE = { description: 'TEMPLATE', paths: ['Extension.Municipality.etemplate'] };
   static ETEMPLATE_REF = { description: 'TEMPLATE', paths: ['etemplate'] };
 
   static CONTEST_DATE = { description: 'CONTEST_DATA', paths: ['votingCardDelivery.contestData.Item.contestDate'] };

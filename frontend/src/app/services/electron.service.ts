@@ -32,6 +32,37 @@ export class ElectronService {
     );
   }
 
+  public async requestShellExecuteChunked<T>(
+    commandInfo: CommandInfo,
+    commandParameters: CommandParameter[],
+    input: any,
+    builder: (accumulator: T | undefined, i: number, chunk: string) => T,
+  ): Promise<T | undefined> {
+    return new Promise((resolve, reject) => {
+      let chunkNumber = 1;
+      let accumulator: T | undefined = undefined;
+      let removeListener: any;
+
+      const listener: (e, chunk) => void = (_, chunk) => {
+        try {
+          if (chunk && chunk.exitCode === 0) {
+            removeListener();
+            resolve(accumulator);
+            return;
+          }
+
+          accumulator = builder(accumulator, chunkNumber++, chunk);
+        } catch (err) {
+          removeListener();
+          reject(err);
+        }
+      };
+
+      removeListener = this.backend.shellExecuteChunkedEmitter(listener);
+      this.backend.requestShellExecuteChunked(environment.toolsDirectory, commandInfo, commandParameters, input);
+    });
+  }
+
   public shellExecuteDecoded(
     commandInfo: CommandInfo,
     commandParameters: CommandParameter[],

@@ -8,7 +8,7 @@ using Thinktecture.IO.Adapters;
 
 namespace VotingCardGenerator;
 
-public class Application
+public class Application : IAsyncDisposable
 {
     private readonly Arguments _arguments;
 
@@ -60,5 +60,10 @@ public class Application
         {
             return generator.GeneratePdf(_arguments.TemplateStream, _arguments.DataStream, _arguments.PdfStream);
         }
+    }
+
+    public ValueTask DisposeAsync()
+    {
+        return _services.DisposeAsync();
     }
 }

@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 export class JobContext {
   templateMapping: Ech228MappingPath;
   ech228: Ech228Model | undefined;
-  ech228Grouped: any;
+  votingCardGroups: any;
   sorting: { isASC: boolean; reference: any }[];
   groupe1: Ech228MappingPath;
   groupe2: Ech228MappingPath;

@@ -10,6 +10,8 @@ import { AppStateService } from '../../services/app-state.service';
 import { AppStateStep } from '../../models/app-state.model';
 import { E_VOTING_CONFIG_DIR } from '../../common/path.constants';
 import { pathCombine } from '../../services/utils/path.utils';
+import { VotingCardData } from '../../models/ech228.model';
+import { resolveValue } from '../../services/utils/value-resolver.utils';
 
 @Component({
   selector: 'app-preview-page',
@@ -46,16 +48,16 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  public getGroupDescription(votingCardData): string | undefined {
+  public getGroupDescription(votingCardData: VotingCardData): string | undefined {
     let groupName = '';
     if (this.context.groupe1 && this.context.groupe1.description) {
-      groupName += `${this.votingCardService.getGroupObject(votingCardData, this.context.groupe1.paths)}`;
+      groupName += `${resolveValue(votingCardData, this.context.groupe1.paths)}`;
     }
     if (this.context.groupe2 && this.context.groupe2.description) {
-      groupName += `_${this.votingCardService.getGroupObject(votingCardData, this.context.groupe2.paths)}`;
+      groupName += `_${resolveValue(votingCardData, this.context.groupe2.paths)}`;
     }
     if (this.context.groupe3 && this.context.groupe3.description) {
-      groupName += `_${this.votingCardService.getGroupObject(votingCardData, this.context.groupe3.paths)}`;
+      groupName += `_${resolveValue(votingCardData, this.context.groupe3.paths)}`;
     }
     if (groupName === '') {
       return;
@@ -63,7 +65,7 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
     return groupName;
   }
 
-  public setPreview(index): void {
+  public setPreview(index: number): void {
     this.previewIndex = index;
     if (this.pdfList[index] && environment.production) {
       return;
@@ -72,18 +74,15 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
     this.generatePdf(index).subscribe();
   }
 
-  public generatePdf(index): Observable<any> {
+  public generatePdf(index: number): Observable<any> {
     if (!this.context.ech228) {
       return from('no value');
     }
-    const groupValue = this.context.ech228Grouped[index];
-    const municipalityRef = this.votingCardService.getGroupObject(groupValue[0], [Ech0228MappingService.MUNICIPALITY_REF.paths[0]]);
-    var template: any = pathCombine(
+    const groupValue = this.context.votingCardGroups[index];
+    const municipalityRef = resolveValue(groupValue[0], [Ech0228MappingService.MUNICIPALITY_REF.paths[0]]);
+    let template: any = pathCombine(
       E_VOTING_CONFIG_DIR,
-      this.votingCardService.getGroupObject(
-        this.context.ech228['extension']['Municipalities'][municipalityRef],
-        this.context.templateMapping.paths,
-      ),
+      resolveValue(this.context.ech228.extension.Municipalities[municipalityRef], this.context.templateMapping.paths),
     );
     this.context.ech228.votingCardDelivery.votingCardData = groupValue.slice(0, this.settingsService.numberOfPreview);
 
@@ -94,7 +93,7 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
 
   private generateQueue(index = 0): void {
     console.log('index', index);
-    if (!this.context.ech228Grouped || !this.context.ech228Grouped[index]) {
+    if (!this.context.votingCardGroups || !this.context.votingCardGroups[index]) {
       return;
     }
 

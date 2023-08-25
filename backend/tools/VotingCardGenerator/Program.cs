@@ -59,7 +59,7 @@ public class Program
 
         var arguments = new Arguments(cla);
 
-        cla.OnExecute(() =>
+        cla.OnExecuteAsync(async ct =>
         {
             LoggerInitializer.Initialize(arguments.LogLevel, !arguments.StreamPdf, arguments.LogFileName);
             Log.Logger.Information("+++++ Application {AssemblyName} {AssemblyVersion} is starting up +++++");
@@ -71,10 +71,10 @@ public class Program
                 return 1;
             }
 
-            var app = new Application(arguments);
+            await using var app = new Application(arguments);
 
             app.Initialize();
-            app.Run().Wait();
+            await app.Run();
 
             Log.Logger.Information("+++++ Application {AssemblyName} {AssemblyVersion} finished +++++");
             return 0;
