@@ -9,7 +9,7 @@
   <span *ngIf="!errorValue">{{ 'ERROR.GENERIC' | translate }}</span>
 </div>
 <div *ngIf="!hasErrors && !isRunning">
-  {{ 'NUBER_OF_VALIDATION' | translate }}: {{ jobContext.ech228?.votingCardDelivery?.votingCardData?.length }}
+  {{ 'NUMBER_OF_VALIDATION' | translate }}: {{ jobContext.ech228?.votingCardDelivery?.votingCardData?.length }}
 </div>
 <span *ngIf="isRunning"><app-spinner></app-spinner></span>
 <br />

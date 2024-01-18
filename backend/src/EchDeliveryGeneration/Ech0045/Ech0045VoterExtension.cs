@@ -1,4 +1,4 @@
-﻿using Voting.Lib.Ech.Ech0045.Models;
+﻿using Voting.Lib.Ech.Ech0045_4_0.Models;
 
 namespace EchDeliveryGeneration.Ech0045
 {

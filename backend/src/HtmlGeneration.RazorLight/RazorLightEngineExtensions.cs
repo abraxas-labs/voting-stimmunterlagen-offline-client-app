@@ -6,6 +6,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Thinktecture.IO;
+using HtmlGeneration.RazorLight.Exceptions;
 
 public static class RazorLightEngineExtensions
 {
@@ -22,7 +23,17 @@ public static class RazorLightEngineExtensions
         if (!outStream.CanWrite)
             throw new InvalidOperationException("The output stream must be writable, but CanWrite is false.");
 
-        var template = await engine.CompileTemplateAsync(templateKey);
+        ITemplatePage? template;
+
+        try
+        {
+            template = await engine.CompileTemplateAsync(templateKey);
+        }
+        catch (Exception ex)
+        {
+            throw new RazorLightRenderException(ex);
+        }
+
         await engine.RenderTemplateAsync(template, model, outStream, bufferSize, encoding);
     }
 
@@ -47,6 +58,14 @@ public static class RazorLightEngineExtensions
         // it is important to leave the inner stream opened after writing, disposing the StreamWriter at the
         // end of the using block will ensure that the buffer is flushed to the underlying stream
         using var writer = new StreamWriter(outStream.UnsafeConvert(), encoding, bufferSize, true);
-        await engine.RenderTemplateAsync(template, model, writer);
+
+        try
+        {
+            await engine.RenderTemplateAsync(template, model, writer);
+        }
+        catch (Exception ex)
+        {
+            throw new RazorLightRenderException(ex);
+        }
     }
 }

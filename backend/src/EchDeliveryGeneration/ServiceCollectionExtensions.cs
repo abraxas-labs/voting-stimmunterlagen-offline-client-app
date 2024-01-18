@@ -1,7 +1,7 @@
 ﻿using EchDeliveryGeneration;
 using EchDeliveryGeneration.Ech0045;
 using EchDeliveryGeneration.Post;
-using Voting.Lib.Ech.Ech0045.DependencyInjection;
+using Voting.Lib.Ech.Ech0045_4_0.DependencyInjection;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

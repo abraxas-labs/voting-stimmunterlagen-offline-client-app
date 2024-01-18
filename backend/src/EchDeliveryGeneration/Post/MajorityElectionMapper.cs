@@ -1,141 +1,132 @@
-﻿using eCH_0045_4_0;
-using eCH_0155_4_0;
-using eCH_0228;
-using EchDeliveryGeneration.ErrorHandling;
+﻿using EchDeliveryGeneration.ErrorHandling;
 using System.Collections.Generic;
 using System.Linq;
+using Ech0045_4_0;
+using Ech0155_4_0;
+using Ech0228_1_0;
 using Voting.Lib.Common;
 
 namespace EchDeliveryGeneration.Post;
 
 public class MajorityElectionMapper
 {
-    public void MapToEchElection(eCH_0228.electionInformationType election, electionType1 electionTypeSource, electionInformationType config)
+    public void MapToEchElection(ElectionInformationType election, EVoting.Print.ElectionType electionTypeSource, EVoting.Config.ElectionInformationType config)
     {
-        var candidates = electionTypeSource.candidate.ToList();
+        var candidates = electionTypeSource.Candidate.ToList();
 
-        if (electionTypeSource.list != null)
+        if (electionTypeSource.List != null)
         {
-            candidates.AddRange(electionTypeSource.list
-                .SelectMany(l => l.candidate?.ToList() ?? new List<candidateListType>())
-                .Select(c => new candidateType2 { candidateIdentification = c.candidateListIdentification, choiceReturnCode = c.choiceReturnCode }));
+            candidates.AddRange(electionTypeSource.List
+                .SelectMany(l => l.Candidate?.ToList() ?? new List<EVoting.Print.CandidateListType>())
+                .Select(c => new EVoting.Print.CandidateType { CandidateIdentification = c.CandidateListIdentification, ChoiceReturnCode = c.ChoiceReturnCode }));
         }
 
-        election.candidate = candidates
+        election.Candidate = candidates
             .Select(candidate => MapToEchCandidate(candidate, electionTypeSource, config))
-            .ToArray();
+            .ToList();
 
-        election.writeInCodes = electionTypeSource.writeInCandidate
+        election.WriteInCodes = electionTypeSource.WriteInCandidate
             .Select((writeInCandidate, index) => MapToEchWriteInCodes(index, writeInCandidate))
-            .ToArray();
+            .ToList();
     }
 
-    private electionInformationTypeCandidate MapToEchCandidate(candidateType2 candidateType2, electionType1 electionTypeSource, electionInformationType config)
+    private ElectionInformationTypeCandidate MapToEchCandidate(EVoting.Print.CandidateType candidateType, EVoting.Print.ElectionType electionTypeSource, EVoting.Config.ElectionInformationType config)
     {
-        var candidateConfig = config.candidate.SingleOrDefault(x =>
-            x.candidateIdentification == candidateType2.candidateIdentification);
+        var candidateConfig = config.Candidate.SingleOrDefault(x =>
+            x.CandidateIdentification == candidateType.CandidateIdentification);
 
         if (candidateConfig != null)
         {
-            var candidateTextOnPositionList = new List<CandidateTextInfo>();
-            var candidateReferenceList = new List<electionInformationTypeCandidateCandidateReference>();
+            var candidateTextOnPositionList = candidateConfig.CandidateText
+                .Select(x => new CandidateTextInformationTypeCandidateTextInfo
+                {
+                    Language = XmlUtil.GetXmlEnumAttributeValueFromEnum(x.Language),
+                    CandidateText = x.CandidateText,
+                })
+                .ToList();
 
+            var candidateText = candidateConfig.FamilyName + " " + candidateConfig.CallName;
+            var candidateTextOnPosition = Languages.All
+                .Select(lang => new CandidateTextInformationTypeCandidateTextInfo
+                {
+                    Language = lang,
+                    CandidateText = candidateText,
+                })
+                .ToList();
 
-            foreach (var textInfo in candidateConfig.candidateText)
+            return new ElectionInformationTypeCandidate
             {
-                candidateTextOnPositionList.Add(CandidateTextInfo.Create(textInfo.language.ToString(),
-                    textInfo.candidateText));
-            }
-            var candidateTextInformation = CandidateTextInformation.Create(candidateTextOnPositionList);
-            var candidateText = candidateConfig.familyName + " " + candidateConfig.callName;
-            var candidateTextOnPosition = CandidateTextInformation.Create(
-                Languages.All.Select(lang => CandidateTextInfo.Create(lang, candidateText)).ToList());
-
-            var choiceCodes = new List<namedCodeType>();
-
-            foreach (var code in candidateType2.choiceReturnCode)
-            {
-                choiceCodes.Add(new namedCodeType() { codeDesignation = EchDeliveryGenerationConstants.ChoiceCode, codeValue = code });
-            }
-
-            candidateReferenceList.Add(new electionInformationTypeCandidateCandidateReference()
-            {
-                CandidateReference = candidateConfig.referenceOnPosition,
-                CandidateTextOnPosition = candidateTextOnPosition,
-                Occurences = electionTypeSource.candidate.Select(x =>
-                        x.candidateIdentification == candidateType2.candidateIdentification).Count()
-                    .ToString(),
-                individualCandidateVerificationCode = choiceCodes.ToArray(),
-            });
-
-            return new()
-            {
-                CandidateIdentification = candidateConfig.candidateIdentification,
-                CandidateTextinformation = candidateTextInformation,
-                candidateReference = candidateReferenceList.ToArray(),
+                CandidateIdentification = candidateConfig.CandidateIdentification,
+                CandidateText = candidateTextOnPositionList,
+                CandidateReference = new List<ElectionInformationTypeCandidateCandidateReference>
+                {
+                    new()
+                    {
+                        CandidateReferenceOnPosition = candidateConfig.ReferenceOnPosition,
+                        CandidateTextOnPosition = candidateTextOnPosition,
+                        Occurences = electionTypeSource.Candidate.Select(x =>
+                                x.CandidateIdentification == candidateType.CandidateIdentification).Count()
+                            .ToString(),
+                        IndividualCandidateVerificationCode = new List<NamedCodeType>(candidateType.ChoiceReturnCode
+                            .Select(code => new NamedCodeType { CodeDesignation = EchDeliveryGenerationConstants.ChoiceCode, CodeValue = code })
+                            .ToArray()),
+                    },
+                },
             };
         }
         else
         {
-            var emptyCandidateConfig = config.list.FirstOrDefault()?.candidatePosition?.FirstOrDefault(
-                x => x.candidateListIdentification == candidateType2.candidateIdentification)
-                ?? throw new TransformationException(TransformationErrorCode.CandidateNotFound, candidateType2.candidateIdentification);
+            var emptyCandidateConfig = config.List.FirstOrDefault()?.CandidatePosition?.FirstOrDefault(
+                x => x.CandidateListIdentification == candidateType.CandidateIdentification)
+                ?? throw new TransformationException(TransformationErrorCode.CandidateNotFound, candidateType.CandidateIdentification);
 
-            var candidateTextOnPositionList = new List<CandidateTextInfo>();
-            var candidateReferenceList =
-                new List<electionInformationTypeCandidateCandidateReference>();
-
-            foreach (var textInfo in emptyCandidateConfig.candidateTextOnPosition)
-            {
-                candidateTextOnPositionList.Add(CandidateTextInfo.Create(
-                    textInfo.language.ToString(),
-                    textInfo.candidateText));
-            }
-            var candidateTextInformation =
-                CandidateTextInformation.Create(candidateTextOnPositionList);
-
-            var choiceCodes = new List<namedCodeType>();
-
-            foreach (var code in candidateType2.choiceReturnCode)
-            {
-                choiceCodes.Add(new namedCodeType()
+            var candidateTextOnPositionList = emptyCandidateConfig.CandidateTextOnPosition
+                .Select(x => new CandidateTextInformationTypeCandidateTextInfo
                 {
-                    codeDesignation = EchDeliveryGenerationConstants.ChoiceCode,
-                    codeValue = code
-                });
-            }
+                    Language = XmlUtil.GetXmlEnumAttributeValueFromEnum(x.Language),
+                    CandidateText = x.CandidateText,
+                })
+                .ToList();
 
-            candidateReferenceList.Add(new electionInformationTypeCandidateCandidateReference()
-            {
-                CandidateReference = emptyCandidateConfig.candidateReferenceOnPosition,
-                CandidateTextOnPosition = candidateTextInformation,
-                Occurences = electionTypeSource.candidate.Select(x =>
-                        x.candidateIdentification == candidateType2.candidateIdentification)
-                    .Count()
-                    .ToString(),
-                individualCandidateVerificationCode = choiceCodes.ToArray(),
-            });
+            var choiceCodes = candidateType.ChoiceReturnCode
+                .Select(code => new NamedCodeType
+                {
+                    CodeDesignation = EchDeliveryGenerationConstants.ChoiceCode,
+                    CodeValue = code
+                })
+                .ToList();
 
-            return new()
+            return new ElectionInformationTypeCandidate
             {
-                CandidateIdentification = emptyCandidateConfig.candidateIdentification,
-                CandidateTextinformation = candidateTextInformation,
-                candidateReference = candidateReferenceList.ToArray(),
+                CandidateIdentification = emptyCandidateConfig.CandidateIdentification,
+                CandidateText = candidateTextOnPositionList,
+                CandidateReference = new List<ElectionInformationTypeCandidateCandidateReference>
+                {
+                    new()
+                    {
+                        CandidateReferenceOnPosition = emptyCandidateConfig.CandidateReferenceOnPosition,
+                        CandidateTextOnPosition = candidateTextOnPositionList,
+                        Occurences = electionTypeSource.Candidate.Select(x =>
+                                x.CandidateIdentification == candidateType.CandidateIdentification)
+                            .Count()
+                            .ToString(),
+                        IndividualCandidateVerificationCode = choiceCodes,
+                    },
+                },
             };
         }
     }
 
-    private electionInformationTypeWriteInCodes MapToEchWriteInCodes(int index, writeInCandidateType1 writeInCandidate)
+    private ElectionInformationTypeWriteInCodes MapToEchWriteInCodes(int index, EVoting.Print.WriteInCandidateType writeInCandidate)
     {
-        return new()
+        return new ElectionInformationTypeWriteInCodes
         {
-            position = (index + 1).ToString(),
-            individualWriteInVerificationCode = writeInCandidate.choiceReturnCode,
-            writeInCodeDesignation = new[]
-                {
-                    new electionInformationTypeWriteInCodesWriteInCodeDesignation()
-                        { Language = LanguageType.de, codeDesignationText = "Anderer wählbarer Kandidat"},
-                }
+            Position = (index + 1).ToString(),
+            IndividualWriteInVerificationCode = writeInCandidate.ChoiceReturnCode,
+            WriteInCodeDesignation = new List<ElectionInformationTypeWriteInCodesWriteInCodeDesignation>
+            {
+                new() { Language = XmlUtil.GetXmlEnumAttributeValueFromEnum(LanguageType.De), CodeDesignationText = "Anderer wählbarer Kandidat"},
+            }
         };
     }
 }

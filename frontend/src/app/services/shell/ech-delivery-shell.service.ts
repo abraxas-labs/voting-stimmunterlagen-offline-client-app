@@ -3,15 +3,16 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { CommandParameter } from '../../models/shell/command-parameter';
 import { EchDeliveryService } from '../ech-delivery.service';
-import { Ech228Model, VotingCardData } from '../../models/ech228.model';
+import { Ech0228Model } from '../../models/ech0228/ech0228.model';
 import { LogService } from '../log.service';
 import { ElectronService } from '../electron.service';
+import { VotingCardData } from '../../models/ech0228/voting-card-data.model';
 
 @Injectable()
 export class EchDeliveryShellService<T> implements EchDeliveryService<T> {
   public constructor(private readonly electronService: ElectronService, private readonly logService: LogService) {}
 
-  public importDataFromPaths(filePaths: string[]): Observable<Ech228Model | T | undefined | any> {
+  public importDataFromPaths(filePaths: string[]): Observable<Ech0228Model | T | undefined | any> {
     const parameters = [
       new CommandParameter('--outstream', ''),
       new CommandParameter('--logfile', this.logService.generateLogFilePath('import-data-from-paths')),
@@ -24,14 +25,14 @@ export class EchDeliveryShellService<T> implements EchDeliveryService<T> {
     let votingCardCounter = 0;
 
     return from(
-      this.electronService.requestShellExecuteChunked<Ech228Model>(
+      this.electronService.requestShellExecuteChunked<Ech0228Model>(
         environment.commands.echDeliveryToJsonConverter,
         parameters,
         null,
         (delivery, i, chunk) => {
           // chunk 1: delivery without voting cards
           if (i === 1) {
-            return this.jsonParse<Ech228Model>(chunk);
+            return this.jsonParse<Ech0228Model>(chunk);
           }
 
           if (!delivery) {
@@ -49,7 +50,7 @@ export class EchDeliveryShellService<T> implements EchDeliveryService<T> {
           const votingCards = this.jsonParse<VotingCardData[]>(chunk);
 
           for (let votingCard of votingCards) {
-            delivery!.votingCardDelivery.votingCardData![votingCardCounter++] = votingCard;
+            delivery.votingCardDelivery.votingCardData![votingCardCounter++] = votingCard;
           }
 
           console.log(votingCardCounter + ' voting cards imported');

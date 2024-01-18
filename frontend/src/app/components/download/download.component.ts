@@ -36,7 +36,7 @@ export class DownloadComponent implements OnInit {
     jobContext: JobContext,
     private readonly electronService: ElectronService,
   ) {
-    this.encryptionCertificatePaths = jobContext.ech228?.extension.Certificates ?? [];
+    this.encryptionCertificatePaths = jobContext.ech228?.votingCardDelivery.extension.certificates ?? [];
     this.checkablePdfs = appStateService.state.downloadPdfs.map(f => ({
       file: f,
       checked: f.status === 'encrypted',

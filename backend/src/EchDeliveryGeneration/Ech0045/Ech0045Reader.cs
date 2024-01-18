@@ -1,5 +1,4 @@
-﻿using eCH_0045_4_0;
-using EchDeliveryGeneration.ErrorHandling;
+﻿using EchDeliveryGeneration.ErrorHandling;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,8 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-using Voting.Lib.Ech.Ech0045.Converter;
-using Voting.Lib.Ech.Ech0045.Models;
+using Ech0045_4_0;
+using Voting.Lib.Ech.Ech0045_4_0.Converter;
+using Voting.Lib.Ech.Ech0045_4_0.Models;
 
 namespace EchDeliveryGeneration.Ech0045
 {
@@ -44,21 +44,26 @@ namespace EchDeliveryGeneration.Ech0045
         {
             var voter = new Ech0045VoterExtension();
 
-            switch (votingPersonType.Person.NationalityChoice)
+            if (votingPersonType.Person.Swiss != null)
             {
-                case SwissDomesticType swiss:
-                    voter.PersonId = swiss.SwissDomesticPerson.PersonIdentification.LocalPersonId.PersonId;
-                    return voter;
-                case SwissAbroadType swissAbroad:
-                    voter.PersonId = swissAbroad.SwissAbroadPerson.PersonIdentification.LocalPersonId.PersonId;
-                    voter.SwissAbroadPersonExtensionAddress = GetExtension(swissAbroad.SwissAbroadPerson.Extension)?.Address;
-                    return voter;
-                case ForeignerType foreign:
-                    voter.PersonId = foreign.ForeignerPerson.PersonIdentification.LocalPersonId.PersonId;
-                    return voter;
-                default:
-                    throw new InvalidOperationException("Invalid ech-0045 nationality choice type");
+                voter.PersonId = votingPersonType.Person.Swiss.SwissDomesticPerson.PersonIdentification.LocalPersonId.PersonId;
+                return voter;
             }
+
+            if (votingPersonType.Person.SwissAbroad != null)
+            {
+                voter.PersonId = votingPersonType.Person.SwissAbroad.SwissAbroadPerson.PersonIdentification.LocalPersonId.PersonId;
+                voter.SwissAbroadPersonExtensionAddress = GetExtension(votingPersonType.Person.SwissAbroad.SwissAbroadPerson.Extension)?.Address;
+                return voter;
+            }
+
+            if (votingPersonType.Person.Foreigner != null)
+            {
+                voter.PersonId = votingPersonType.Person.Foreigner.ForeignerPerson.PersonIdentification.LocalPersonId.PersonId;
+                return voter;
+            }
+
+            throw new InvalidOperationException("Invalid ech-0045 nationality choice type");
         }
 
         private SwissPersonExtension GetExtension(object extension)

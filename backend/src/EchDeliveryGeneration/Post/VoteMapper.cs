@@ -1,225 +1,235 @@
-﻿using eCH_0045_4_0;
-using eCH_0155_4_0;
-using eCH_0228;
+﻿using System.Collections.Generic;
 using EchDeliveryGeneration.ErrorHandling;
-using System.Collections.Generic;
 using System.Linq;
+using Ech0155_4_0;
+using Ech0228_1_0;
+using VoteType = Ech0228_1_0.VoteType;
+using Voting.Lib.Common;
 
 
 namespace EchDeliveryGeneration.Post;
 
 public class VoteMapper
 {
-    public eCH_0228.voteType MapToEchVote(voteType1 voteTypeSource, voteInformationType configInfo)
+    public VoteType MapToEchVote(EVoting.Print.VoteType voteTypeSource, EVoting.Config.VoteInformationType configInfo)
     {
-        var vote = new eCH_0228.voteType
+        var voteDescriptions = configInfo.Vote.VoteDescription
+            .Select(voteDescription => new VoteDescriptionInformationTypeVoteDescriptionInfo
+            {
+                Language = XmlUtil.GetXmlEnumAttributeValueFromEnum(voteDescription.Language),
+                VoteDescription = voteDescription.VoteDescription,
+            })
+            .ToList();
+
+        var voteTypeBallotList = configInfo.Vote.Ballot
+            .Select(x => MapToEchBallot(voteTypeSource.Question, x))
+            .ToList();
+
+        return new VoteType
         {
-            VoteIdentification = voteTypeSource.voteIdentification
+            VoteIdentification = voteTypeSource.VoteIdentification,
+            VoteDescription = voteDescriptions,
+            Ballot = voteTypeBallotList,
         };
-
-        var voteDescriptions = new List<VoteDescriptionInfoType>();
-        foreach (var voteDescription in configInfo.vote.voteDescription)
-        {
-            voteDescriptions.Add(VoteDescriptionInfoType.Create(voteDescription.language.ToString(), voteDescription.voteDescription));
-        }
-
-        vote.VoteDescription = VoteDescriptionInformationType.Create(voteDescriptions);
-
-        var voteTypeBallotList = new List<voteTypeBallot>();
-
-        foreach (var ballotType in configInfo.vote.ballot)
-        {
-            voteTypeBallotList.Add(MapToEchBallot(voteTypeSource.question, ballotType));
-        }
-
-        vote.ballot = voteTypeBallotList.ToArray();
-
-        return vote;
     }
 
-    private voteTypeBallot MapToEchBallot(questionType[] questions, ballotType ballotTypeConfig)
+    private VoteTypeBallot MapToEchBallot(List<EVoting.Print.QuestionType> questions, EVoting.Config.BallotType ballotTypeConfig)
     {
-        var voteTypeBallot = new voteTypeBallot();
-        var ballotDescriptionInfos = new List<BallotDescriptionInfo>();
+        var voteTypeBallot = new VoteTypeBallot();
+        var ballotDescriptionInfos = new List<BallotDescriptionInformationTypeBallotDescriptionInfo>();
 
-        voteTypeBallot.BallotIdentification = ballotTypeConfig.ballotIdentification;
-        voteTypeBallot.BallotPosition = int.Parse(ballotTypeConfig.ballotPosition);
+        voteTypeBallot.BallotIdentification = ballotTypeConfig.BallotIdentification;
+        voteTypeBallot.BallotPosition = ballotTypeConfig.BallotPosition.ToString();
 
-        foreach (var ballotDescriptionInfo in ballotTypeConfig.ballotDescription)
+        foreach (var ballotDescriptionInfo in ballotTypeConfig.BallotDescription)
         {
-            ballotDescriptionInfos.Add(BallotDescriptionInfo.Create(ballotDescriptionInfo.language.ToString(), ballotDescriptionInfo.ballotDescriptionLong, ballotDescriptionInfo.ballotDescriptionShort));
+            ballotDescriptionInfos.Add(new BallotDescriptionInformationTypeBallotDescriptionInfo
+            {
+                Language = XmlUtil.GetXmlEnumAttributeValueFromEnum(ballotDescriptionInfo.Language),
+                BallotDescriptionLong = ballotDescriptionInfo.BallotDescriptionLong,
+                BallotDescriptionShort = ballotDescriptionInfo.BallotDescriptionShort,
+            });
         }
 
-        voteTypeBallot.BallotDescription = BallotDescriptionInformation.Create(ballotDescriptionInfos);
+        voteTypeBallot.BallotDescription = ballotDescriptionInfos;
 
-        if (ballotTypeConfig.Item is standardBallotType standardBallot)
+        if (ballotTypeConfig.StandardBallot != null)
         {
-            var standardBallotItem = new voteTypeBallotStandardBallot();
-            var ballotQuestionInfoList = new List<BallotQuestionInfo>();
-
-            standardBallotItem.QuestionIdentification = standardBallot.questionIdentification;
-
-            foreach (var ballotQuestionTypeBallotQuestionInfo in standardBallot.ballotQuestion)
+            var standardBallot = ballotTypeConfig.StandardBallot;
+            var standardBallotItem = new VoteTypeBallotStandardBallot
             {
-                if (string.IsNullOrEmpty(ballotQuestionTypeBallotQuestionInfo.ballotQuestionTitle))
+                QuestionInformation = new VoteTypeBallotStandardBallotQuestionInformation(),
+            };
+            var ballotQuestionInfoList = new List<BallotQuestionTypeBallotQuestionInfo>();
+
+            standardBallotItem.QuestionInformation.QuestionIdentification = standardBallot.QuestionIdentification;
+
+            foreach (var ballotQuestionTypeBallotQuestionInfo in standardBallot.BallotQuestion)
+            {
+                if (string.IsNullOrEmpty(ballotQuestionTypeBallotQuestionInfo.BallotQuestionTitle))
                 {
-                    ballotQuestionInfoList.Add(BallotQuestionInfo.Create(
-                        ballotQuestionTypeBallotQuestionInfo.language.ToString(),
-                        ballotQuestionTypeBallotQuestionInfo.ballotQuestion));
+                    ballotQuestionInfoList.Add(new BallotQuestionTypeBallotQuestionInfo
+                    {
+                        Language = XmlUtil.GetXmlEnumAttributeValueFromEnum(ballotQuestionTypeBallotQuestionInfo.Language),
+                        BallotQuestion = ballotQuestionTypeBallotQuestionInfo.BallotQuestion,
+                    });
                 }
                 else
                 {
-                    ballotQuestionInfoList.Add(BallotQuestionInfo.Create(
-                        ballotQuestionTypeBallotQuestionInfo.language.ToString(),
-                        ballotQuestionTypeBallotQuestionInfo.ballotQuestionTitle,
-                        ballotQuestionTypeBallotQuestionInfo.ballotQuestion));
+                    ballotQuestionInfoList.Add(new BallotQuestionTypeBallotQuestionInfo
+                    {
+                        Language = XmlUtil.GetXmlEnumAttributeValueFromEnum(ballotQuestionTypeBallotQuestionInfo.Language),
+                        BallotQuestionTitle = ballotQuestionTypeBallotQuestionInfo.BallotQuestionTitle,
+                        BallotQuestion = ballotQuestionTypeBallotQuestionInfo.BallotQuestion,
+                    });
                 }
             }
 
-            standardBallotItem.BallotQuestion = BallotQuestion.Create(ballotQuestionInfoList);
+            standardBallotItem.QuestionInformation.BallotQuestion = ballotQuestionInfoList;
 
             var questionsConfig = questions.SingleOrDefault(x =>
-                x.questionIdentification == standardBallot.questionIdentification)
-                ?? throw new TransformationException(TransformationErrorCode.QuestionNotFound, standardBallot.questionIdentification);
+                x.QuestionIdentification == standardBallot.QuestionIdentification)
+                ?? throw new TransformationException(TransformationErrorCode.QuestionNotFound, standardBallot.QuestionIdentification);
 
-            standardBallotItem.answerOption = MapToEchAnswers(questionsConfig, standardBallot.answer).ToArray();
+            standardBallotItem.QuestionInformation.AnswerOption = MapToEchAnswers(questionsConfig, standardBallot.Answer);
 
-            voteTypeBallot.Item = standardBallotItem;
+            voteTypeBallot.StandardBallot = standardBallotItem;
         }
-        else if (ballotTypeConfig.Item is variantBallotType variantBallot)
+        else if (ballotTypeConfig.VariantBallot != null)
         {
-            var variantBallotItem = new voteTypeBallotVariantBallot();
+            var variantBallot = ballotTypeConfig.VariantBallot;
+            var variantBallotItem = new VoteTypeBallotVariantBallot();
 
-            var standardQuestionList = new List<voteTypeBallotVariantBallotQuestionInformation>();
-            var tieBreakQuestionList = new List<voteTypeBallotVariantBallotTieBreakInformation>();
+            var standardQuestionList = new List<VoteTypeBallotVariantBallotQuestionInformation>();
+            var tieBreakQuestionList = new List<VoteTypeBallotVariantBallotTieBreakInformation>();
 
-            foreach (var standardQuestionType in variantBallot.standardQuestion)
+            foreach (var standardQuestionType in variantBallot.StandardQuestion)
             {
-                var ballotQuestionInfoList = new List<BallotQuestionInfo>();
+                var ballotQuestionInfoList = new List<BallotQuestionTypeBallotQuestionInfo>();
 
-                foreach (var ballotQuestionTypeBallotQuestionInfo in standardQuestionType.ballotQuestion)
+                foreach (var ballotQuestionTypeBallotQuestionInfo in standardQuestionType.BallotQuestion)
                 {
-                    var ballotQuestion = BallotQuestionInfo.Create(
-                        ballotQuestionTypeBallotQuestionInfo.language.ToString(),
-                        ballotQuestionTypeBallotQuestionInfo.ballotQuestion);
-                    if (ballotQuestionTypeBallotQuestionInfo.ballotQuestionTitle != null)
+                    var ballotQuestion = new BallotQuestionTypeBallotQuestionInfo
                     {
-                        ballotQuestion.BallotQuestionTitle = ballotQuestionTypeBallotQuestionInfo.ballotQuestionTitle;
+                        Language = XmlUtil.GetXmlEnumAttributeValueFromEnum(ballotQuestionTypeBallotQuestionInfo.Language),
+                        BallotQuestion = ballotQuestionTypeBallotQuestionInfo.BallotQuestion
+                    };
+
+                    if (ballotQuestionTypeBallotQuestionInfo.BallotQuestionTitle != null)
+                    {
+                        ballotQuestion.BallotQuestionTitle = ballotQuestionTypeBallotQuestionInfo.BallotQuestionTitle;
                     }
+
                     ballotQuestionInfoList.Add(ballotQuestion);
                 }
 
-                int.TryParse(standardQuestionType.questionNumber, out var questionNumber);
-                int.TryParse(standardQuestionType.questionPosition, out var questionPosition);
-
                 var questionConfig = questions.SingleOrDefault(x =>
-                    x.questionIdentification == standardQuestionType.questionIdentification)
-                    ?? throw new TransformationException(TransformationErrorCode.QuestionNotFound, standardQuestionType.questionIdentification);
+                    x.QuestionIdentification == standardQuestionType.QuestionIdentification)
+                    ?? throw new TransformationException(TransformationErrorCode.QuestionNotFound, standardQuestionType.QuestionIdentification);
 
-                standardQuestionList.Add(new voteTypeBallotVariantBallotQuestionInformation()
+                standardQuestionList.Add(new VoteTypeBallotVariantBallotQuestionInformation()
                 {
-                    BallotQuestion = BallotQuestion.Create(ballotQuestionInfoList),
-                    BallotQuestionNumber = questionNumber,
-                    QuestionIdentification = standardQuestionType.questionIdentification,
-                    questionInformation = MapToEchAnswers(questionConfig, standardQuestionType.answer).ToArray(),
-                    QuestionPosition = questionPosition
+                    BallotQuestion = ballotQuestionInfoList,
+                    BallotQuestionNumber = standardQuestionType.QuestionNumber,
+                    QuestionIdentification = standardQuestionType.QuestionIdentification,
+                    AnswerOption = MapToEchAnswers(questionConfig, standardQuestionType.Answer),
+                    QuestionPosition = standardQuestionType.QuestionPosition.ToString()
                 });
             }
 
-            variantBallotItem.questionInformation = standardQuestionList.ToArray();
+            variantBallotItem.QuestionInformation = standardQuestionList;
 
-            foreach (var tieBreakQuestionType in variantBallot.tieBreakQuestion)
+            foreach (var tieBreakQuestionType in variantBallot.TieBreakQuestion)
             {
-                var ballotQuestionInfoList = new List<TieBreakQuestionInfo>();
+                var ballotQuestionInfoList = new List<TieBreakQuestionTypeTieBreakQuestionInfo>();
 
-                foreach (var ballotQuestionTypeBallotQuestionInfo in tieBreakQuestionType.ballotQuestion)
+                foreach (var ballotQuestionTypeBallotQuestionInfo in tieBreakQuestionType.BallotQuestion)
                 {
-                    var tieBreakQuestion = TieBreakQuestionInfo.Create(
-                        ballotQuestionTypeBallotQuestionInfo.language.ToString(),
-                        ballotQuestionTypeBallotQuestionInfo.ballotQuestion);
+                    var tieBreakQuestion = new TieBreakQuestionTypeTieBreakQuestionInfo
+                    {
+                        Language = XmlUtil.GetXmlEnumAttributeValueFromEnum(ballotQuestionTypeBallotQuestionInfo.Language),
+                        TieBreakQuestion = ballotQuestionTypeBallotQuestionInfo.BallotQuestion
+                    };
                     ballotQuestionInfoList.Add(tieBreakQuestion);
                 }
 
-                int.TryParse(tieBreakQuestionType.questionNumber, out var questionNumber);
-                int.TryParse(tieBreakQuestionType.questionPosition, out var questionPosition);
-
                 var questionConfig = questions.SingleOrDefault(x =>
-                    x.questionIdentification == tieBreakQuestionType.questionIdentification)
-                    ?? throw new TransformationException(TransformationErrorCode.QuestionNotFound, tieBreakQuestionType.questionIdentification);
+                    x.QuestionIdentification == tieBreakQuestionType.QuestionIdentification)
+                    ?? throw new TransformationException(TransformationErrorCode.QuestionNotFound, tieBreakQuestionType.QuestionIdentification);
 
-                tieBreakQuestionList.Add(new voteTypeBallotVariantBallotTieBreakInformation()
+                tieBreakQuestionList.Add(new VoteTypeBallotVariantBallotTieBreakInformation()
                 {
-                    BallotQuestion = TieBreakQuestion.Create(ballotQuestionInfoList),
-                    TieBreakQuestionNumber = questionNumber,
-                    QuestionIdentification = tieBreakQuestionType.questionIdentification,
-                    questionInformation = MapToEchAnswers(questionConfig, tieBreakQuestionType.answer).ToArray(),
-                    QuestionPosition = questionPosition
+                    TieBreakQuestion = ballotQuestionInfoList,
+                    TieBreakQuestionNumber = tieBreakQuestionType.QuestionNumber,
+                    QuestionIdentification = tieBreakQuestionType.QuestionIdentification,
+                    AnswerOption = MapToEchAnswers(questionConfig, tieBreakQuestionType.Answer),
+                    QuestionPosition = tieBreakQuestionType.QuestionPosition.ToString(),
                 });
             }
 
-            variantBallotItem.tieBreakInformation = tieBreakQuestionList.ToArray();
+            variantBallotItem.TieBreakInformation = tieBreakQuestionList;
 
-            voteTypeBallot.Item = variantBallotItem;
+            voteTypeBallot.VariantBallot = variantBallotItem;
         }
 
         return voteTypeBallot;
     }
 
-    private List<answerOptionType> MapToEchAnswers(questionType question, standardAnswerType[] answers)
+    private List<AnswerOptionType> MapToEchAnswers(EVoting.Print.QuestionType question, List<EVoting.Config.StandardAnswerType> answers)
     {
-        var answerList = new List<answerOptionType>();
+        var answerList = new List<AnswerOptionType>();
         foreach (var answerType in answers)
         {
-            var answerTextInfoList = new List<answerOptionTypeAnswerTextInformation>();
+            var answerTextInfoList = new List<AnswerOptionTypeAnswerTextInformation>();
 
-            foreach (var answerText in answerType.answerInfo)
+            foreach (var answerText in answerType.AnswerInfo)
             {
-                answerTextInfoList.Add(new answerOptionTypeAnswerTextInformation()
+                answerTextInfoList.Add(new AnswerOptionTypeAnswerTextInformation()
                 {
-                    Language = (LanguageType)answerText.language,
-                    answerText = answerText.answer
+                    Language = XmlUtil.GetXmlEnumAttributeValueFromEnum(answerText.Language),
+                    AnswerText = answerText.Answer
                 });
             }
-            var answere = question.answer
-                .SingleOrDefault(x => x.answerIdentification == answerType.answerIdentification)
-                ?? throw new TransformationException(TransformationErrorCode.AnswereNotFound, answerType.answerIdentification);
+            var answere = question.Answer
+                .SingleOrDefault(x => x.AnswerIdentification == answerType.AnswerIdentification)
+                ?? throw new TransformationException(TransformationErrorCode.AnswereNotFound, answerType.AnswerIdentification);
 
-            answerList.Add(new answerOptionType()
+            answerList.Add(new AnswerOptionType()
             {
-                AnswerIdentification = answerType.answerIdentification,
-                answerSequenceNumber = answerType.answerPosition,
-                answerTextInformation = answerTextInfoList.ToArray(),
-                individualVoteVerificationCode = answere.choiceReturnCode,
+                AnswerIdentification = answerType.AnswerIdentification,
+                AnswerSequenceNumber = answerType.AnswerPosition.ToString(),
+                AnswerTextInformation = answerTextInfoList,
+                IndividualVoteVerificationCode = answere.ChoiceReturnCode,
             });
         }
         return answerList;
     }
 
-    private List<answerOptionType> MapToEchAnswers(questionType question, tiebreakAnswerType[] answers)
+    private List<AnswerOptionType> MapToEchAnswers(EVoting.Print.QuestionType question, List<EVoting.Config.TiebreakAnswerType> answers)
     {
-        var answerList = new List<answerOptionType>();
+        var answerList = new List<AnswerOptionType>();
         foreach (var answerType in answers)
         {
-            var answerTextInfoList = new List<answerOptionTypeAnswerTextInformation>();
+            var answerTextInfoList = new List<AnswerOptionTypeAnswerTextInformation>();
 
-            foreach (var answerText in answerType.answerInfo)
+            foreach (var answerText in answerType.AnswerInfo)
             {
-                answerTextInfoList.Add(new answerOptionTypeAnswerTextInformation()
+                answerTextInfoList.Add(new AnswerOptionTypeAnswerTextInformation()
                 {
-                    Language = (LanguageType)answerText.language,
-                    answerText = answerText.answer
+                    Language = XmlUtil.GetXmlEnumAttributeValueFromEnum(answerText.Language),
+                    AnswerText = answerText.Answer
                 });
             }
-            var answere = question.answer
-                .SingleOrDefault(x => x.answerIdentification == answerType.answerIdentification)
-                ?? throw new TransformationException(TransformationErrorCode.AnswereNotFound, answerType.answerIdentification);
+            var answer = question.Answer
+                .SingleOrDefault(x => x.AnswerIdentification == answerType.AnswerIdentification)
+                ?? throw new TransformationException(TransformationErrorCode.AnswereNotFound, answerType.AnswerIdentification);
 
-            answerList.Add(new answerOptionType()
+            answerList.Add(new AnswerOptionType()
             {
-                AnswerIdentification = answerType.answerIdentification,
-                answerSequenceNumber = answerType.answerPosition,
-                answerTextInformation = answerTextInfoList.ToArray(),
-                individualVoteVerificationCode = answere.choiceReturnCode,
+                AnswerIdentification = answerType.AnswerIdentification,
+                AnswerSequenceNumber = answerType.AnswerPosition.ToString(),
+                AnswerTextInformation = answerTextInfoList,
+                IndividualVoteVerificationCode = answer.ChoiceReturnCode,
             });
         }
         return answerList;

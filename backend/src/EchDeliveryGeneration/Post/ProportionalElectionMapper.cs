@@ -1,104 +1,105 @@
-﻿using eCH_0155_4_0;
-using eCH_0228;
+﻿using System.Collections.Generic;
 using EchDeliveryGeneration.ErrorHandling;
-using System.Collections.Generic;
 using System.Linq;
+using Ech0155_4_0;
+using Ech0228_1_0;
+using Voting.Lib.Common;
 
 namespace EchDeliveryGeneration.Post;
 
 public class ProportionalElectionMapper
 {
-    public void MapToEchElection(eCH_0228.electionInformationType election, electionType1 electionTypeSource, electionInformationType config)
+    public void MapToEchElection(ElectionInformationType election, EVoting.Print.ElectionType electionTypeSource, EVoting.Config.ElectionInformationType config)
     {
-        election.list = electionTypeSource.list.Select(list => MapToEchList(list, config)).ToArray();
+        election.List = electionTypeSource.List.Select(list => MapToEchList(list, config)).ToList();
     }
 
-    private electionInformationTypeList MapToEchList(listType1 listSource, electionInformationType config)
+    private ElectionInformationTypeList MapToEchList(EVoting.Print.ListType listSource, EVoting.Config.ElectionInformationType config)
     {
-        var sourceConfig = config.list.SingleOrDefault(x => x.listIdentification == listSource.listIdentification)
-            ?? throw new TransformationException(TransformationErrorCode.ListNotFound, listSource.listIdentification);
+        var sourceConfig = config.List.SingleOrDefault(x => x.ListIdentification == listSource.ListIdentification)
+            ?? throw new TransformationException(TransformationErrorCode.ListNotFound, listSource.ListIdentification);
 
-        var listDescriptionList = new List<ListDescriptionInfo>();
-        int.TryParse(sourceConfig.listOrderOfPrecedence, out var listOrderOfPrecedence);
-        var candidatePositions = new List<electionInformationTypeListCandidatePosition>();
-        var listUnionDescriptionList = new List<ListUnionDescriptionInfoType>();
-        var listUnionDescription = default(ListUnionDescriptionType);
+        var listDescriptionList = new List<ListDescriptionInformationTypeListDescriptionInfo>();
+        var listUnionDescriptionList = new List<ListUnionBallotTextTypeListUnionBallotTextInfo>();
 
-        foreach (var description in sourceConfig.listDescription)
+        foreach (var description in sourceConfig.ListDescription)
         {
-            listDescriptionList.Add(ListDescriptionInfo.Create(description.language.ToString(),
-                description.listDescription, description.listDescriptionShort));
-        }
-
-        var listUnion = config.listUnion?.SingleOrDefault
-        (x =>
-            x.listUnionType1 == listUnionTypeListUnionType.Item1 &&
-            x.referencedList.Any(y => y == listSource.listIdentification)
-        );
-
-        if (listUnion != null && listUnion.listUnionDescription != null &&
-            listUnion.listUnionDescription.Length > 0)
-        {
-            foreach (var listUnionDescriptionInfo in listUnion.listUnionDescription)
+            listDescriptionList.Add(new ListDescriptionInformationTypeListDescriptionInfo
             {
-                listUnionDescriptionList.Add(ListUnionDescriptionInfoType.Create(
-                    listUnionDescriptionInfo.language.ToString(),
-                    listUnionDescriptionInfo.listUnionDescription));
-            }
-            listUnionDescription = ListUnionDescriptionType.Create(listUnionDescriptionList);
-        }
-
-        return new()
-        {
-            IsEmptyList = sourceConfig.listEmpty,
-            ListDescriptionInformation = ListDescriptionInformation.Create(listDescriptionList),
-            ListIdentification = listSource.listIdentification,
-            ListIndentureNumber = sourceConfig.listIndentureNumber,
-            ListOrderOfPrecedence = listOrderOfPrecedence,
-            individualListVerificationCodes = new[]
-                {new namedCodeType() {codeDesignation = EchDeliveryGenerationConstants.ChoiceCode, codeValue = listSource.choiceReturnCode}},
-            ListUnionBallotText = listUnionDescription,
-            candidatePosition = listSource.candidate
-                .Select(c => MapToEchCandidate(c, config, sourceConfig))
-                // a candidate must only appear once, even if they are accumulated. If it is accumulated there are multiple choice codes available on a single candidate.
-                .DistinctBy(c => c.CandidateReferenceOnPosition)
-                .ToArray(),
-        };
-    }
-
-    private electionInformationTypeListCandidatePosition MapToEchCandidate(candidateListType candidateListType, electionInformationType config, listType sourceConfig)
-    {
-        var listCandidatesChoiceCodes = new List<namedCodeType>();
-        var candidateListConfiguration = sourceConfig.candidatePosition.FirstOrDefault(x =>
-            x.candidateListIdentification == candidateListType.candidateListIdentification)
-            ?? throw new TransformationException(TransformationErrorCode.CandidateNotFound, candidateListType.candidateListIdentification);
-
-        var candidateConfiguration = config.candidate.FirstOrDefault(x =>
-            x.candidateIdentification == candidateListConfiguration.candidateIdentification);
-        int.TryParse(candidateListConfiguration.positionOnList, out var candidatePositionOnList);
-
-        var candidateOccurences = 1;
-
-        if (!sourceConfig.listEmpty)
-            candidateOccurences = sourceConfig.candidatePosition.Count(x =>
-                x.candidateIdentification == candidateListConfiguration.candidateIdentification);
-
-        foreach (var choiceCode in candidateListType.choiceReturnCode)
-        {
-            listCandidatesChoiceCodes.Add(new namedCodeType()
-            {
-                codeDesignation = EchDeliveryGenerationConstants.ChoiceCode,
-                codeValue = choiceCode
+                Language = XmlUtil.GetXmlEnumAttributeValueFromEnum(description.Language),
+                ListDescription = description.ListDescription,
+                ListDescriptionShort = description.ListDescriptionShort,
             });
         }
 
-        return new()
+        var listUnion = config.ListUnion?.SingleOrDefault
+        (x =>
+            x.ListUnionTypeProperty == EVoting.Config.ListUnionTypeListUnionType.Item1 &&
+            x.ReferencedList.Any(y => y == listSource.ListIdentification)
+        );
+
+        if (listUnion != null && listUnion.ListUnionDescription != null &&
+            listUnion.ListUnionDescription.Count > 0)
         {
-            CandidateIdentification = candidateListConfiguration.candidateIdentification,
-            CandidateReferenceOnPosition = candidateListConfiguration.candidateReferenceOnPosition,
-            PositionOnList = candidatePositionOnList,
-            occurences = candidateOccurences,
-            individualCandidateVerificationCode = listCandidatesChoiceCodes.ToArray()
+            foreach (var listUnionDescriptionInfo in listUnion.ListUnionDescription)
+            {
+                listUnionDescriptionList.Add(new ListUnionBallotTextTypeListUnionBallotTextInfo
+                {
+                    Language = XmlUtil.GetXmlEnumAttributeValueFromEnum(listUnionDescriptionInfo.Language),
+                    ListUnionBalloText = listUnionDescriptionInfo.ListUnionDescription,
+                });
+            }
+        }
+
+        return new ElectionInformationTypeList
+        {
+            IsEmptyList = sourceConfig.ListEmpty,
+            ListDescription = listDescriptionList,
+            ListIdentification = listSource.ListIdentification,
+            ListIndentureNumber = sourceConfig.ListIndentureNumber,
+            ListOrderOfPrecedence = sourceConfig.ListOrderOfPrecedence.ToString(),
+            IndividualListVerificationCodes = new List<NamedCodeType>
+            {
+                new() { CodeDesignation = EchDeliveryGenerationConstants.ChoiceCode, CodeValue = listSource.ChoiceReturnCode}
+            },
+            ListUnionBallotText = listUnionDescriptionList,
+            CandidatePosition = listSource.Candidate
+                .Select(c => MapToEchCandidate(c, config, sourceConfig))
+                // a candidate must only appear once, even if they are accumulated. If it is accumulated there are multiple choice codes available on a single candidate.
+                .DistinctBy(c => c.CandidateReferenceOnPosition)
+                .ToList(),
+        };
+    }
+
+    private ElectionInformationTypeListCandidatePosition MapToEchCandidate(EVoting.Print.CandidateListType candidateListType, EVoting.Config.ElectionInformationType config, EVoting.Config.ListType sourceConfig)
+    {
+        var listCandidatesChoiceCodes = new List<NamedCodeType>();
+        var candidateListConfiguration = sourceConfig.CandidatePosition.FirstOrDefault(x =>
+            x.CandidateListIdentification == candidateListType.CandidateListIdentification)
+            ?? throw new TransformationException(TransformationErrorCode.CandidateNotFound, candidateListType.CandidateListIdentification);
+
+        var candidateOccurrences = 1;
+
+        if (!sourceConfig.ListEmpty)
+            candidateOccurrences = sourceConfig.CandidatePosition.Count(x =>
+                x.CandidateIdentification == candidateListConfiguration.CandidateIdentification);
+
+        foreach (var choiceCode in candidateListType.ChoiceReturnCode)
+        {
+            listCandidatesChoiceCodes.Add(new NamedCodeType()
+            {
+                CodeDesignation = EchDeliveryGenerationConstants.ChoiceCode,
+                CodeValue = choiceCode
+            });
+        }
+
+        return new ElectionInformationTypeListCandidatePosition
+        {
+            CandidateIdentification = candidateListConfiguration.CandidateIdentification,
+            CandidateReferenceOnPosition = candidateListConfiguration.CandidateReferenceOnPosition,
+            PositionOnList = candidateListConfiguration.PositionOnList.ToString(),
+            Occurences = candidateOccurrences.ToString(),
+            IndividualCandidateVerificationCode = listCandidatesChoiceCodes,
         };
     }
 }

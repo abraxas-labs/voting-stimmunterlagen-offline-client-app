@@ -1,5 +1,6 @@
 module.exports = {
   appId: 'voting-stimmunterlagen-offline-client',
+  copyright: 'Copyright © 2024 Abraxas Informatik AG',
   extraMetadata: {
     version: process.env.APP_VERSION,
   },

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
+using Ech0155_4_0;
 using Voting.Stimmunterlagen.OfflineClient.Shared.ContestConfiguration;
 
 namespace EchDeliveryGeneration.Models;
 
-public class DeliveryExtension
+public class DeliveryExtension : ExtensionType
 {
     public Dictionary<string, Municipality> Municipalities { get; } = new();
-    public Dictionary<string, SmallPrinting> Printings { get; } = new();
     public List<string> Certificates { get; init; } = new();
 }
 

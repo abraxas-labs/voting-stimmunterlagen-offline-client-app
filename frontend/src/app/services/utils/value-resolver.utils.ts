@@ -17,7 +17,7 @@ function getValueFromPath(obj: any, propertyPath: string): any {
   let groupElement = obj;
   for (const pathElement of pathElements) {
     groupElement = groupElement[pathElement];
-    if (groupElement === undefined) {
+    if (groupElement === null || groupElement === undefined) {
       return undefined;
     }
   }

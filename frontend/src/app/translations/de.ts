@@ -58,7 +58,7 @@ export const TRANSLATIONS: Translations = {
   'NUMBER_OF_PAGES_PREVIEW': 'Anzahl Stimmrechtsausweise pro Vorschau',
   'NUMBER_OF_PAGES_JOB': 'Anzahl Stimmrechtsausweise pro Job',
   'ERROR_EXIST': 'Fehler vorhanden!',
-  'NUBER_OF_VALIDATION': 'Anzahl Stimmberechtigte',
+  'NUMBER_OF_VALIDATION': 'Anzahl Stimmberechtigte',
   'DOWNLOAD_ALL': 'Alles herunterladen',
   'YES': 'Ja',
   'NO': 'Nein',

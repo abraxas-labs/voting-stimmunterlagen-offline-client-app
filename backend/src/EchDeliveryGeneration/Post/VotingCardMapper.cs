@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using eCH_0010_5_1;
-using eCH_0228;
-using Voting.Stimmunterlagen.OfflineClient.Shared.ContestConfiguration;
+using Ech0010_6_0;
+using Ech0228_1_0;
+using SharedContestConfiguration = Voting.Stimmunterlagen.OfflineClient.Shared.ContestConfiguration.Configuration;
 using EchDeliveryGeneration.Ech0045;
 using EchDeliveryGeneration.ErrorHandling;
-using EchDeliveryGeneration.Models;
+using VoteType = Ech0228_1_0.VoteType;
 
 namespace EchDeliveryGeneration.Post;
 
@@ -23,107 +23,120 @@ public class VotingCardMapper
         _electionGroupBallotMapper = electionGroupBallotMapper;
     }
 
-    public votingCardDataType MapToEchVotingCard(
-        votingCardType votingCardType,
-        configuration configuration,
-        Configuration jsonConfig,
+    public VotingCardDataType MapToEchVotingCard(
+        EVoting.Print.VotingCardType votingCardType,
+        EVoting.Config.Configuration configuration,
+        SharedContestConfiguration jsonConfig,
         Dictionary<string, Ech0045VoterExtension> echVoterByPersonId)
     {
 
-        var votingCard = new votingCardDataType();
+        var votingCard = new VotingCardDataType();
 
-        var personConfig = configuration.register.FirstOrDefault(x =>
-            x.voterIdentification == votingCardType.voterIdentification)
-            ?? throw new TransformationException(TransformationErrorCode.VoterNotFound, votingCardType.voterIdentification);
+        var personConfig = configuration.Register.FirstOrDefault(x =>
+            x.VoterIdentification == votingCardType.VoterIdentification)
+            ?? throw new TransformationException(TransformationErrorCode.VoterNotFound, votingCardType.VoterIdentification);
 
-        var echVoter = echVoterByPersonId.GetValueOrDefault(votingCardType.voterIdentification);
+        var echVoter = echVoterByPersonId.GetValueOrDefault(votingCardType.VoterIdentification);
 
-        var authorization = configuration.authorizations.SingleOrDefault(x =>
-            x.authorizationIdentification == personConfig.authorization)
-            ?? throw new TransformationException(TransformationErrorCode.AuthorizationNotFound, personConfig.authorization);
+        var authorization = configuration.Authorizations.SingleOrDefault(x =>
+            x.AuthorizationIdentification == personConfig.Authorization)
+            ?? throw new TransformationException(TransformationErrorCode.AuthorizationNotFound, personConfig.Authorization);
 
-        votingCard.votingCardSequenceNumber = votingCardType.voterIdentification;
-        votingCard.Item = _voterMapper.MapToEchVoter(personConfig, authorization, echVoter);
-
-        AddVotesAndElection(votingCard, votingCardType, configuration);
-
-        var votingPersonMuicipalityBfs = personConfig.person.municipality.municipalityId;
+        var votingPersonMuicipalityBfs = personConfig.Person.Municipality.MunicipalityId.ToString();
         var printingJsonConfig = jsonConfig.Printings.FirstOrDefault(x =>
-            x.Municipalities.Any(y => y.Bfs == votingPersonMuicipalityBfs))
-            ?? throw new TransformationException(TransformationErrorCode.PrintingNotFoundInZip, votingPersonMuicipalityBfs);
+                                     x.Municipalities.Any(y => y.Bfs == votingPersonMuicipalityBfs))
+                                 ?? throw new TransformationException(TransformationErrorCode.PrintingNotFoundInZip, votingPersonMuicipalityBfs);
 
         var municipaityJsonConfig =
             printingJsonConfig.Municipalities.Single(x => x.Bfs == votingPersonMuicipalityBfs);
 
-        municipaityJsonConfig.PollOpening = ConvertDateTimeToString(authorization.authorizationFromDate);
-        municipaityJsonConfig.PollClosing = ConvertDateTimeToString(authorization.authorizationToDate);
+        municipaityJsonConfig.PollOpening = ConvertDateTimeToString(authorization.AuthorizationFromDate);
+        municipaityJsonConfig.PollClosing = ConvertDateTimeToString(authorization.AuthorizationToDate);
+
+        votingCard.VotingCardSequenceNumber = votingCardType.VoterIdentification;
+        votingCard.VotingPerson = _voterMapper.MapToEchVoter(personConfig, authorization, echVoter, printingJsonConfig.Name, municipaityJsonConfig.Bfs, municipaityJsonConfig.Name);
+
+        AddVotesAndElection(votingCard, votingCardType, configuration);
 
         if (municipaityJsonConfig.ReturnDeliveryAddress != null)
         {
-            var organisationMailAddressInfo = OrganisationMailAddressInfo.Create(municipaityJsonConfig.Name);
-            var addressInformation = AddressInformation.Create(municipaityJsonConfig.Name, "CH");
-            addressInformation.AddressLine1 = municipaityJsonConfig.ReturnDeliveryAddress.AddressField1;
-            addressInformation.AddressLine2 = municipaityJsonConfig.ReturnDeliveryAddress.AddressField2;
-            addressInformation.Street = municipaityJsonConfig.ReturnDeliveryAddress.Street;
-            if (int.TryParse(municipaityJsonConfig.ReturnDeliveryAddress.Plz, out var plz) && plz > 999 &&
+            var organisationMailAddressInfo = new OrganisationMailAddressInfoType
+            {
+                OrganisationName = municipaityJsonConfig.Name
+            };
+            var addressInformation = new AddressInformationType
+            {
+                Town = municipaityJsonConfig.Name,
+                Country = new CountryType { CountryNameShort = "CH" },
+                AddressLine1 = municipaityJsonConfig.ReturnDeliveryAddress.AddressField1,
+                AddressLine2 = municipaityJsonConfig.ReturnDeliveryAddress.AddressField2,
+                Street = municipaityJsonConfig.ReturnDeliveryAddress.Street
+            };
+            if (uint.TryParse(municipaityJsonConfig.ReturnDeliveryAddress.Plz, out var plz) && plz > 999 &&
                 plz < 10000)
                 addressInformation.SwissZipCode = plz;
 
-            votingCard.VotingCardReturnAddress = OrganisationMailAddress.Create(organisationMailAddressInfo, addressInformation);
+            votingCard.VotingCardReturnAddress = new List<OrganisationMailAddressType>
+            {
+                new()
+                {
+                    AddressInformation = addressInformation,
+                    Organisation = organisationMailAddressInfo,
+                }
+            };
         }
 
-        votingCard.Extension = new VotingCardDataExtension(printingJsonConfig.Name, municipaityJsonConfig.Bfs);
         return votingCard;
     }
 
 
     private void AddVotesAndElection(
-        votingCardDataType votingCardDataType,
-        votingCardType votingCardSource,
-        configuration configSource)
+        VotingCardDataType votingCardDataType,
+        EVoting.Print.VotingCardType votingCardSource,
+        EVoting.Config.Configuration configSource)
     {
-        var individualCodes = new votingCardIndividualCodesType();
-        var voteList = new List<eCH_0228.voteType>();
-        var electionList = new List<votingCardIndividualCodesTypeElectionGroupBallot>();
+        var individualCodes = new VotingCardIndividualCodesType();
+        var voteList = new List<VoteType>();
+        var electionList = new List<VotingCardIndividualCodesTypeElectionGroupBallot>();
 
-        individualCodes.individualContestCodes = new namedCodeType[]
+        individualCodes.IndividualContestCodes = new List<NamedCodeType>
         {
-            new namedCodeType() {codeDesignation = "startVotingKey", codeValue = votingCardSource.startVotingKey},
-            new namedCodeType() {codeDesignation = "ballotCastingKey", codeValue = votingCardSource.ballotCastingKey},
-            new namedCodeType() {codeDesignation = "voteCastCode", codeValue = votingCardSource.voteCastReturnCode},
-            new namedCodeType() {codeDesignation = "votingCardId", codeValue = votingCardSource.votingCardId},
+            new() { CodeDesignation = "startVotingKey", CodeValue = votingCardSource.StartVotingKey },
+            new() { CodeDesignation = "ballotCastingKey", CodeValue = votingCardSource.BallotCastingKey },
+            new() { CodeDesignation = "voteCastCode", CodeValue = votingCardSource.VoteCastReturnCode },
+            new() { CodeDesignation = "votingCardId", CodeValue = votingCardSource.VotingCardId },
         };
 
-        if (votingCardSource.vote != null)
+        if (votingCardSource.Vote != null)
         {
-            foreach (var vote in votingCardSource.vote)
+            foreach (var vote in votingCardSource.Vote)
             {
-                var config = configSource.contest.voteInformation.SingleOrDefault(x =>
-                    x.vote.voteIdentification == vote.voteIdentification)
-                    ?? throw new TransformationException(TransformationErrorCode.VoteNotFoud, vote.voteIdentification);
+                var config = configSource.Contest.VoteInformation.SingleOrDefault(x =>
+                    x.Vote.VoteIdentification == vote.VoteIdentification)
+                    ?? throw new TransformationException(TransformationErrorCode.VoteNotFoud, vote.VoteIdentification);
 
                 voteList.Add(_voteMapper.MapToEchVote(vote, config));
             }
         }
 
-        if (votingCardSource.election != null)
+        if (votingCardSource.Election != null)
         {
-            foreach (var election in votingCardSource.election)
+            foreach (var election in votingCardSource.Election)
             {
-                var config = configSource.contest.electionGroupBallot.SelectMany(e => e.electionInformation).SingleOrDefault(x =>
-                    x.election.electionIdentification == election.electionIdentification)
-                    ?? throw new TransformationException(TransformationErrorCode.ElectionNotFound, election.electionIdentification);
+                var config = configSource.Contest.ElectionGroupBallot.SelectMany(e => e.ElectionInformation).SingleOrDefault(x =>
+                    x.Election.ElectionIdentification == election.ElectionIdentification)
+                    ?? throw new TransformationException(TransformationErrorCode.ElectionNotFound, election.ElectionIdentification);
 
-                config.candidate ??= Array.Empty<candidateType>();
-                election.writeInCandidate ??= Array.Empty<writeInCandidateType1>();
-                election.candidate ??= Array.Empty<candidateType2>();
+                config.Candidate ??= new List<EVoting.Config.CandidateType>();
+                election.WriteInCandidate ??= new List<EVoting.Print.WriteInCandidateType>();
+                election.Candidate ??= new List<EVoting.Print.CandidateType>();
                 electionList.Add(_electionGroupBallotMapper.MapToEchElectionGroupBallot(election, config));
             }
         }
 
-        individualCodes.vote = voteList.ToArray();
-        individualCodes.electionGroupBallot = electionList.ToArray();
-        votingCardDataType.votingCardIndividualCodes = individualCodes;
+        individualCodes.Vote = voteList;
+        individualCodes.ElectionGroupBallot = electionList;
+        votingCardDataType.VotingCardIndividualCodes = individualCodes;
     }
 
     private static string ConvertDateTimeToString(DateTime dateTime)

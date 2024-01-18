@@ -6,8 +6,9 @@ using Newtonsoft.Json;
 using EchDeliveryGeneration;
 using EchDeliveryGeneration.ErrorHandling;
 using System.Collections.Generic;
-using eCH_0228;
 using System.Linq;
+using Ech0228_1_0;
+using Newtonsoft.Json.Serialization;
 
 namespace EchDeliveryJsonConverter;
 
@@ -18,7 +19,11 @@ public class Application
     private readonly ILogger<Application> _logger;
     private readonly Arguments _arguments;
     private readonly EchDeliveryGenerator _echDeliveryGenerator;
-    private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings { DateFormatString = "dd.MM.yyyy HH:mm:ss" };
+    private readonly JsonSerializerSettings _jsonSerializerSettings = new()
+    {
+        DateFormatString = "dd.MM.yyyy HH:mm:ss",
+        ContractResolver = new CamelCasePropertyNamesContractResolver(),
+    };
 
 
     public Application(ILogger<Application> logger, Arguments arguments, EchDeliveryGenerator echDeliveryGenerator)

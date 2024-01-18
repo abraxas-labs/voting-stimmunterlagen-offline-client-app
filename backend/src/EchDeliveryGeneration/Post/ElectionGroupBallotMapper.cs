@@ -1,4 +1,5 @@
-﻿using eCH_0228;
+﻿using System.Collections.Generic;
+using Ech0228_1_0;
 
 namespace EchDeliveryGeneration.Post;
 
@@ -11,11 +12,11 @@ public class ElectionGroupBallotMapper
         _electionMapper = electionMapper;
     }
 
-    public votingCardIndividualCodesTypeElectionGroupBallot MapToEchElectionGroupBallot(electionType1 electionTypeSource, electionInformationType config)
+    public VotingCardIndividualCodesTypeElectionGroupBallot MapToEchElectionGroupBallot(EVoting.Print.ElectionType electionTypeSource, EVoting.Config.ElectionInformationType config)
     {
-        return new votingCardIndividualCodesTypeElectionGroupBallot
+        return new VotingCardIndividualCodesTypeElectionGroupBallot
         {
-            electionInformation = new[] { _electionMapper.MapToEchElection(electionTypeSource, config) },
+            ElectionInformation = new List<ElectionInformationType> { _electionMapper.MapToEchElection(electionTypeSource, config) },
         };
     }
 }

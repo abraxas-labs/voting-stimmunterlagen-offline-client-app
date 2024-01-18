@@ -1,4 +1,4 @@
-# ✨ Changelog (`v1.17.2`)
+# ✨ Changelog (`v1.18.1`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v1.17.2
-Previous version ---- v1.13.4
+This version -------- v1.18.1
+Previous version ---- v1.17.2
 Initial version ----- v1.12.12
-Total commits ------- 14
+Total commits ------- 5
 ```
+
+## [v1.18.1] - 2024-01-18
+
+### :arrows_counterclockwise: Changed
+
+- use static copyright to ensure a reproducible build at the turn of the year
+
+## [v1.18.0] - 2023-12-20
+
+### 🆕 Added
+
+- Add updated eCH from voting lib
+- Add updated Post models
+
+## [v1.17.3] - 2023-11-30
+
+### 🔄 Changed
+
+- Frontend code improvements
+
+### 🔒 Security
+
+- Update electron version to 23.3.13
+
+### 🔄 Changed
+
+- Change pdf output naming scheme
 
 ## [v1.17.2] - 2023-08-24
 
@@ -101,25 +128,17 @@ Total commits ------- 14
 
 - Salutation on swiss abroad voters
 
-## [v1.13.3] - 2023-04-19
-
 ### 🔄 Changed
 
 - Included attachment stations on voting card
-
-## [v1.13.2] - 2023-04-11
 
 ### 🔒 Security
 
 - fix(VOTING-3073): upgrade Newtonsoft.Json to mitigate insecure defaults for versions <13.0.1 (CWE-755)
 
-## [v1.13.1] - 2023-04-06
-
 ### 🔄 Changed
 
 - Display the app version correctly on the settings page
-
-## [v1.13.0] - 2023-04-06
 
 ### 🆕 Added
 
@@ -258,6 +277,30 @@ Total commits ------- 14
 ### 🔒 Security
 
 - integrate dependency check for front- and backend part.
+
+## [v1.13.3] - 2023-04-19
+
+### 🔄 Changed
+
+- Included attachment stations on voting card
+
+## [v1.13.2] - 2023-04-11
+
+### 🔒 Security
+
+- fix(VOTING-3073): upgrade Newtonsoft.Json to mitigate insecure defaults for versions <13.0.1 (CWE-755)
+
+## [v1.13.1] - 2023-04-06
+
+### 🔄 Changed
+
+- Display the app version correctly on the settings page
+
+## [v1.13.0] - 2023-04-06
+
+### 🆕 Added
+
+- Physical address mapping of the voter according ISO
 
 ## [v1.12.14] - 2023-04-05
 

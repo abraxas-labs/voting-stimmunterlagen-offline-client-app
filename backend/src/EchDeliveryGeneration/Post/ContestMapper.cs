@@ -1,22 +1,31 @@
-﻿using eCH_0155_4_0;
-using System.Collections.Generic;
+﻿using System.Linq;
+using Ech0155_4_0;
+using Voting.Lib.Common;
 
 namespace EchDeliveryGeneration.Post;
 
 public class ContestMapper
 {
-    public ContestType MapToEchContest(contestType contest)
+    public ContestType MapToEchContest(EVoting.Config.ContestType contest)
     {
-        var contestType = ContestType.Create(contest.contestIdentification, contest.contestDate);
-        var contestDescriptionInfo = new List<ContestDescriptionInfo>();
+        var contestDescriptionInfos = contest.ContestDescription
+                .Select(x => new ContestDescriptionInformationTypeContestDescriptionInfo
+                {
+                    Language = XmlUtil.GetXmlEnumAttributeValueFromEnum(x.Language),
+                    ContestDescription = x.ContestDescription,
+                })
+                .ToList();
 
-        foreach (var description in contest.contestDescription)
+        return new ContestType
         {
-            contestDescriptionInfo.Add(ContestDescriptionInfo.Create(description.language.ToString(), description.contestDescription));
-        }
-
-        contestType.ContestDescription = ContestDescriptionInformation.Create(contestDescriptionInfo);
-        contestType.EvotingPeriod = EvotingPeriodType.Create(contest.evotingFromDate, contest.evotingToDate);
-        return contestType;
+            ContestIdentification = contest.ContestIdentification,
+            ContestDate = contest.ContestDate,
+            EVotingPeriod = new EVotingPeriodType
+            {
+                EVotingPeriodFrom = contest.EvotingFromDate,
+                EVotingPeriodTill = contest.EvotingToDate,
+            },
+            ContestDescription = contestDescriptionInfos,
+        };
     }
 }

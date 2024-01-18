@@ -13,9 +13,13 @@ import { StepActionsService } from '../../services/step-actions.service';
   styleUrls: ['./voting-cards-configuration.component.scss'],
 })
 export class VotingCardsConfigurationComponent implements OnInit {
-  public groupOptionsValue = [Ech0228MappingService.BFS, Ech0228MappingService.COMUNICATION_LAUNGUAGE, Ech0228MappingService.POSTAGE_CODE];
+  public groupOptionsValue = [
+    Ech0228MappingService.VOTING_CARD_BFS,
+    Ech0228MappingService.VOTING_CARD_COMUNICATION_LAUNGUAGE,
+    Ech0228MappingService.VOTING_CARD_POSTAGE_CODE,
+  ];
 
-  public sortOptions = [Ech0228MappingService.POSTAGE_CODE, Ech0228MappingService.STREET];
+  public sortOptions = [Ech0228MappingService.VOTING_CARD_POSTAGE_CODE, Ech0228MappingService.VOTING_CARD_STREET];
   public isGrouping = false;
   public sort1: { isASC: boolean; reference: any } = { isASC: true, reference: {} };
   public sort2: { isASC: boolean; reference: any } = { isASC: true, reference: {} };
@@ -39,10 +43,10 @@ export class VotingCardsConfigurationComponent implements OnInit {
 
     this.fingerprintRequired =
       !!this.context.ech228?.votingCardDelivery.contestData &&
-      !!this.context.ech228?.votingCardDelivery.contestData?.Item &&
-      !!this.context.ech228?.votingCardDelivery.contestData?.Item?.eVotingPeriod &&
-      !!this.context.ech228?.votingCardDelivery.contestData?.Item?.eVotingPeriod?.eVotingPeriodFrom &&
-      !!this.context.ech228?.votingCardDelivery.contestData?.Item?.eVotingPeriod?.eVotingPeriodTill;
+      !!this.context.ech228?.votingCardDelivery.contestData?.contest &&
+      !!this.context.ech228?.votingCardDelivery.contestData?.contest?.eVotingPeriod &&
+      !!this.context.ech228?.votingCardDelivery.contestData?.contest?.eVotingPeriod?.eVotingPeriodFrom &&
+      !!this.context.ech228?.votingCardDelivery.contestData?.contest?.eVotingPeriod?.eVotingPeriodTill;
   }
 
   public getGroupOptions(value): { paths: string[]; description: string }[] {
@@ -70,8 +74,8 @@ export class VotingCardsConfigurationComponent implements OnInit {
       return;
     }
     this.context.sorting.push(value);
-    if (value.reference.description === Ech0228MappingService.STREET.description) {
-      this.context.sorting.push({ isASC: value.isASC, reference: Ech0228MappingService.HOUSE_NUMBER });
+    if (value.reference.description === Ech0228MappingService.VOTING_CARD_STREET.description) {
+      this.context.sorting.push({ isASC: value.isASC, reference: Ech0228MappingService.VOTING_CARD_HOUSE_NUMBER });
     }
   }
 

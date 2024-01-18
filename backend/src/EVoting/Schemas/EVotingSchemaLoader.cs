@@ -4,9 +4,9 @@ using System.IO;
 using System.Xml;
 using System.Xml.Schema;
 
-namespace EchDeliveryJsonConverter.Schemas;
+namespace EVoting.Schemas;
 
-internal static class ChVoteSchemaLoader
+public static class EVotingSchemaLoader
 {
     private static readonly Dictionary<string, string> Schemas = new()
     {
@@ -14,7 +14,7 @@ internal static class ChVoteSchemaLoader
         ["http://www.evoting.ch/xmlns/config/5"] = "evoting-config-5-0.xsd"
     };
 
-    public static XmlSchemaSet LoadChVoteSchemas()
+    public static XmlSchemaSet LoadEVotingSchemas()
     {
         var schemaDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Schemas");
         var xmlSchemaSet = new XmlSchemaSet();

@@ -1,17 +1,17 @@
-﻿using eCH_0228;
-using EchDeliveryJsonConverter.Schemas;
+﻿using EVoting.Schemas;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Xml.Schema;
 using System.Xml;
 using Microsoft.Extensions.Logging;
-using Voting.Stimmunterlagen.OfflineClient.Shared.ContestConfiguration;
 using EchDeliveryGeneration.Ech0045;
 using System.IO;
 using EchDeliveryJsonConverter.Converters;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using Ech0228_1_0;
 using EchDeliveryGeneration.Post;
+using Voting.Stimmunterlagen.OfflineClient.Shared.ContestConfiguration;
 
 namespace EchDeliveryGeneration;
 
@@ -37,8 +37,8 @@ public class EchDeliveryGenerator
     {
         var delivery = new Delivery();
 
-        var config = new List<configuration>();
-        var votingCards = new List<votingCardList>();
+        var config = new List<EVoting.Config.Configuration>();
+        var votingCardLists = new List<EVoting.Print.VotingCardList>();
         var echVoterByPersonId = new Dictionary<string, Ech0045VoterExtension>();
         var jsonConfig = new Configuration();
         var settings = CreateXmlReaderSettings();
@@ -54,14 +54,14 @@ public class EchDeliveryGenerator
                 if (!string.IsNullOrEmpty(xmlTypeRef) &&
                     xmlTypeRef.Contains(PostConfigXmlNamespace))
                 {
-                    config.Add(EVotingXmlSerializer.DeserializeXml<configuration>(xr));
+                    config.Add(EVotingXmlSerializer.DeserializeXml<EVoting.Config.Configuration>(xr));
                 }
 
                 xmlTypeRef = xr.GetAttribute("xmlns");
                 if (!string.IsNullOrEmpty(xmlTypeRef) &&
                     xmlTypeRef.Contains(PostPrintXmlNamespace))
                 {
-                    votingCards.Add(EVotingXmlSerializer.DeserializeXml<votingCardList>(xr));
+                    votingCardLists.Add(EVotingXmlSerializer.DeserializeXml<EVoting.Print.VotingCardList>(xr));
                 }
 
                 xmlTypeRef = xr.GetAttribute("xmlns:eCH-0045");
@@ -88,8 +88,8 @@ public class EchDeliveryGenerator
         if (jsonConfig == null)
             throw new ValidationException($"{nameof(jsonConfig)} is not provided");
 
-        if (votingCards.Count > 0)
-            delivery = _postDataTransformer.Transform(config, votingCards, jsonConfig, echVoterByPersonId);
+        if (votingCardLists.Count > 0)
+            delivery = _postDataTransformer.Transform(config, votingCardLists, jsonConfig, echVoterByPersonId);
 
         return delivery;
     }
@@ -101,7 +101,7 @@ public class EchDeliveryGenerator
         var settings = new XmlReaderSettings()
         {
             ValidationType = ValidationType.Schema,
-            Schemas = ChVoteSchemaLoader.LoadChVoteSchemas(),
+            Schemas = EVotingSchemaLoader.LoadEVotingSchemas(),
             DtdProcessing = DtdProcessing.Prohibit,
             XmlResolver = null,
             MaxCharactersFromEntities = 1024

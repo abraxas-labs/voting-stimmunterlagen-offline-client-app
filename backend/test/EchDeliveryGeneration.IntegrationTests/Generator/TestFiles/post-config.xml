@@ -18128,6 +18128,7 @@
                     <municipalityName>Au</municipalityName>
                 </municipality>
                 <physicalAddress>
+                    <mrMrs>2</mrMrs>
                     <firstName>Josef</firstName>
                     <lastName>Imhof</lastName>
                     <street>Musterstr</street>
@@ -18163,6 +18164,7 @@
                     <municipalityName>Au</municipalityName>
                 </municipality>
                 <physicalAddress>
+                    <mrMrs>1</mrMrs>
                     <firstName>Marianne</firstName>
                     <lastName>Keller</lastName>
                     <street>Musterstr</street>
@@ -18191,7 +18193,7 @@
                 <firstName>Lautaro</firstName>
                 <sex>1</sex>
                 <dateOfBirth>1979-09-25</dateOfBirth>
-                <languageOfCorrespondance>de</languageOfCorrespondance>
+                <languageOfCorrespondance>fr</languageOfCorrespondance>
                 <residenceCountryId>AT</residenceCountryId>
                 <municipality>
                     <municipalityId>9170</municipalityId>
@@ -18233,6 +18235,7 @@
                     <municipalityName>Auslandschweizer</municipalityName>
                 </municipality>
                 <physicalAddress>
+                    <mrMrs>3</mrMrs>
                     <firstName>Olivia</firstName>
                     <lastName>Sonderegger</lastName>
                     <street>Musterstrasse</street>

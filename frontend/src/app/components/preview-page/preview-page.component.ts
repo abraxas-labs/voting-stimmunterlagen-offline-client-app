@@ -10,8 +10,8 @@ import { AppStateService } from '../../services/app-state.service';
 import { AppStateStep } from '../../models/app-state.model';
 import { E_VOTING_CONFIG_DIR } from '../../common/path.constants';
 import { pathCombine } from '../../services/utils/path.utils';
-import { VotingCardData } from '../../models/ech228.model';
 import { resolveValue } from '../../services/utils/value-resolver.utils';
+import { VotingCardData } from '../../models/ech0228/voting-card-data.model';
 
 @Component({
   selector: 'app-preview-page',
@@ -49,20 +49,7 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
   }
 
   public getGroupDescription(votingCardData: VotingCardData): string | undefined {
-    let groupName = '';
-    if (this.context.groupe1 && this.context.groupe1.description) {
-      groupName += `${resolveValue(votingCardData, this.context.groupe1.paths)}`;
-    }
-    if (this.context.groupe2 && this.context.groupe2.description) {
-      groupName += `_${resolveValue(votingCardData, this.context.groupe2.paths)}`;
-    }
-    if (this.context.groupe3 && this.context.groupe3.description) {
-      groupName += `_${resolveValue(votingCardData, this.context.groupe3.paths)}`;
-    }
-    if (groupName === '') {
-      return;
-    }
-    return groupName;
+    return this.votingCardService.buildGroupsSegment([this.context.groupe1, this.context.groupe2, this.context.groupe3], votingCardData);
   }
 
   public setPreview(index: number): void {
@@ -79,10 +66,10 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
       return from('no value');
     }
     const groupValue = this.context.votingCardGroups[index];
-    const municipalityRef = resolveValue(groupValue[0], [Ech0228MappingService.MUNICIPALITY_REF.paths[0]]);
+    const municipalityRef = resolveValue(groupValue[0], Ech0228MappingService.VOTING_CARD_BFS.paths);
     let template: any = pathCombine(
       E_VOTING_CONFIG_DIR,
-      resolveValue(this.context.ech228.extension.Municipalities[municipalityRef], this.context.templateMapping.paths),
+      resolveValue(this.context.ech228.votingCardDelivery.extension.municipalities[municipalityRef], this.context.templateMapping.paths),
     );
     this.context.ech228.votingCardDelivery.votingCardData = groupValue.slice(0, this.settingsService.numberOfPreview);
 

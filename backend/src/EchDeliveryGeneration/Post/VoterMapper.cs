@@ -1,19 +1,27 @@
-﻿using eCH_0008_3_0;
-using eCH_0010_6_0;
-using eCH_0011_8_1;
-using eCH_0021_7_0;
-using eCH_0044_4_1;
-using eCH_0045_4_0;
-using eCH_0155_4_0;
-using eCH_0228;
-using EchDeliveryGeneration.Ech0045;
-using System;
-using System.Collections.Generic;
-using SwissMunicipality = eCH_0007_6_0.SwissMunicipality;
-using CantonAbbreviation = eCH_0007_5_0.CantonAbbreviation;
-using Microsoft.Extensions.Logging;
+﻿using System.Collections.Generic;
+using Ech0007_6_0;
+using Ech0010_6_0;
+using Ech0044_4_1;
+using Ech0155_4_0;
 using EchDeliveryGeneration.Configurations.Country;
+using EchDeliveryGeneration.Ech0045;
 using EchDeliveryGeneration.ErrorHandling;
+using EchDeliveryGeneration.Models;
+using Microsoft.Extensions.Logging;
+using ForeignerPersonType = Ech0228_1_0.ForeignerPersonType;
+using ForeignerType = Ech0228_1_0.ForeignerType;
+using PersonIdentificationType = Ech0228_1_0.PersonIdentificationType;
+using SwissAbroadType = Ech0228_1_0.SwissAbroadType;
+using SwissDomesticType = Ech0228_1_0.SwissDomesticType;
+using SwissPersonType = Ech0228_1_0.SwissPersonType;
+using VotingPersonType = Ech0228_1_0.VotingPersonType;
+using VotingPersonTypeDomainOfInfluenceInfo = Ech0228_1_0.VotingPersonTypeDomainOfInfluenceInfo;
+using VotingPersonTypePerson = Ech0228_1_0.VotingPersonTypePerson;
+using SexType = Ech0044_4_1.SexType;
+using LanguageType = Ech0045_4_0.LanguageType;
+using MrMrsType = Ech0010_6_0.MrMrsType;
+using CountingCircleType = Ech0155_4_0.CountingCircleType;
+using DomainOfInfluenceType = Ech0155_4_0.DomainOfInfluenceType;
 
 namespace EchDeliveryGeneration.Post;
 
@@ -26,102 +34,164 @@ public class VoterMapper
         _logger = logger;
     }
 
-    public VotingPersonType MapToEchVoter(voterType voterType, authorizationType authorization, Ech0045VoterExtension? echVoter)
+    public VotingPersonType MapToEchVoter(EVoting.Config.VoterType voterType, EVoting.Config.AuthorizationType authorization, Ech0045VoterExtension? echVoter, string printingRef, string municipalityRef, string municipalityName)
     {
-        var personInfo = voterType.person;
-        var nationality = default(Nationality);
-        var country10 = CountryType.Create(null, voterType.person.residenceCountryId, voterType.person.residenceCountryId);
-        var country08 = Country.Create(null, voterType.person.residenceCountryId, voterType.person.residenceCountryId);
-        var sexType = personInfo.sex == personTypeSex.Item1 ? SexType.Männlich : SexType.Weiblich;
-        var dateOfBirth = DatePartiallyKnown.Create(personInfo.dateOfBirth);
+        var personInfo = voterType.Person;
+        var nationality = default(VotingPersonTypePerson);
+        var country10 = new CountryType
+        {
+            CountryIdIso2 = voterType.Person.ResidenceCountryId,
+            CountryNameShort = voterType.Person.ResidenceCountryId,
+        };
+        var country08 = new Ech0008_3_0.CountryType()
+        {
+            CountryIdIso2 = voterType.Person.ResidenceCountryId,
+            CountryNameShort = voterType.Person.ResidenceCountryId,
+        };
+        var sexType = personInfo.Sex == EVoting.Config.PersonTypeSex.Item1 ? SexType.Item1 : SexType.Item2;
+        var dateOfBirth = new DatePartiallyKnownType { YearMonthDay = personInfo.DateOfBirth };
 
-        var physicalAddressCountryConfig = CountryConfigurationProvider.GetCountryConfiguration(voterType.person.physicalAddress.country)
-            ?? throw new TransformationException(TransformationErrorCode.CountryNotFound, voterType.person.physicalAddress.country);
+        var physicalAddressCountryConfig = CountryConfigurationProvider.GetCountryConfiguration(voterType.Person.PhysicalAddress.Country)
+            ?? throw new TransformationException(TransformationErrorCode.CountryNotFound, voterType.Person.PhysicalAddress.Country);
 
-        var namedPersonId = NamedPersonId.Create("voting", voterType.voterIdentification);
-        var personIdentification = PersonIdentification.Create(namedPersonId, personInfo.officialName,
-            personInfo.firstName, sexType, dateOfBirth);
+        var namedPersonId = new NamedPersonIdType
+        {
+            PersonIdCategory = "voting",
+            PersonId = voterType.VoterIdentification,
+        };
+        var personIdentification = new PersonIdentificationType
+        {
+            LocalPersonId = namedPersonId,
+            OfficialName = personInfo.OfficialName,
+            FirstName = personInfo.FirstName,
+            Sex = sexType,
+            DateOfBirth = dateOfBirth,
 
-        var swissPersonType =
-            SwissPersonType.Create(
-                personIdentification,
-                (LanguageType)personInfo.languageOfCorrespondance,
-                new List<PlaceOfOrigin>() { PlaceOfOrigin.Create(EchDeliveryGenerationConstants.DefaultPlaceholder, CantonAbbreviation.SG) });
+        };
+
+        var swissPersonType = new SwissPersonType
+        {
+            PersonIdentification = personIdentification,
+            LanguageOfCorrespondance = (LanguageType)personInfo.LanguageOfCorrespondance,
+        };
 
         var addressExtension = GetAddressExtension(voterType, echVoter, physicalAddressCountryConfig);
-        swissPersonType.Extension = new AddressOnEnvelope() { Address = addressExtension };
+        swissPersonType.Extension = new PersonTypeExtension(addressExtension, printingRef, municipalityRef, municipalityName);
 
-        var swissMunicipality = SwissMunicipality.Create(personInfo.municipality.municipalityName);
-        if (int.TryParse(personInfo.municipality.municipalityId, out var bfs))
-            swissMunicipality.MunicipalityId = bfs;
+        var swissMunicipality = new SwissMunicipalityType
+        {
+            MunicipalityName = personInfo.Municipality.MunicipalityName,
+            MunicipalityId = personInfo.Municipality.MunicipalityId
+        };
 
-        var mrMrs = (MrMrsType)personInfo.physicalAddress.mrMrs;
 
-        var personMailAddressInfo = PersonMailAddressInfoType.Create(mrMrs, personInfo.physicalAddress.title,
-            personInfo.physicalAddress.firstName, personInfo.physicalAddress.lastName);
+        var mrMrs = (MrMrsType?)personInfo.PhysicalAddress.MrMrs;
 
-        var addressInformationType = AddressInformationType.Create(personInfo.physicalAddress.town, country10);
-        addressInformationType.DwellingNumber = voterType.person.physicalAddress.dwellingNumber;
-        addressInformationType.HouseNumber = voterType.person.physicalAddress.houseNumber;
-        addressInformationType.Street = voterType.person.physicalAddress.street;
+        var personMailAddressInfo = new PersonMailAddressInfoType
+        {
+            MrMrs = mrMrs,
+            Title = personInfo.PhysicalAddress.Title,
+            FirstName = personInfo.PhysicalAddress.FirstName,
+            LastName = personInfo.PhysicalAddress.LastName
 
-        if (int.TryParse(voterType.person.physicalAddress.zipCode, out var zipCode) && zipCode > 999 && zipCode < 10000)
+        };
+
+        var addressInformationType = new AddressInformationType
+        {
+            Town = personInfo.PhysicalAddress.Town,
+            Country = country10,
+            DwellingNumber = voterType.Person.PhysicalAddress.DwellingNumber,
+            HouseNumber = voterType.Person.PhysicalAddress.HouseNumber,
+            Street = voterType.Person.PhysicalAddress.Street
+        };
+
+        if (uint.TryParse(voterType.Person.PhysicalAddress.ZipCode, out var zipCode) && zipCode > 999 && zipCode < 10000)
             addressInformationType.SwissZipCode = zipCode;
 
-        switch (voterType.voterType1)
+        switch (voterType.VoterTypeProperty)
         {
-            case voterTypeType.SWISSRESIDENT:
-                var swissDomesticType = SwissDomesticType.Create(swissPersonType, swissMunicipality);
+            case EVoting.Config.VoterTypeType.Swissresident:
+                var swissDomesticType = new SwissDomesticType
+                {
+                    SwissDomesticPerson = swissPersonType,
+                    Municipality = swissMunicipality,
+                };
 
-                nationality = Nationality.Create(swissDomesticType);
+                nationality = new VotingPersonTypePerson { Swiss = swissDomesticType };
                 break;
-            case voterTypeType.SWISSABROAD:
-                var swissAbroadType = SwissAbroadType.Create(swissPersonType, DateTime.MinValue, country08, swissMunicipality);
+            case EVoting.Config.VoterTypeType.Swissabroad:
+                var swissAbroadType = new SwissAbroadType
+                {
+                    SwissAbroadPerson = swissPersonType,
+                    ResidenceCountry = country08,
+                    Municipality = swissMunicipality,
+                };
 
-                addressInformationType.ForeignZipCode = voterType.person.physicalAddress.zipCode;
+                addressInformationType.ForeignZipCode = voterType.Person.PhysicalAddress.ZipCode;
 
-                nationality = Nationality.Create(swissAbroadType);
+                nationality = new VotingPersonTypePerson { SwissAbroad = swissAbroadType };
                 break;
-            case voterTypeType.FOREIGNER:
-                var foreignerPerson = ForeignerPersonType.Create(personIdentification,
-                    (LanguageType)personInfo.languageOfCorrespondance);
+            case EVoting.Config.VoterTypeType.Foreigner:
+                var foreignerPerson = new ForeignerPersonType
+                {
+                    PersonIdentification = personIdentification,
+                    LanguageOfCorrespondance = (LanguageType)personInfo.LanguageOfCorrespondance,
+                    Extension = new PersonTypeExtension(null, printingRef, municipalityRef, municipalityName)
+                };
 
-                nationality = Nationality.Create(ForeignerType.Create(foreignerPerson, swissMunicipality));
+                nationality = new VotingPersonTypePerson
+                {
+                    Foreigner = new ForeignerType
+                    {
+                        ForeignerPerson = foreignerPerson,
+                        Municipality = swissMunicipality,
+                    },
+                };
                 break;
         }
 
-        var personMailAddress = PersonMailAddressType.Create(personMailAddressInfo, addressInformationType);
-
-        var domainOfInfluenceList = new List<DomainOfInfluenceInfoType>();
-
-        foreach (var authorizationObjectType in authorization.authorizationObject)
+        var personMailAddress = new PersonMailAddressType
         {
-            domainOfInfluenceList.Add(new DomainOfInfluenceInfoType()
+            AddressInformation = addressInformationType,
+            Person = personMailAddressInfo,
+        };
+
+        var domainOfInfluenceList = new List<VotingPersonTypeDomainOfInfluenceInfo>();
+
+        foreach (var authorizationObjectType in authorization.AuthorizationObject)
+        {
+            domainOfInfluenceList.Add(new VotingPersonTypeDomainOfInfluenceInfo()
             {
-                CountingCircle = CountingCircleType.Create(
-                    authorizationObjectType.countingCircle.countingCircleIdentification,
-                    authorizationObjectType.countingCircle.countingCircleName),
-                DomainOfInfluence = DomainOfInfluenceType.Create(
-                    GetDomainOfInfluenceTypeFromType(authorizationObjectType.domainOfInfluence.domainOfInfluenceType1),
-                    authorizationObjectType.domainOfInfluence.domainOfInfluenceIdentification,
-                    authorizationObjectType.domainOfInfluence.domainOfInfluenceName ?? "?"),
+                CountingCircle = new CountingCircleType
+                {
+                    CountingCircleId = authorizationObjectType.CountingCircle.CountingCircleIdentification,
+                    CountingCircleName = authorizationObjectType.CountingCircle.CountingCircleName,
+                },
+                DomainOfInfluence = new DomainOfInfluenceType
+                {
+                    DomainOfInfluenceTypeProperty = (DomainOfInfluenceTypeType)authorizationObjectType.DomainOfInfluence.DomainOfInfluenceTypeProperty,
+                    LocalDomainOfInfluenceIdentification = authorizationObjectType.DomainOfInfluence.DomainOfInfluenceIdentification,
+                    DomainOfInfluenceName = authorizationObjectType.DomainOfInfluence.DomainOfInfluenceName ?? "?",
+                },
             });
         }
 
-        var votingPerson = VotingPersonType.Create(nationality, DataLockType.KeineSperre, personMailAddress,
-            domainOfInfluenceList);
-
-        return votingPerson;
+        return new VotingPersonType
+        {
+            Person = nationality,
+            DeliveryAddress = personMailAddress,
+            DomainOfInfluenceInfo = domainOfInfluenceList,
+        };
     }
 
     private PersonTypeAddressExtension GetAddressExtension(
-        voterType voterType,
+        EVoting.Config.VoterType voterType,
         Ech0045VoterExtension? echVoter,
         CountryConfiguration physicalAddressCountryConfig)
     {
         var addressExtension = new PersonTypeAddressExtension();
 
-        if (voterType.voterType1 == voterTypeType.SWISSABROAD)
+        if (voterType.VoterTypeProperty == EVoting.Config.VoterTypeType.Swissabroad)
         {
             if (echVoter?.SwissAbroadPersonExtensionAddress != null)
             {
@@ -136,47 +206,47 @@ public class VoterMapper
             }
             else
             {
-                _logger.LogInformation("Voter with id {VoterId} has no Ech-0045 swiss abroad address extension. Fallback address is used", voterType.voterIdentification);
+                _logger.LogInformation("Voter with id {VoterId} has no Ech-0045 swiss abroad address extension. Fallback address is used", voterType.VoterIdentification);
             }
         }
 
-        var mrMrsItem2String = voterType.person.physicalAddress.mrMrs == mrMrsType.Item2
-            ? "Herr"
-            : "Fräulein";
-
-        var mrMrsString = voterType.person.physicalAddress.mrMrs == mrMrsType.Item1
-            ? "Frau"
-            : mrMrsItem2String;
+        var mrMrsString = voterType.Person.PhysicalAddress.MrMrs switch
+        {
+            EVoting.Config.MrMrsType.Item1 => "Frau",
+            EVoting.Config.MrMrsType.Item2 => "Herr",
+            EVoting.Config.MrMrsType.Item3 => "Fräulein",
+            _ => string.Empty,
+        };
 
         var townLine = physicalAddressCountryConfig.ZipCodeTownControl
-            ? $"{voterType.person.physicalAddress.town} {voterType.person.physicalAddress.zipCode}"
-            : $"{voterType.person.physicalAddress.zipCode} {voterType.person.physicalAddress.town}";
+            ? $"{voterType.Person.PhysicalAddress.Town} {voterType.Person.PhysicalAddress.ZipCode}"
+            : $"{voterType.Person.PhysicalAddress.ZipCode} {voterType.Person.PhysicalAddress.Town}";
 
         var streetLine = physicalAddressCountryConfig.StreetNrControl
-            ? $"{voterType.person.physicalAddress.houseNumber} {voterType.person.physicalAddress.street}"
-            : $"{voterType.person.physicalAddress.street} {voterType.person.physicalAddress.houseNumber}";
+            ? $"{voterType.Person.PhysicalAddress.HouseNumber} {voterType.Person.PhysicalAddress.Street}"
+            : $"{voterType.Person.PhysicalAddress.Street} {voterType.Person.PhysicalAddress.HouseNumber}";
 
-        var postOfficeLine = !string.IsNullOrEmpty(voterType.person.physicalAddress.postOfficeBoxText)
-            ? voterType.person.physicalAddress.postOfficeBoxText + " " +
-                (voterType.person.physicalAddress.postOfficeBoxNumber == 0 ? "" : voterType.person.physicalAddress.postOfficeBoxNumber.ToString())
+        var postOfficeLine = !string.IsNullOrEmpty(voterType.Person.PhysicalAddress.PostOfficeBoxText)
+            ? voterType.Person.PhysicalAddress.PostOfficeBoxText + " " +
+                (voterType.Person.PhysicalAddress.PostOfficeBoxNumber == 0 ? "" : voterType.Person.PhysicalAddress.PostOfficeBoxNumber.ToString())
             : string.Empty;
 
         addressExtension.Line1 = mrMrsString;
-        addressExtension.Line2 = $"{voterType.person.physicalAddress.firstName} {voterType.person.physicalAddress.lastName}";
+        addressExtension.Line2 = $"{voterType.Person.PhysicalAddress.FirstName} {voterType.Person.PhysicalAddress.LastName}";
         addressExtension.Line4 = streetLine;
 
-        if (voterType.voterType1 != voterTypeType.SWISSABROAD)
+        if (voterType.VoterTypeProperty != EVoting.Config.VoterTypeType.Swissabroad)
         {
-            if (voterType.person.physicalAddress.belowNameLine != null &&
-                voterType.person.physicalAddress.belowNameLine.Length > 0)
+            if (voterType.Person.PhysicalAddress.BelowNameLine != null &&
+                voterType.Person.PhysicalAddress.BelowNameLine.Count > 0)
             {
-                addressExtension.Line3 = string.Join(" ", voterType.person.physicalAddress.belowNameLine);
+                addressExtension.Line3 = string.Join(" ", voterType.Person.PhysicalAddress.BelowNameLine);
             }
 
-            if (voterType.person.physicalAddress.belowStreetLine != null &&
-                voterType.person.physicalAddress.belowStreetLine.Length > 0)
+            if (voterType.Person.PhysicalAddress.BelowStreetLine != null &&
+                voterType.Person.PhysicalAddress.BelowStreetLine.Count > 0)
             {
-                addressExtension.Line5 = string.Join(" ", voterType.person.physicalAddress.belowStreetLine);
+                addressExtension.Line5 = string.Join(" ", voterType.Person.PhysicalAddress.BelowStreetLine);
             }
 
             addressExtension.Line6 = postOfficeLine;
@@ -191,47 +261,6 @@ public class VoterMapper
         }
 
         return addressExtension;
-    }
-
-
-    private static DomainOfInfluenceTypeType GetDomainOfInfluenceTypeFromType(domainOfInfluenceTypeDomainOfInfluenceType type)
-    {
-        var returnValue = default(DomainOfInfluenceTypeType);
-        switch (type)
-        {
-            case domainOfInfluenceTypeDomainOfInfluenceType.CH:
-                returnValue = DomainOfInfluenceTypeType.CH;
-                break;
-            case domainOfInfluenceTypeDomainOfInfluenceType.CT:
-                returnValue = DomainOfInfluenceTypeType.CT;
-                break;
-            case domainOfInfluenceTypeDomainOfInfluenceType.BZ:
-                returnValue = DomainOfInfluenceTypeType.BZ;
-                break;
-            case domainOfInfluenceTypeDomainOfInfluenceType.MU:
-                returnValue = DomainOfInfluenceTypeType.MU;
-                break;
-            case domainOfInfluenceTypeDomainOfInfluenceType.SC:
-                returnValue = DomainOfInfluenceTypeType.SC;
-                break;
-            case domainOfInfluenceTypeDomainOfInfluenceType.KI:
-                returnValue = DomainOfInfluenceTypeType.KI;
-                break;
-            case domainOfInfluenceTypeDomainOfInfluenceType.OG:
-                returnValue = DomainOfInfluenceTypeType.OG;
-                break;
-            case domainOfInfluenceTypeDomainOfInfluenceType.KO:
-                returnValue = DomainOfInfluenceTypeType.KO;
-                break;
-            case domainOfInfluenceTypeDomainOfInfluenceType.SK:
-                returnValue = DomainOfInfluenceTypeType.SK;
-                break;
-            case domainOfInfluenceTypeDomainOfInfluenceType.AN:
-                returnValue = DomainOfInfluenceTypeType.AN;
-                break;
-        }
-
-        return returnValue;
     }
 }
 

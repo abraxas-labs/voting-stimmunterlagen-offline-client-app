@@ -50,7 +50,7 @@ public class Generator
     {
         using var streamReader = new StreamReader(modelStream.UnsafeConvert());
         using var jsonTextReader = new JsonTextReader(streamReader);
-        var jsonSerializer = new JsonSerializer();
+        var jsonSerializer = JsonSerializer.Create();
         return jsonSerializer.Deserialize(jsonTextReader);
     }
 }

@@ -1,5 +1,7 @@
-﻿using eCH_0155_4_0;
-using System.Collections.Generic;
+﻿using System.Linq;
+using Ech0155_4_0;
+using Ech0228_1_0;
+using Voting.Lib.Common;
 
 namespace EchDeliveryGeneration.Post;
 
@@ -14,26 +16,32 @@ public class ElectionMapper
         _majorityElectionMapper = majorityElectionMapper;
     }
 
-    public eCH_0228.electionInformationType MapToEchElection(electionType1 electionTypeSource, electionInformationType config)
+    public ElectionInformationType MapToEchElection(EVoting.Print.ElectionType electionTypeSource, EVoting.Config.ElectionInformationType config)
     {
-        var election = new eCH_0228.electionInformationType();
+        var electionDescriptionList = config.Election.ElectionDescription
+            .Select(electionDescriptionInfo => new ElectionDescriptionInformationTypeElectionDescriptionInfo
+            {
+                Language = XmlUtil.GetXmlEnumAttributeValueFromEnum(electionDescriptionInfo.Language),
+                ElectionDescription = electionDescriptionInfo.ElectionDescription,
+                ElectionDescriptionShort = electionDescriptionInfo.ElectionDescriptionShort,
+            })
+            .ToList();
 
-        int.TryParse(config.election.numberOfMandates, out var numberOfMandates);
-        election.election = ElectionType.Create(electionTypeSource.electionIdentification, (TypeOfElectionType)config.election.typeOfElection, numberOfMandates);
-
-        var electionDescriptionList = new List<ElectionDescriptionInfoType>();
-        foreach (var electionDescriptionInfo in config.election.electionDescription)
+        var election = new ElectionInformationType
         {
-            electionDescriptionList.Add(ElectionDescriptionInfoType.Create(electionDescriptionInfo.language.ToString(), electionDescriptionInfo.electionDescription, electionDescriptionInfo.electionDescriptionShort));
-        }
+            Election = new ElectionInformationTypeElection
+            {
+                ElectionIdentification = electionTypeSource.ElectionIdentification,
+                NumberOfMandates = config.Election.NumberOfMandates.ToString(),
+                ElectionDescription = electionDescriptionList,
+            }
+        };
 
-        election.election.ElectionDescription = ElectionDescriptionInformationType.Create(electionDescriptionList);
-
-        if (config.election.typeOfElection == electionTypeTypeOfElection.Item1)
+        if (config.Election.TypeOfElection == EVoting.Config.ElectionTypeTypeOfElection.Item1)
         {
             _proportionalElectionMapper.MapToEchElection(election, electionTypeSource, config);
         }
-        else if (config.election.typeOfElection == electionTypeTypeOfElection.Item2)
+        else if (config.Election.TypeOfElection == EVoting.Config.ElectionTypeTypeOfElection.Item2)
         {
             _majorityElectionMapper.MapToEchElection(election, electionTypeSource, config);
         }

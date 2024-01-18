@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using eCH_0228;
-using Voting.Stimmunterlagen.OfflineClient.Shared.ContestConfiguration;
+using Ech0228_1_0;
 using EchDeliveryGeneration.Ech0045;
 using EchDeliveryGeneration.ErrorHandling;
 using EchDeliveryGeneration.Models;
+using Voting.Stimmunterlagen.OfflineClient.Shared.ContestConfiguration;
 
 namespace EchDeliveryGeneration.Post;
 
@@ -20,8 +20,8 @@ public class PostDataTransformer
     }
 
     public Delivery Transform(
-        List<configuration> configuration,
-        List<votingCardList> votingCardList,
+        List<EVoting.Config.Configuration> configuration,
+        List<EVoting.Print.VotingCardList> votingCardLists,
         Configuration jsonConfig,
         Dictionary<string, Ech0045VoterExtension> echVoterByPersonId)
     {
@@ -30,35 +30,35 @@ public class PostDataTransformer
             VotingCardDelivery = new(),
         };
 
-        var votingCardDataList = new List<votingCardDataType>();
+        var votingCardDataList = new List<VotingCardDataType>();
 
-        foreach (var cardList in votingCardList)
+        foreach (var votingCardList in votingCardLists)
         {
             var referencesConfigs = configuration
-                .Where(x => x.contest.contestIdentification == cardList.contest.contestIdentification)
+                .Where(x => x.Contest.ContestIdentification == votingCardList.Contest.ContestIdentification)
                 .ToList();
 
             if (referencesConfigs.Count > 1)
-                throw new TransformationException(TransformationErrorCode.ContestDuplicates, cardList.contest.contestIdentification);
+                throw new TransformationException(TransformationErrorCode.ContestDuplicates, votingCardList.Contest.ContestIdentification);
 
             var referenceConfig = referencesConfigs.SingleOrDefault()
-                ?? throw new TransformationException(TransformationErrorCode.ContestNotFound, cardList.contest.contestIdentification);
+                ?? throw new TransformationException(TransformationErrorCode.ContestNotFound, votingCardList.Contest.ContestIdentification);
 
-            votingCardDataList.AddRange(cardList.contest.votingCard.Select(vc =>
+            votingCardDataList.AddRange(votingCardList.Contest.VotingCard.Select(vc =>
                 _votingCardMapper.MapToEchVotingCard(vc, referenceConfig, jsonConfig, echVoterByPersonId)));
 
-            AddContestDataToDelivery(ref delivery, referenceConfig.contest);
+            AddContestDataToDelivery(ref delivery, referenceConfig.Contest);
         }
         delivery.VotingCardDelivery.VotingCardData = votingCardDataList;
         SetDeliveryExtension(delivery, jsonConfig);
         return delivery;
     }
 
-    private void AddContestDataToDelivery(ref Delivery delivery, contestType contest)
+    private void AddContestDataToDelivery(ref Delivery delivery, EVoting.Config.ContestType contest)
     {
-        delivery.VotingCardDelivery.ContestData = new ContestDataType()
+        delivery.VotingCardDelivery.ContestData = new ContestDataType
         {
-            Item = _contestMapper.MapToEchContest(contest),
+            Contest = _contestMapper.MapToEchContest(contest),
         };
     }
 
@@ -71,16 +71,12 @@ public class PostDataTransformer
 
         foreach (var jsonConfigurationPrinting in jsonConfiguration.Printings)
         {
-            if (!deliveryExtension.Printings.ContainsKey(jsonConfigurationPrinting.Name))
-                deliveryExtension.Printings.Add(jsonConfigurationPrinting.Name, new SmallPrinting(jsonConfigurationPrinting));
-
             foreach (var municipality in jsonConfigurationPrinting.Municipalities)
             {
-                if (!deliveryExtension.Municipalities.ContainsKey(municipality.Bfs))
-                    deliveryExtension.Municipalities.Add(municipality.Bfs, municipality);
+                deliveryExtension.Municipalities.TryAdd(municipality.Bfs, municipality);
             }
         }
 
-        delivery.Extension = deliveryExtension;
+        delivery.VotingCardDelivery.Extension = deliveryExtension;
     }
 }

@@ -1,7 +1,7 @@
 import { PDF_CREATOR_SERVCE, PdfCreatorService } from './pdf-creator.service';
 import { firstValueFrom, from, groupBy, Observable, Observer, of, throwError } from 'rxjs';
 import { ElectronService } from './electron.service';
-import { VotingCardData } from '../models/ech228.model';
+import { Ech228MappingPath } from '../models/ech0228/ech0228.model';
 import { Ech0228MappingService } from './ech0228-mapping.service';
 import { E_VOTING_CONFIG_DIR, OUT_PDF_DIR, TEMP_PDF_DIR } from '../common/path.constants';
 import { map, mergeMap, switchMap, toArray } from 'rxjs/operators';
@@ -16,6 +16,7 @@ import { AppStateService } from './app-state.service';
 import { JobRange } from '../models/generation/job-range';
 import { SettingsService } from './settings.service';
 import { resolveValue } from './utils/value-resolver.utils';
+import { VotingCardData } from '../models/ech0228/voting-card-data.model';
 
 @Injectable()
 export class VotingCardService {
@@ -80,9 +81,7 @@ export class VotingCardService {
         if (!jobContext.sorting || jobContext.sorting.length === 0) {
           return groups;
         }
-        const sorted = this.sortValue(groups, jobContext.sorting);
-
-        return sorted;
+        return this.sortValue(groups, jobContext.sorting);
       }),
       toArray(),
       map(groupValue => {
@@ -134,7 +133,7 @@ export class VotingCardService {
     for (const sortCondition of sortObjects) {
       const firstValue = resolveValue(a, sortCondition.reference.paths);
       const secondValue = resolveValue(b, sortCondition.reference.paths);
-      if (sortCondition.reference.description === Ech0228MappingService.HOUSE_NUMBER.description) {
+      if (sortCondition.reference.description === Ech0228MappingService.VOTING_CARD_HOUSE_NUMBER.description) {
         const firstStreetObject = this.splitNumberAndString(firstValue);
         const secondStreetObject = this.splitNumberAndString(secondValue);
 
@@ -203,11 +202,11 @@ export class VotingCardService {
     );
   }
 
-  public generateJobGroup(context, groupValue: any[]): Job[] {
-    const municipalityRef = resolveValue(groupValue[0], [Ech0228MappingService.MUNICIPALITY_REF.paths[0]]);
+  public generateJobGroup(context: JobContext, groupValue: any[]): Job[] {
+    const municipalityRef = resolveValue(groupValue[0], Ech0228MappingService.VOTING_CARD_BFS.paths);
     const template: any = pathCombine(
       E_VOTING_CONFIG_DIR,
-      resolveValue(context.ech228.extension.Municipalities[municipalityRef], context.templateMapping.paths) ?? '',
+      resolveValue(context.ech228!.votingCardDelivery.extension.municipalities[municipalityRef], context.templateMapping.paths) ?? '',
     );
     const rangeSize = this.settingsService.jobSize;
     let startFrom = 0;
@@ -216,7 +215,7 @@ export class VotingCardService {
     let votersOfGroup: any[] = [];
     const jobModel = context.ech228;
 
-    context.ech228.votingCardDelivery.votingCardData = undefined;
+    context.ech228!.votingCardDelivery.votingCardData = [];
     do {
       votersOfGroup = groupValue.slice(startFrom, to);
       if (votersOfGroup.length) {
@@ -304,25 +303,47 @@ export class VotingCardService {
   }
 
   public createFileName(jobGroup: Job[], jobContext: JobContext): string {
-    const tempDateString = resolveValue(jobGroup[0].model, Ech0228MappingService.CONTEST_DATE.paths);
-    const printingRef = resolveValue(jobGroup[0].voter[0], [Ech0228MappingService.PRINTING_REF.paths[0]]);
+    const contestDate = resolveValue(jobGroup[0].model, Ech0228MappingService.CONTEST_DATE.paths);
 
-    let fileName = '' + this.convertDate(tempDateString);
+    let fileName = '' + this.convertDate(contestDate);
 
     const groupBaseValue = jobGroup[0].voter[0];
-    fileName += '_' + jobGroup[0].model.extension.Printings[printingRef].name;
-    if (jobContext.groupe1 && jobContext.groupe1.description) {
-      fileName += '_' + resolveValue(groupBaseValue, jobContext.groupe1.paths);
-    }
-    if (jobContext.groupe2 && jobContext.groupe2.description) {
-      fileName += '_' + resolveValue(groupBaseValue, jobContext.groupe2.paths);
-    }
-    if (jobContext.groupe3 && jobContext.groupe3.description) {
-      fileName += '_' + resolveValue(groupBaseValue, jobContext.groupe3.paths);
-    }
+    const groupSegment = this.buildGroupsSegment([jobContext.groupe1, jobContext.groupe2, jobContext.groupe3], groupBaseValue);
 
+    fileName += '_' + resolveValue(jobGroup[0].model, Ech0228MappingService.CONTEST_ID.paths);
+
+    if (!!groupSegment) {
+      fileName += '_' + groupSegment;
+    }
     fileName += '_' + this.getNumberOfVotes(jobGroup);
     return fileName;
+  }
+
+  public buildGroupsSegment(groups: Ech228MappingPath[], votingCardData: any): string {
+    let groupsSegment = '';
+    let isFirst = true;
+
+    for (let group of groups) {
+      if (!group || !group.description) {
+        continue;
+      }
+
+      if (group.description === Ech0228MappingService.VOTING_CARD_BFS.description) {
+        // use municiaplity name instead of bfs in the file name
+        group = Ech0228MappingService.VOTING_CARD_MUNICIPALITY_NAME;
+      }
+
+      const segmentValue = resolveValue(votingCardData, group.paths) + '';
+
+      if (!segmentValue) {
+        continue;
+      }
+
+      groupsSegment += (isFirst ? '' : '_') + segmentValue.replace(/ /g, '_');
+      isFirst = false;
+    }
+
+    return groupsSegment;
   }
 
   private getNumberOfVotes(jobs): number {

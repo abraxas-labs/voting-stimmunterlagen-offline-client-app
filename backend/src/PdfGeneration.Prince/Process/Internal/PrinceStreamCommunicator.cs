@@ -92,8 +92,8 @@ public class PrinceStreamCommunicator : IPrinceStreamCommunicator
     {
         if (disposing)
         {
-            _princeStandardInput.Dispose();
-            _princeStandardOutput.Dispose();
+            _princeStandardInput?.Dispose();
+            _princeStandardOutput?.Dispose();
         }
     }
 

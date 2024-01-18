@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@angular/core';
-import { Municipality } from '../models/ech228.model';
 import { AppStateService } from './app-state.service';
 import { EchDeliveryService, ECH_DELIVERY_SERVICE } from './ech-delivery.service';
 import { Ech0228MappingService } from './ech0228-mapping.service';
@@ -27,9 +26,9 @@ export class StepActionsService {
     }
 
     if (uploads.some(f => f.fileType === 'ECH0045')) {
-      this.jobContext.templateMapping = Ech0228MappingService.TEMPLATE_REF;
+      this.jobContext.templateMapping = Ech0228MappingService.MUNICIPALITY_TEMPLATE_REF;
     } else {
-      this.jobContext.templateMapping = Ech0228MappingService.ETEMPLATE_REF;
+      this.jobContext.templateMapping = Ech0228MappingService.MUNICIPALITY_ETEMPLATE_REF;
     }
 
     let response = await this.chVoteDataService.importDataFromPaths(uploads.map(fileItem => fileItem.filePath)).toPromise();
@@ -53,7 +52,7 @@ export class StepActionsService {
   }
 
   public addFingerprintToMunicipalities(fingerprint: string): void {
-    const municipalities = Object.values(this.jobContext.ech228!.extension.Municipalities) as Municipality[];
+    const municipalities = Object.values(this.jobContext.ech228!.votingCardDelivery.extension.municipalities);
     for (const municipality of municipalities) {
       if (!!municipality.vcteVotingFingerprint) {
         continue;
