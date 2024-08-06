@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { Ech0228MappingService } from '../../services/ech0228-mapping.service';
 import { Component, OnInit } from '@angular/core';
 import { AppStateStep } from '../../models/app-state.model';

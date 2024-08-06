@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 

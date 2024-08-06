@@ -22,8 +22,16 @@
         [disabled]="disableSettingJobSize"
       />
     </div>
+    <app-file-input label="POST_SIGNATURE_VALIDATION.JAVA_RUNTIME"
+                    [path]="javaRuntimePath"
+                    (pathChange)="changeJavaRuntimePath($event)"
+                    [accept]="allowedJavaRuntimePathExtensions"></app-file-input>
+    <app-file-input label="POST_SIGNATURE_VALIDATION.SIGNATURE_VALIDATOR"
+                    [path]="postSignatureValidatorPath"
+                    (pathChange)="changePostSignatureValidatorPath($event)"
+                    [accept]="allowedPostSignatureValidatorPathExtensions"></app-file-input>
     <div class="abra-form-group">
-      <button class="abra-button-secondary" (click)="sDelete()">Sicheres Löschen aller Daten</button>
+      <button class="abra-button-secondary" (click)="sDelete()">{{ 'DELETE_ALL_FILES' | translate }}</button>
       <span>{{ deleteMsg }}</span>
     </div>
     v{{ appVersion }}

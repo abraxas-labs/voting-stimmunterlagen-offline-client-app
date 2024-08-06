@@ -1,4 +1,7 @@
-﻿using CsvHelper;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using CsvHelper;
 using CsvHelper.Configuration;
 using System;
 using System.Collections.Generic;

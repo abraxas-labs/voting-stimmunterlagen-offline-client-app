@@ -14,7 +14,7 @@ namespace EVoting.Config
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "2.1.963.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("PartyAffiliationformationTypePartyAffiliationInfo", Namespace="http://www.evoting.ch/xmlns/config/5", AnonymousType=true)]
+    [System.Xml.Serialization.XmlTypeAttribute("PartyAffiliationformationTypePartyAffiliationInfo", Namespace="http://www.evoting.ch/xmlns/config/6", AnonymousType=true)]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PartyAffiliationformationTypePartyAffiliationInfo

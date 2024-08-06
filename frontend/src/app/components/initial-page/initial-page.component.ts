@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppStateService } from '../../services/app-state.service';

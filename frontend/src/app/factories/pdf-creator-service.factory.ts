@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { ElectronService } from '../services/electron.service';
 import { PdfCreatorShellService } from '../services/shell/pdf-creator-shell.service';
 import { LogService } from '../services/log.service';

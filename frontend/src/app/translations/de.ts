@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { Translations } from '../models/translations';
 
 /* eslint-disable */
@@ -63,6 +69,7 @@ export const TRANSLATIONS: Translations = {
   'YES': 'Ja',
   'NO': 'Nein',
   'CLOSE': 'Schliessen',
+  'DELETE_ALL_FILES': 'Sicheres Löschen aller Daten',
   'ASC': 'Aufsteigend (abc 123)',
   'DSC': 'Absteigend (cba 321)',
 
@@ -76,6 +83,17 @@ export const TRANSLATIONS: Translations = {
   'CRYPTO.CHECK_CERTIFICATE': 'Zertifikat überprüfen',
   'CRYPTO.CANNOT_LOAD_CERTIFICATE': 'Das Zertifikat konnte nicht geladen werden. Entweder ist der Pfad oder das Passwort falsch',
   'CRYPTO.SIGN_AND_ENCRYPT': 'Signieren und verschlüsseln',
+
+  'POST_SIGNATURE_VALIDATION.JAVA_RUNTIME': 'Java Runtime (java.exe für XML Signatur Validierungs Tool)',
+  'POST_SIGNATURE_VALIDATION.SIGNATURE_VALIDATOR': 'XML Signatur Validierungs Tool',
+  'POST_SIGNATURE_VALIDATION.KEYSTORE_SECTION': 'Zertifikat für die XML Validierung (Print | Config)',
+  'POST_SIGNATURE_VALIDATION.KEYSTORE_CERTIFICATE': 'Keystore',
+  'POST_SIGNATURE_VALIDATION.KEYSTORE_PASSWORD': 'Keystore Passwort',
+
+  'POST_SIGNATURE_VALIDATION_RESULT.SKIPPED': 'Die Signaturprüfung konnte nicht durchgeführt werden, da nicht alle erforderlichen Dateien angegeben wurden.',
+  'POST_SIGNATURE_VALIDATION_RESULT.SUCCESS': 'Die Signaturprüfung wurde erfolgreich durchgeführt.',
+  'POST_SIGNATURE_VALIDATION_RESULT.FILE_NOT_FOUND': 'Für die Signaturprüfung wurden Dateien angegeben, wobei folgende Datei nicht mehr gefunden wird:',
+  'POST_SIGNATURE_VALIDATION_RESULT.ERROR': 'Die Signaturprüfung ist fehlgeschlagen:',
 
   'ERROR.GENERIC': 'Ein Fehler ist aufgetreten',
   'ERROR.VOTER_NOT_FOUND': 'Wähler mit der id',

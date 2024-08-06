@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { Injectable } from '@angular/core';
 import { LOG_DIR } from '../common/path.constants';
 import { pathCombine } from './utils/path.utils';

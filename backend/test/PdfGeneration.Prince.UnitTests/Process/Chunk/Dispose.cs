@@ -1,4 +1,7 @@
-﻿using Moq;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using Moq;
 using Thinktecture.IO;
 using Xunit;
 using SUT = PdfGeneration.Prince.Process.Chunk;

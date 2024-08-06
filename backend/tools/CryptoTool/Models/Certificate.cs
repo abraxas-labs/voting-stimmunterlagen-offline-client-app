@@ -1,14 +1,17 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using Voting.Stimmunterlagen.OfflineClient.Shared.Cryptography.Certificates;
 
 namespace CryptoTool.Models;
 
 internal class Certificate
 {
-    public Certificate(X509Certificate2 certificate)
+    public Certificate(ICertificate certificate)
     {
         Subject = certificate.Subject;
         Thumbprint = certificate.Thumbprint;
-        CommonName = certificate.GetNameInfo(X509NameType.SimpleName, false);
+        CommonName = certificate.CommonName;
     }
 
     public string Subject { get; init; }

@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { PropertyMunicipalities } from './porperty-data';
 
 export interface Voter {

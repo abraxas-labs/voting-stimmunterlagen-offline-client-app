@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using System.Collections.Generic;
 using Ech0007_6_0;
 using Ech0010_6_0;
 using Ech0044_4_1;

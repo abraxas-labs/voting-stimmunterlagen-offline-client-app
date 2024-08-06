@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { E_VOTING_CONFIG_DIR } from '../../common/path.constants';
 import { Certificate } from '../../models/certificate.model';

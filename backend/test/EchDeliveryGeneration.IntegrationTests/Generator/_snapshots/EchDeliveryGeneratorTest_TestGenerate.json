@@ -1544,19 +1544,19 @@
                       "candidateText": [
                         {
                           "language": "de",
-                          "candidateText": "Kein Name ausgewählt"
+                          "candidateText": "Kein Name ausgewählt Position 1"
                         },
                         {
                           "language": "fr",
-                          "candidateText": "Aucun nom sélectionné"
+                          "candidateText": "Aucun nom sélectionné Position 1"
                         },
                         {
                           "language": "it",
-                          "candidateText": "Nessun nominativo selezionato"
+                          "candidateText": "Nessun nominativo selezionato Position 1"
                         },
                         {
                           "language": "rm",
-                          "candidateText": "Nagin num selecziunà"
+                          "candidateText": "Nagin num selecziunà Position 1"
                         }
                       ],
                       "candidateTextSpecified": true,
@@ -1567,19 +1567,19 @@
                           "candidateTextOnPosition": [
                             {
                               "language": "de",
-                              "candidateText": "Kein Name ausgewählt"
+                              "candidateText": "Kein Name ausgewählt Position 1"
                             },
                             {
                               "language": "fr",
-                              "candidateText": "Aucun nom sélectionné"
+                              "candidateText": "Aucun nom sélectionné Position 1"
                             },
                             {
                               "language": "it",
-                              "candidateText": "Nessun nominativo selezionato"
+                              "candidateText": "Nessun nominativo selezionato Position 1"
                             },
                             {
                               "language": "rm",
-                              "candidateText": "Nagin num selecziunà"
+                              "candidateText": "Nagin num selecziunà Position 1"
                             }
                           ],
                           "candidateTextOnPositionSpecified": true,
@@ -1599,19 +1599,19 @@
                       "candidateText": [
                         {
                           "language": "de",
-                          "candidateText": "Kein Name ausgewählt"
+                          "candidateText": "Kein Name ausgewählt Position 2"
                         },
                         {
                           "language": "fr",
-                          "candidateText": "Aucun nom sélectionné"
+                          "candidateText": "Aucun nom sélectionné Position 2"
                         },
                         {
                           "language": "it",
-                          "candidateText": "Nessun nominativo selezionato"
+                          "candidateText": "Nessun nominativo selezionato Position 2"
                         },
                         {
                           "language": "rm",
-                          "candidateText": "Nagin num selecziunà"
+                          "candidateText": "Nagin num selecziunà Position 2"
                         }
                       ],
                       "candidateTextSpecified": true,
@@ -1622,19 +1622,19 @@
                           "candidateTextOnPosition": [
                             {
                               "language": "de",
-                              "candidateText": "Kein Name ausgewählt"
+                              "candidateText": "Kein Name ausgewählt Position 2"
                             },
                             {
                               "language": "fr",
-                              "candidateText": "Aucun nom sélectionné"
+                              "candidateText": "Aucun nom sélectionné Position 2"
                             },
                             {
                               "language": "it",
-                              "candidateText": "Nessun nominativo selezionato"
+                              "candidateText": "Nessun nominativo selezionato Position 2"
                             },
                             {
                               "language": "rm",
-                              "candidateText": "Nagin num selecziunà"
+                              "candidateText": "Nagin num selecziunà Position 2"
                             }
                           ],
                           "candidateTextOnPositionSpecified": true,
@@ -1660,7 +1660,7 @@
                       "writeInCodeDesignation": [
                         {
                           "language": "de",
-                          "codeDesignationText": "Anderer wählbarer Kandidat"
+                          "codeDesignationText": "Andere wählbare Person Position 1"
                         }
                       ],
                       "writeInCodeDesignationSpecified": true
@@ -1671,7 +1671,7 @@
                       "writeInCodeDesignation": [
                         {
                           "language": "de",
-                          "codeDesignationText": "Anderer wählbarer Kandidat"
+                          "codeDesignationText": "Andere wählbare Person Position 2"
                         }
                       ],
                       "writeInCodeDesignationSpecified": true
@@ -2447,19 +2447,19 @@
                       "candidateText": [
                         {
                           "language": "de",
-                          "candidateText": "Kein Name ausgewählt"
+                          "candidateText": "Kein Name ausgewählt Position 1"
                         },
                         {
                           "language": "fr",
-                          "candidateText": "Aucun nom sélectionné"
+                          "candidateText": "Aucun nom sélectionné Position 1"
                         },
                         {
                           "language": "it",
-                          "candidateText": "Nessun nominativo selezionato"
+                          "candidateText": "Nessun nominativo selezionato Position 1"
                         },
                         {
                           "language": "rm",
-                          "candidateText": "Nagin num selecziunà"
+                          "candidateText": "Nagin num selecziunà Position 1"
                         }
                       ],
                       "candidateTextSpecified": true,
@@ -2470,19 +2470,19 @@
                           "candidateTextOnPosition": [
                             {
                               "language": "de",
-                              "candidateText": "Kein Name ausgewählt"
+                              "candidateText": "Kein Name ausgewählt Position 1"
                             },
                             {
                               "language": "fr",
-                              "candidateText": "Aucun nom sélectionné"
+                              "candidateText": "Aucun nom sélectionné Position 1"
                             },
                             {
                               "language": "it",
-                              "candidateText": "Nessun nominativo selezionato"
+                              "candidateText": "Nessun nominativo selezionato Position 1"
                             },
                             {
                               "language": "rm",
-                              "candidateText": "Nagin num selecziunà"
+                              "candidateText": "Nagin num selecziunà Position 1"
                             }
                           ],
                           "candidateTextOnPositionSpecified": true,
@@ -2502,19 +2502,19 @@
                       "candidateText": [
                         {
                           "language": "de",
-                          "candidateText": "Kein Name ausgewählt"
+                          "candidateText": "Kein Name ausgewählt Position 2"
                         },
                         {
                           "language": "fr",
-                          "candidateText": "Aucun nom sélectionné"
+                          "candidateText": "Aucun nom sélectionné Position 2"
                         },
                         {
                           "language": "it",
-                          "candidateText": "Nessun nominativo selezionato"
+                          "candidateText": "Nessun nominativo selezionato Position 2"
                         },
                         {
                           "language": "rm",
-                          "candidateText": "Nagin num selecziunà"
+                          "candidateText": "Nagin num selecziunà Position 2"
                         }
                       ],
                       "candidateTextSpecified": true,
@@ -2525,19 +2525,19 @@
                           "candidateTextOnPosition": [
                             {
                               "language": "de",
-                              "candidateText": "Kein Name ausgewählt"
+                              "candidateText": "Kein Name ausgewählt Position 2"
                             },
                             {
                               "language": "fr",
-                              "candidateText": "Aucun nom sélectionné"
+                              "candidateText": "Aucun nom sélectionné Position 2"
                             },
                             {
                               "language": "it",
-                              "candidateText": "Nessun nominativo selezionato"
+                              "candidateText": "Nessun nominativo selezionato Position 2"
                             },
                             {
                               "language": "rm",
-                              "candidateText": "Nagin num selecziunà"
+                              "candidateText": "Nagin num selecziunà Position 2"
                             }
                           ],
                           "candidateTextOnPositionSpecified": true,
@@ -2563,7 +2563,7 @@
                       "writeInCodeDesignation": [
                         {
                           "language": "de",
-                          "codeDesignationText": "Anderer wählbarer Kandidat"
+                          "codeDesignationText": "Andere wählbare Person Position 1"
                         }
                       ],
                       "writeInCodeDesignationSpecified": true
@@ -2574,7 +2574,7 @@
                       "writeInCodeDesignation": [
                         {
                           "language": "de",
-                          "codeDesignationText": "Anderer wählbarer Kandidat"
+                          "codeDesignationText": "Andere wählbare Person Position 2"
                         }
                       ],
                       "writeInCodeDesignationSpecified": true

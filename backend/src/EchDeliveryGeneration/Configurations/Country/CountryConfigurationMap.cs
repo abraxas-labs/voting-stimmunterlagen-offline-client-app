@@ -1,4 +1,7 @@
-﻿using CsvHelper.Configuration;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using CsvHelper.Configuration;
 
 namespace EchDeliveryGeneration.Configurations.Country;
 

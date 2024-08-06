@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Job } from '../../models/generation/job';
 import { VotingCardService } from '../../services/voting-card.service';

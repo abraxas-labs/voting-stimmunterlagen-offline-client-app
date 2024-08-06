@@ -4,8 +4,8 @@
     "strictNullChecks": true,
     "outDir": "../out-tsc/app",
     "baseUrl": "./",
-    "types": ["electron"]
+    "types": ["../../node_modules/electron/electron.d.ts"],
   },
   "files": ["boot.ts", "polyfills.ts"],
-  "include": ["src/**/*.d.ts"]
+  "include": ["**/*.d.ts"]
 }

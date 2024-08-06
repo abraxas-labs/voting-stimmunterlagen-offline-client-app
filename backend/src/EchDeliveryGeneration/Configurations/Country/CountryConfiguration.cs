@@ -1,4 +1,7 @@
-﻿namespace EchDeliveryGeneration.Configurations.Country;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+namespace EchDeliveryGeneration.Configurations.Country;
 
 internal class CountryConfiguration
 {

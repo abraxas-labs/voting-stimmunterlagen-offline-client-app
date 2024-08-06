@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { BrowserModule } from '@angular/platform-browser';
 import { Injector, LOCALE_ID, NgModule } from '@angular/core';
 
@@ -53,7 +59,7 @@ registerLocaleData(localeEn);
   declarations: [...ALL_COMPONENTS, ...ALL_DIRECTIVES, ...ALL_PIPES, ValuePrepareComponent, SpinnerComponent],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(APP_ROUTES, { useHash: true, relativeLinkResolution: 'legacy' }),
+    RouterModule.forRoot(APP_ROUTES, { useHash: true }),
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,

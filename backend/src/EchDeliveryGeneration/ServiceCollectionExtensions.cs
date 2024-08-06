@@ -1,6 +1,10 @@
-﻿using EchDeliveryGeneration;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using EchDeliveryGeneration;
 using EchDeliveryGeneration.Ech0045;
 using EchDeliveryGeneration.Post;
+using EchDeliveryGeneration.Validation;
 using Voting.Lib.Ech.Ech0045_4_0.DependencyInjection;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -20,7 +24,8 @@ public static class ServiceCollectionExtensions
             .AddSingleton<ProportionalElectionMapper>()
             .AddSingleton<VoteMapper>()
             .AddSingleton<VoterMapper>()
-            .AddSingleton<VotingCardMapper>();
+            .AddSingleton<VotingCardMapper>()
+            .AddSingleton<PostSignatureValidator>();
     }
 }
 

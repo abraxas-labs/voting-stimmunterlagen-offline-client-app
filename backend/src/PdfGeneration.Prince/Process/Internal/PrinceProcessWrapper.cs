@@ -1,4 +1,7 @@
-﻿namespace PdfGeneration.Prince.Process.Internal;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+namespace PdfGeneration.Prince.Process.Internal;
 
 using System;
 using System.Diagnostics;

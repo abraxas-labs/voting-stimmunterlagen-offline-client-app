@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<configuration xmlns="http://www.evoting.ch/xmlns/config/5">
+<configuration xmlns="http://www.evoting.ch/xmlns/config/6">
     <header>
         <fileDate>2023-04-14T13:41:52.556+02:00</fileDate>
         <voterTotal>60</voterTotal>

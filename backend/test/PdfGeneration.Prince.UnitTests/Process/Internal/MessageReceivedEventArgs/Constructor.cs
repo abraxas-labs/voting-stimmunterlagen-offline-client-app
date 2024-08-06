@@ -1,4 +1,7 @@
-﻿using FluentAssertions;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using FluentAssertions;
 using Xunit;
 using SUT = PdfGeneration.Prince.Process.Internal.MessageReceivedEventArgs;
 

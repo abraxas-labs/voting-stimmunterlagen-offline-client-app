@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { Injectable } from '@angular/core';
 import { AppState, AppStateStep } from '../models/app-state.model';
 import { Job } from '../models/generation/job';
@@ -42,6 +48,7 @@ export class AppStateService {
     this.stateValue = {
       step: AppStateStep.Welcome,
       uploads: [],
+      keystorePaths: [],
       grouping: [],
       sorting: [],
       jobGroups: [],
@@ -86,8 +93,8 @@ export class AppStateService {
       return appState;
     }
 
-    for (let jobGroup of appState.jobGroups) {
-      for (let job of jobGroup) {
+    for (const jobGroup of appState.jobGroups) {
+      for (const job of jobGroup) {
         if (!job.completed) {
           return appState;
         }

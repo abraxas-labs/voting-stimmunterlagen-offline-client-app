@@ -1,4 +1,7 @@
-﻿using Serilog.Events;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using Serilog.Events;
 using Serilog;
 using System;
 using Serilog.Formatting.Json;

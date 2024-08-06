@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { Component, Input } from '@angular/core';
 import { trigger, style, state, animate, transition } from '@angular/animations';
 

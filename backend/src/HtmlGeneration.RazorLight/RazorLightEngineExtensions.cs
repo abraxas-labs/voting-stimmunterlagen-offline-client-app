@@ -1,4 +1,6 @@
-﻿// ReSharper disable once CheckNamespace; Justification: Extension method
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
 namespace RazorLight;
 
 using System;

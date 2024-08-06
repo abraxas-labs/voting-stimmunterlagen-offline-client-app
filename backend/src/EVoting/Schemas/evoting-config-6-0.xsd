@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:config="http://www.evoting.ch/xmlns/config/5" targetNamespace="http://www.evoting.ch/xmlns/config/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:config="http://www.evoting.ch/xmlns/config/6" targetNamespace="http://www.evoting.ch/xmlns/config/6" elementFormDefault="qualified" attributeFormDefault="unqualified" version="6.0">
 	<xs:simpleType name="languageType">
 		<xs:restriction base="xs:string">
 			<xs:length value="2"/>
@@ -143,7 +143,7 @@
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element name="language" type="config:languageType"/>
-						<xs:element name="ballotDescriptionLong" minOccurs="0">
+						<xs:element name="ballotDescriptionLong">
 							<xs:simpleType>
 								<xs:restriction base="xs:token">
 									<xs:minLength value="1"/>
@@ -151,11 +151,30 @@
 								</xs:restriction>
 							</xs:simpleType>
 						</xs:element>
-						<xs:element name="ballotDescriptionShort" minOccurs="0">
+						<xs:element name="ballotDescriptionShort">
 							<xs:simpleType>
 								<xs:restriction base="xs:token">
 									<xs:minLength value="1"/>
 									<xs:maxLength value="100"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="electionRulesExplanationType">
+		<xs:sequence>
+			<xs:element name="displayLineInfo" minOccurs="4" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="language" type="config:languageType"/>
+						<xs:element name="displayLineText">
+							<xs:simpleType>
+								<xs:restriction base="xs:token">
+									<xs:minLength value="1"/>
+									<xs:maxLength value="500"/>
 								</xs:restriction>
 							</xs:simpleType>
 						</xs:element>
@@ -170,7 +189,7 @@
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element name="language" type="config:languageType"/>
-						<xs:element name="electionDescriptionShort" minOccurs="0">
+						<xs:element name="electionDescriptionShort">
 							<xs:simpleType>
 								<xs:restriction base="xs:token">
 									<xs:maxLength value="100"/>
@@ -198,6 +217,25 @@
 					<xs:sequence>
 						<xs:element name="language" type="config:languageType"/>
 						<xs:element name="candidateText">
+							<xs:simpleType>
+								<xs:restriction base="xs:token">
+									<xs:minLength value="1"/>
+									<xs:maxLength value="500"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="displayLineInformationType">
+		<xs:sequence>
+			<xs:element name="displayLineInfo" minOccurs="4" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="language" type="config:languageType"/>
+						<xs:element name="displayLineText">
 							<xs:simpleType>
 								<xs:restriction base="xs:token">
 									<xs:minLength value="1"/>
@@ -327,6 +365,7 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
+			<xs:element name="electionRulesExplanation" type="config:electionRulesExplanationType" minOccurs="0"/>
 			<xs:element name="electionDescription" type="config:electionDescriptionInformationType"/>
 			<xs:element name="electionPosition">
 				<xs:simpleType>
@@ -398,6 +437,13 @@
 			<xs:element name="incumbentText" type="config:incumbentTextType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="eligibilityType">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="explicit"/>
+			<xs:enumeration value="implicit"/>
+			<xs:enumeration value="implicitDiscreet"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:complexType name="candidateType">
 		<xs:sequence>
 			<xs:element name="candidateIdentification" type="config:identifierType"/>
@@ -470,7 +516,7 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="referenceOnPosition" minOccurs="0">
+			<xs:element name="referenceOnPosition">
 				<xs:simpleType>
 					<xs:restriction base="xs:token">
 						<xs:minLength value="1"/>
@@ -479,6 +525,12 @@
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="partyAffiliation" type="config:partyAffiliationformationType" minOccurs="0"/>
+			<xs:element name="eligibility" type="config:eligibilityType"/>
+			<xs:element name="displayCandidateLine1" type="config:displayLineInformationType"/>
+			<xs:element name="displayCandidateLine2" type="config:displayLineInformationType"/>
+			<xs:element name="displayCandidateLine3" type="config:displayLineInformationType" minOccurs="0"/>
+			<xs:element name="displayCandidateLine4" type="config:displayLineInformationType" minOccurs="0"/>
+			<xs:element name="displayCandidateLine5" type="config:displayLineInformationType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="varListTextInfoType">
@@ -523,6 +575,11 @@
 			<xs:element name="candidatePosition" type="config:candidatePositionType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="varListText1" type="config:varListTextType" minOccurs="0"/>
 			<xs:element name="varListText2" type="config:varListTextType" minOccurs="0"/>
+			<xs:element name="displayListLine1" type="config:displayLineInformationType"/>
+			<xs:element name="displayListLine2" type="config:displayLineInformationType" minOccurs="0"/>
+			<xs:element name="displayListLine3" type="config:displayLineInformationType" minOccurs="0"/>
+			<xs:element name="displayListLine4" type="config:displayLineInformationType" minOccurs="0"/>
+			<xs:element name="displayListLine5" type="config:displayLineInformationType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="dwellingAddressType">
@@ -645,7 +702,7 @@
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element name="language" type="config:languageType"/>
-						<xs:element name="ballotQuestionTitle" minOccurs="0">
+						<xs:element name="ballotQuestionTitle">
 							<xs:simpleType>
 								<xs:restriction base="xs:token">
 									<xs:minLength value="1"/>
@@ -842,7 +899,7 @@
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element name="language" type="config:languageType"/>
-						<xs:element name="electionGroupDescriptionShort" minOccurs="0">
+						<xs:element name="electionGroupDescriptionShort">
 							<xs:simpleType>
 								<xs:restriction base="xs:token">
 									<xs:maxLength value="100"/>
@@ -1262,5 +1319,60 @@
 				<xs:element name="signature" type="xs:base64Binary"/>
 			</xs:sequence>
 		</xs:complexType>
+		<!-- Prevent election identification duplicates -->
+		<xs:unique name="electionIdentificationUniquenessConstraint">
+			<xs:selector xpath="config:contest/config:electionGroupBallot/config:electionInformation/config:election"/>
+			<xs:field xpath="config:electionIdentification"/>
+		</xs:unique>
+		<!-- Prevent list identification duplicates -->
+		<xs:unique name="listIdentificationUniquenessConstraint">
+			<xs:selector xpath="config:contest/config:electionGroupBallot/config:electionInformation/config:list"/>
+			<xs:field xpath="config:listIdentification"/>
+		</xs:unique>
+		<!-- Prevent ballot identification duplicates -->
+		<xs:unique name="ballotIdentificationUniquenessConstraint">
+			<xs:selector xpath="config:contest/config:voteInformation/config:vote/config:ballot"/>
+			<xs:field xpath="config:ballotIdentification"/>
+		</xs:unique>
+		<!-- Prevent question identification duplicates -->
+		<xs:unique name="questionIdentificationUniquenessConstraint">
+			<xs:selector xpath="config:contest/config:voteInformation/config:vote/config:ballot/config:standardBallot|config:contest/config:voteInformation/config:vote/config:ballot/config:variantBallot/config:standardQuestion|config:contest/config:voteInformation/config:vote/config:ballot/config:variantBallot/config:tieBreakQuestion"/>
+			<xs:field xpath="config:questionIdentification"/>
+		</xs:unique>
+		<!-- Prevent answer identification duplicates -->
+		<xs:unique name="answerIdentificationUniquenessConstraint">
+			<xs:selector xpath="config:contest/config:voteInformation/config:vote/config:ballot/config:standardBallot/config:answer|config:contest/config:voteInformation/config:vote/config:ballot/config:variantBallot/config:standardQuestion/config:answer|config:contest/config:voteInformation/config:vote/config:ballot/config:variantBallot/config:tieBreakQuestion/config:answer"/>
+			<xs:field xpath="config:answerIdentification"/>
+		</xs:unique>
+		<!-- Prevent vote identification duplicates -->
+		<xs:unique name="voteIdentificationUniquenessConstraint">
+			<xs:selector xpath="config:contest/config:voteInformation/config:vote"/>
+			<xs:field xpath="config:voteIdentification"/>
+		</xs:unique>
+		<!-- Prevent election group identification duplicates -->
+		<xs:unique name="electionGroupIdentificationUniquenessConstraint">
+			<xs:selector xpath="config:contest/config:electionGroupBallot"/>
+			<xs:field xpath="config:electionGroupIdentification"/>
+		</xs:unique>
+		<!-- Prevent voter identification duplicates -->
+		<xs:unique name="voterIdentificationUniquenessConstraint">
+			<xs:selector xpath="config:register/config:voter"/>
+			<xs:field xpath="config:voterIdentification"/>
+		</xs:unique>
+		<!-- Prevent authorization identification duplicates -->
+		<xs:unique name="authorizationIdentificationUniquenessConstraint">
+			<xs:selector xpath="config:authorizations/config:authorization"/>
+			<xs:field xpath="config:authorizationIdentification"/>
+		</xs:unique>
+		<!-- Prevent list union identification duplicates -->
+		<xs:unique name="listUnionIdentificationUniquenessConstraint">
+			<xs:selector xpath="config:contest/config:electionGroupBallot/config:electionInformation/config:listUnion"/>
+			<xs:field xpath="config:listUnionIdentification"/>
+		</xs:unique>
+		<!-- Prevent write in candidate identification duplicates -->
+		<xs:unique name="writeInCandidateIdentificationUniquenessConstraint">
+			<xs:selector xpath="config:contest/config:electionGroupBallot/config:electionInformation/config:writeInCandidate"/>
+			<xs:field xpath="config:writeInCandidateIdentification"/>
+		</xs:unique>
 	</xs:element>
 </xs:schema>

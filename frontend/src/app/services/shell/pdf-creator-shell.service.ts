@@ -1,4 +1,10 @@
 /**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
+/**
  * Uses Node API to start a shell.
  */
 import { PdfCreatorService } from '../pdf-creator.service';

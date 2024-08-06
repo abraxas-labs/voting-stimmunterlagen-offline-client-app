@@ -1,4 +1,10 @@
 /**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
+/**
  * Resolves a value in an object by property paths. Returns the first existing value.
  */
 export function resolveValue(obj: any, propertyPaths: string[]): any {

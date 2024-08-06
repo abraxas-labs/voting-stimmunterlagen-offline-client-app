@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { PDF_CREATOR_SERVCE, PdfCreatorService } from './pdf-creator.service';
 import { firstValueFrom, from, groupBy, Observable, Observer, of, throwError } from 'rxjs';
 import { ElectronService } from './electron.service';

@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Certificate } from '../models/certificate.model';

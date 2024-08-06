@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { CommandInfo } from '../app/models/shell/command-info';
 import { pathCombine } from '../app/services/utils/path.utils';
 

@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { pathCombine } from '../services/utils/path.utils';
 
 declare const backend: any;

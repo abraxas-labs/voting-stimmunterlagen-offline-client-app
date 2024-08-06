@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { ipcMain, app, dialog } from 'electron';
 import * as fs from 'fs';
 import * as pathModule from 'path';
@@ -93,7 +99,6 @@ function handleGetAppVersionSync(e): void {
 // Supports only text output
 // Returns values by sending them to the shellExecuteChunkedEmitChannel, which can be listened to by the renderer.
 function handleRequestShellExecuteChunked(e, toolsDirectory, commandInfo, commandParameters, input): void {
-  console.log('request');
   const command = createAndValidateCommand(toolsDirectory, commandInfo, commandParameters);
   processInput(command, input);
   command.stdout.setEncoding('utf-8');

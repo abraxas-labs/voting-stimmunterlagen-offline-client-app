@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { Inject, Injectable } from '@angular/core';
 import { ElectronService } from './electron.service';
 import { from, Observable, throwError } from 'rxjs';

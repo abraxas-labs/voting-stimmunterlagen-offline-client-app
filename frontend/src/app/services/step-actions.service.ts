@@ -1,9 +1,17 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { Inject, Injectable } from '@angular/core';
 import { AppStateService } from './app-state.service';
 import { EchDeliveryService, ECH_DELIVERY_SERVICE } from './ech-delivery.service';
 import { Ech0228MappingService } from './ech0228-mapping.service';
 import { JobContext } from './jobs/job-context';
 import { VotingCardService } from './voting-card.service';
+import { lastValueFrom } from 'rxjs';
+import { SettingsService } from './settings.service';
 
 @Injectable()
 export class StepActionsService {
@@ -12,6 +20,7 @@ export class StepActionsService {
     private readonly appStateService: AppStateService,
     @Inject(ECH_DELIVERY_SERVICE) private readonly chVoteDataService: EchDeliveryService<any>,
     private readonly votingCardService: VotingCardService,
+    private readonly settingsService: SettingsService,
   ) {}
 
   public async initializePrepareStep(): Promise<void> {
@@ -19,6 +28,12 @@ export class StepActionsService {
     this.jobContext.votingCardGroups = undefined;
 
     const uploads = this.appStateService.state.uploads;
+
+    const postSignatureValidationPaths = [
+      this.settingsService.javaRuntimePath,
+      this.settingsService.postSignatureValidatorPath,
+      ...this.appStateService.state.keystorePaths,
+    ].filter(p => !!p);
 
     if (!uploads || uploads.length < 2) {
       console.error('Value Prepare: No data');
@@ -31,10 +46,15 @@ export class StepActionsService {
       this.jobContext.templateMapping = Ech0228MappingService.MUNICIPALITY_ETEMPLATE_REF;
     }
 
-    let response = await this.chVoteDataService.importDataFromPaths(uploads.map(fileItem => fileItem.filePath)).toPromise();
+    const generatorResult = await lastValueFrom(
+      this.chVoteDataService.importDataFromPaths(
+        uploads.map(fileItem => fileItem.filePath),
+        postSignatureValidationPaths,
+      ),
+    );
 
-    this.jobContext.ech228 = response;
-    console.log(this.jobContext.ech228);
+    this.jobContext.ech228 = generatorResult.delivery;
+    this.jobContext.postSignatureValidationResult = generatorResult.postSignatureValidationResult;
   }
 
   public async restoreGroupAndSortStep(): Promise<void> {

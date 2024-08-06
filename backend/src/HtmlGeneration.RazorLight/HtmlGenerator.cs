@@ -1,4 +1,7 @@
-﻿using System;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using System;
 using System.Threading.Tasks;
 using HtmlGeneration.RazorLight.Razor;
 using Microsoft.Extensions.Logging;

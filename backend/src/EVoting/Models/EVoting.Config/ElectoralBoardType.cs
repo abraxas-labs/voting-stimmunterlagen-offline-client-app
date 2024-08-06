@@ -14,7 +14,7 @@ namespace EVoting.Config
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "2.1.963.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("electoralBoardType", Namespace="http://www.evoting.ch/xmlns/config/5")]
+    [System.Xml.Serialization.XmlTypeAttribute("electoralBoardType", Namespace="http://www.evoting.ch/xmlns/config/6")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ElectoralBoardType
@@ -63,7 +63,7 @@ namespace EVoting.Config
         [System.ComponentModel.DataAnnotations.MaxLengthAttribute(100)]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlArrayAttribute("electoralBoardMembers", Order=3)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("electoralBoardMemberName", Namespace="http://www.evoting.ch/xmlns/config/5")]
+        [System.Xml.Serialization.XmlArrayItemAttribute("electoralBoardMemberName", Namespace="http://www.evoting.ch/xmlns/config/6")]
         public System.Collections.Generic.List<string> ElectoralBoardMembers
         {
             get

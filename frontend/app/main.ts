@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { app, BrowserWindow } from 'electron';
 import * as url from 'url';
 import { config } from './config';
@@ -10,7 +16,7 @@ let mainWindow: Electron.BrowserWindow | null;
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    height: 600,
+    height: 660,
     width: 1200,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),

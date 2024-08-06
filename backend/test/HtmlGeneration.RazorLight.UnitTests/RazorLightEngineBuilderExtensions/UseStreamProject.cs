@@ -1,4 +1,7 @@
-﻿using System;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using System;
 using FluentAssertions;
 using HtmlGeneration.RazorLight.Razor;
 using Moq;
@@ -37,7 +40,7 @@ public class UseStreamProject
     public void Should_add_project_to_engine_builder()
     {
         // arrange
-        var projectMock = new Mock<StreamProject>(MockBehavior.Strict, null);
+        var projectMock = new Mock<StreamProject>(MockBehavior.Strict, null!);
         var streamProject = projectMock.Object;
 
         var engineBuilderMock = new Mock<RazorLightEngineBuilder>();

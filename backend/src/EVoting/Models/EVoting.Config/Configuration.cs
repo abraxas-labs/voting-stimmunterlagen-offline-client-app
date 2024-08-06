@@ -14,10 +14,10 @@ namespace EVoting.Config
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "2.1.963.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("configuration", Namespace="http://www.evoting.ch/xmlns/config/5", AnonymousType=true)]
+    [System.Xml.Serialization.XmlTypeAttribute("configuration", Namespace="http://www.evoting.ch/xmlns/config/6", AnonymousType=true)]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlRootAttribute("configuration", Namespace="http://www.evoting.ch/xmlns/config/5")]
+    [System.Xml.Serialization.XmlRootAttribute("configuration", Namespace="http://www.evoting.ch/xmlns/config/6")]
     public partial class Configuration
     {
         
@@ -34,7 +34,7 @@ namespace EVoting.Config
         
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlArrayAttribute("authorizations", Order=2)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("authorization", Namespace="http://www.evoting.ch/xmlns/config/5")]
+        [System.Xml.Serialization.XmlArrayItemAttribute("authorization", Namespace="http://www.evoting.ch/xmlns/config/6")]
         public System.Collections.Generic.List<AuthorizationType> Authorizations
         {
             get
@@ -61,7 +61,7 @@ namespace EVoting.Config
         
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlArrayAttribute("register", Order=3)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("voter", Namespace="http://www.evoting.ch/xmlns/config/5")]
+        [System.Xml.Serialization.XmlArrayItemAttribute("voter", Namespace="http://www.evoting.ch/xmlns/config/6")]
         public System.Collections.Generic.List<VoterType> Register
         {
             get

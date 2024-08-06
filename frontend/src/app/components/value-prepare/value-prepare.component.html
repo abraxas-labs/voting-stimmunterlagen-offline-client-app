@@ -3,13 +3,19 @@
 <div *ngIf="hasErrors && !isRunning" class="error-msg">
   <span class="fa fa-exclamation-circle"></span>
   <span>
-    {{ 'ERROR.' + errorValue?.ErrorCode | translate }} {{ errorValue?.RelatedId }}
+    {{ 'ERROR.' + errorValue?.errorCode | translate }} {{ errorValue?.relatedId }}
     {{ isNotFoundError ? ('ERROR.NOT_FOUND' | translate) : '' }}</span
   >
   <span *ngIf="!errorValue">{{ 'ERROR.GENERIC' | translate }}</span>
 </div>
 <div *ngIf="!hasErrors && !isRunning">
-  {{ 'NUMBER_OF_VALIDATION' | translate }}: {{ jobContext.ech228?.votingCardDelivery?.votingCardData?.length }}
+  {{ 'NUMBER_OF_VALIDATION' | translate }}: {{ countOfVotingCards }}
+</div>
+<div *ngIf="!!postSignatureValidationResult"
+     [class.warn-msg]="!postSignatureValidationSuccess"
+     [class.success-msg]="postSignatureValidationSuccess">
+  <p>{{ 'POST_SIGNATURE_VALIDATION_RESULT.' + postSignatureValidationResult.code | translate }}</p>
+  <p *ngIf="postSignatureValidationResult.message"><i>{{ postSignatureValidationResult.message }}</i></p>
 </div>
 <span *ngIf="isRunning"><app-spinner></app-spinner></span>
 <br />
@@ -17,7 +23,7 @@
   <button class="abra-button-primary" *ngIf="!hasErrors && !isRunning" [routerLink]="['/voting-cards-configuration']">
     {{ 'NEXT_TO_VOTING_CARDS_CONFIGURATION' | translate }}
   </button>
-  <button class="abra-button-secondary" *ngIf="hasErrors && !isRunning" [routerLink]="['/welcome']">
+  <button class="abra-button-secondary" *ngIf="(hasErrors || !postSignatureValidationSuccess) && !isRunning" [routerLink]="['/welcome']">
     {{ 'BACK_TO_FILE_SELECTION' | translate }}
   </button>
 </div>

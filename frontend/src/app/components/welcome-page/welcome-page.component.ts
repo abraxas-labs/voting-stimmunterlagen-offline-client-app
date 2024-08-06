@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { Component, Inject, OnInit } from '@angular/core';
 import { VotingPropertyService } from '../../services/voting-property.service';
 import { Observable, Subject, from, firstValueFrom } from 'rxjs';
@@ -16,7 +22,12 @@ import { pathCombine } from '../../services/utils/path.utils';
   styleUrls: ['./welcome-page.component.scss'],
 })
 export class WelcomePageComponent implements OnInit {
+  public readonly allowedKeystoreCertificatePathExtensions = '.p12';
+  public readonly allowedKeystorePasswordPathExtensions = '.txt';
   private readonly fileList: FileInputListModel[] = [];
+
+  public keystoreCertificatePath = '';
+  public keystorePasswordPath = '';
 
   public get enablePreview(): boolean {
     const isRunning = !!this.fileList.find(fileElement => fileElement.isRunning);
@@ -58,7 +69,10 @@ export class WelcomePageComponent implements OnInit {
   }
 
   public async complete(): Promise<void> {
-    await this.appStateService.update(s => (s.uploads = this.fileList.map(f => ({ fileType: f.fileType, filePath: f.filePath }))));
+    await this.appStateService.update(s => {
+      s.uploads = this.fileList.map(f => ({ fileType: f.fileType, filePath: f.filePath }));
+      s.keystorePaths = [this.keystoreCertificatePath, this.keystorePasswordPath];
+    });
     this.router.navigate(['/prepare']);
   }
 
@@ -119,6 +133,24 @@ export class WelcomePageComponent implements OnInit {
       jobItem.isRunning = false;
     }
     this.zipHandling();
+  }
+
+  public changeKeystoreCertificatePath(file?: File): void {
+    if (!file || !file.path) {
+      this.keystoreCertificatePath = '';
+      return;
+    }
+
+    this.keystoreCertificatePath = file.path;
+  }
+
+  public changeKeystorePasswordPath(file?: File): void {
+    if (!file || !file.path) {
+      this.keystorePasswordPath = '';
+      return;
+    }
+
+    this.keystorePasswordPath = file.path;
   }
 
   private isZip(file: File): boolean {

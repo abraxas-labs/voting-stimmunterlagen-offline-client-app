@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { Injectable } from '@angular/core';
 import { from, map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -41,6 +47,8 @@ export class ElectronService {
     return new Promise((resolve, reject) => {
       let chunkNumber = 1;
       let accumulator: T | undefined = undefined;
+
+      // eslint-disable-next-line prefer-const
       let removeListener: any;
 
       const listener: (e, chunk) => void = (_, chunk) => {
@@ -111,7 +119,7 @@ export class ElectronService {
     });
 
     // Create a new array with total length and merge all source arrays.
-    let mergedArray = new Uint8Array(length);
+    const mergedArray = new Uint8Array(length);
     let offset = 0;
     myArrays.forEach(item => {
       mergedArray.set(item, offset);

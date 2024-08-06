@@ -1,4 +1,7 @@
-﻿using Voting.Lib.Ech.Ech0045_4_0.Models;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using Voting.Lib.Ech.Ech0045_4_0.Models;
 
 namespace EchDeliveryGeneration.Ech0045
 {

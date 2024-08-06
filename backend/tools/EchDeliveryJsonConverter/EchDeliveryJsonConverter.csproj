@@ -9,4 +9,5 @@
       <ProjectReference Include="..\..\src\EchDeliveryGeneration\EchDeliveryGeneration.csproj" />
       <ProjectReference Include="..\..\src\Voting.Stimmunterlagen.OfflineClient.Logging\Voting.Stimmunterlagen.OfflineClient.Logging.csproj" />
     </ItemGroup>
+
 </Project>

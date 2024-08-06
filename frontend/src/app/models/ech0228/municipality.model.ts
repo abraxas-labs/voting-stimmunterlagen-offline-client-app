@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 // keep in sync with Voting.Stimmunterlagen.OfflineClient.Shared.ContestConfiguration
 export interface Municipality {
   bfs?: string;

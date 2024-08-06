@@ -1,4 +1,7 @@
-﻿using FluentAssertions;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using FluentAssertions;
 using Xunit;
 
 namespace HtmlGeneration.RazorLight.UnitTests.Razor.StreamProject;

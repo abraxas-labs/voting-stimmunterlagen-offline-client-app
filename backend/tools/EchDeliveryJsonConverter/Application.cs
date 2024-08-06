@@ -1,4 +1,7 @@
-﻿using System;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -7,8 +10,9 @@ using EchDeliveryGeneration;
 using EchDeliveryGeneration.ErrorHandling;
 using System.Collections.Generic;
 using System.Linq;
-using Ech0228_1_0;
+using EchDeliveryGeneration.Validation;
 using Newtonsoft.Json.Serialization;
+using EchDeliveryGeneration.Models;
 
 namespace EchDeliveryJsonConverter;
 
@@ -47,7 +51,15 @@ public class Application
     {
         try
         {
-            var voterDelivery = await _echDeliveryGenerator.GenerateDelivery(_arguments.MultipleInFiles);
+            var postSignatureValidationData = new PostSignatureValidationData
+            {
+                JavaRuntimePath = _arguments.PostSignatureValidationFiles.FirstOrDefault(x => x.EndsWith("java.exe")) ?? string.Empty,
+                ValidatorPath = _arguments.PostSignatureValidationFiles.FirstOrDefault(x => x.EndsWith(".jar")) ?? string.Empty,
+                KeystoreCertificatePath = _arguments.PostSignatureValidationFiles.FirstOrDefault(x => x.EndsWith(".p12")) ?? string.Empty,
+                KeystorePasswordPath = _arguments.PostSignatureValidationFiles.FirstOrDefault(x => x.EndsWith(".txt")) ?? string.Empty,
+            };
+
+            var voterDelivery = await _echDeliveryGenerator.GenerateDelivery(_arguments.MultipleInFiles, postSignatureValidationData);
             return voterDelivery;
         }
         catch (Exception ex)
@@ -68,17 +80,19 @@ public class Application
 
         switch (data)
         {
-            case Delivery deliveryData:
+            case EchDeliveryGeneratorResult echDeliveryGeneratorResult:
                 // Send voting cards and delivery in different chunks, for performance reasons.
-                var votingCards = deliveryData.VotingCardDelivery.VotingCardData;
+                var votingCards = echDeliveryGeneratorResult.Delivery.VotingCardDelivery.VotingCardData;
 
                 // One element is required for the xml validation. This should be ignored by the consuming service, because it will be present in the voting card batches.
-                deliveryData.VotingCardDelivery.VotingCardData = new() { votingCards.First() };
+                echDeliveryGeneratorResult.Delivery.VotingCardDelivery.VotingCardData = new() { votingCards.First() };
 
                 // 1.   Chunk: eCH-0228 delivery without voting cards
-                // 2.   Chunk: Count of voting cards
-                // 3-n. Chunk: Voting cards batches
-                chunks.Add(deliveryData);
+                // 2.   Chunk: Post signature validation result
+                // 3.   Chunk: Count of voting cards
+                // 4-n. Chunk: Voting cards batches
+                chunks.Add(echDeliveryGeneratorResult.Delivery);
+                chunks.Add(echDeliveryGeneratorResult.PostSignatureValidationResult);
                 chunks.Add(votingCards.Count);
 
                 foreach (var votingCardsBatch in votingCards.Chunk(VotingCardBatchSize))

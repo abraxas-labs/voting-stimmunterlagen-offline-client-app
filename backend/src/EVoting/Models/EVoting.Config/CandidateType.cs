@@ -14,7 +14,7 @@ namespace EVoting.Config
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "2.1.963.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("candidateType", Namespace="http://www.evoting.ch/xmlns/config/5")]
+    [System.Xml.Serialization.XmlTypeAttribute("candidateType", Namespace="http://www.evoting.ch/xmlns/config/6")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class CandidateType
@@ -107,7 +107,7 @@ namespace EVoting.Config
         
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlArrayAttribute("candidateText", Order=6)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("candidateTextInfo", Namespace="http://www.evoting.ch/xmlns/config/5")]
+        [System.Xml.Serialization.XmlArrayItemAttribute("candidateTextInfo", Namespace="http://www.evoting.ch/xmlns/config/6")]
         public System.Collections.Generic.List<CandidateTextInformationTypeCandidateTextInfo> CandidateText
         {
             get
@@ -129,6 +129,11 @@ namespace EVoting.Config
             this._swiss = new System.Collections.Generic.List<string>();
             this._occupationalTitle = new System.Collections.Generic.List<OccupationalTitleInformationTypeOccupationalTitleInfo>();
             this._partyAffiliation = new System.Collections.Generic.List<PartyAffiliationformationTypePartyAffiliationInfo>();
+            this._displayCandidateLine1 = new System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo>();
+            this._displayCandidateLine2 = new System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo>();
+            this._displayCandidateLine3 = new System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo>();
+            this._displayCandidateLine4 = new System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo>();
+            this._displayCandidateLine5 = new System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo>();
         }
         
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
@@ -157,7 +162,7 @@ namespace EVoting.Config
         [System.ComponentModel.DataAnnotations.MaxLengthAttribute(80)]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlArrayAttribute("swiss", Order=11)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("origin", Namespace="http://www.evoting.ch/xmlns/config/5")]
+        [System.Xml.Serialization.XmlArrayItemAttribute("origin", Namespace="http://www.evoting.ch/xmlns/config/6")]
         public System.Collections.Generic.List<string> Swiss
         {
             get
@@ -174,7 +179,7 @@ namespace EVoting.Config
         private System.Collections.Generic.List<OccupationalTitleInformationTypeOccupationalTitleInfo> _occupationalTitle;
         
         [System.Xml.Serialization.XmlArrayAttribute("occupationalTitle", Order=12)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("occupationalTitleInfo", Namespace="http://www.evoting.ch/xmlns/config/5")]
+        [System.Xml.Serialization.XmlArrayItemAttribute("occupationalTitleInfo", Namespace="http://www.evoting.ch/xmlns/config/6")]
         public System.Collections.Generic.List<OccupationalTitleInformationTypeOccupationalTitleInfo> OccupationalTitle
         {
             get
@@ -247,6 +252,7 @@ namespace EVoting.Config
         /// </summary>
         [System.ComponentModel.DataAnnotations.MinLengthAttribute(1)]
         [System.ComponentModel.DataAnnotations.MaxLengthAttribute(10)]
+        [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlElementAttribute("referenceOnPosition", Order=14)]
         public string ReferenceOnPosition { get; set; }
         
@@ -254,7 +260,7 @@ namespace EVoting.Config
         private System.Collections.Generic.List<PartyAffiliationformationTypePartyAffiliationInfo> _partyAffiliation;
         
         [System.Xml.Serialization.XmlArrayAttribute("partyAffiliation", Order=15)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("partyAffiliationInfo", Namespace="http://www.evoting.ch/xmlns/config/5")]
+        [System.Xml.Serialization.XmlArrayItemAttribute("partyAffiliationInfo", Namespace="http://www.evoting.ch/xmlns/config/6")]
         public System.Collections.Generic.List<PartyAffiliationformationTypePartyAffiliationInfo> PartyAffiliation
         {
             get
@@ -277,6 +283,136 @@ namespace EVoting.Config
             {
                 return ((this.PartyAffiliation != null) 
                             && (this.PartyAffiliation.Count != 0));
+            }
+        }
+        
+        [System.ComponentModel.DataAnnotations.RequiredAttribute()]
+        [System.Xml.Serialization.XmlElementAttribute("eligibility", Order=16)]
+        public EligibilityType Eligibility { get; set; }
+        
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        private System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo> _displayCandidateLine1;
+        
+        [System.ComponentModel.DataAnnotations.RequiredAttribute()]
+        [System.Xml.Serialization.XmlArrayAttribute("displayCandidateLine1", Order=17)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("displayLineInfo", Namespace="http://www.evoting.ch/xmlns/config/6")]
+        public System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo> DisplayCandidateLine1
+        {
+            get
+            {
+                return _displayCandidateLine1;
+            }
+            set
+            {
+                _displayCandidateLine1 = value;
+            }
+        }
+        
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        private System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo> _displayCandidateLine2;
+        
+        [System.ComponentModel.DataAnnotations.RequiredAttribute()]
+        [System.Xml.Serialization.XmlArrayAttribute("displayCandidateLine2", Order=18)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("displayLineInfo", Namespace="http://www.evoting.ch/xmlns/config/6")]
+        public System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo> DisplayCandidateLine2
+        {
+            get
+            {
+                return _displayCandidateLine2;
+            }
+            set
+            {
+                _displayCandidateLine2 = value;
+            }
+        }
+        
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        private System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo> _displayCandidateLine3;
+        
+        [System.Xml.Serialization.XmlArrayAttribute("displayCandidateLine3", Order=19)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("displayLineInfo", Namespace="http://www.evoting.ch/xmlns/config/6")]
+        public System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo> DisplayCandidateLine3
+        {
+            get
+            {
+                return _displayCandidateLine3;
+            }
+            set
+            {
+                _displayCandidateLine3 = value;
+            }
+        }
+        
+        /// <summary>
+        /// <para xml:lang="en">Gets a value indicating whether the DisplayCandidateLine3 collection is empty.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DisplayCandidateLine3Specified
+        {
+            get
+            {
+                return ((this.DisplayCandidateLine3 != null) 
+                            && (this.DisplayCandidateLine3.Count != 0));
+            }
+        }
+        
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        private System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo> _displayCandidateLine4;
+        
+        [System.Xml.Serialization.XmlArrayAttribute("displayCandidateLine4", Order=20)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("displayLineInfo", Namespace="http://www.evoting.ch/xmlns/config/6")]
+        public System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo> DisplayCandidateLine4
+        {
+            get
+            {
+                return _displayCandidateLine4;
+            }
+            set
+            {
+                _displayCandidateLine4 = value;
+            }
+        }
+        
+        /// <summary>
+        /// <para xml:lang="en">Gets a value indicating whether the DisplayCandidateLine4 collection is empty.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DisplayCandidateLine4Specified
+        {
+            get
+            {
+                return ((this.DisplayCandidateLine4 != null) 
+                            && (this.DisplayCandidateLine4.Count != 0));
+            }
+        }
+        
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        private System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo> _displayCandidateLine5;
+        
+        [System.Xml.Serialization.XmlArrayAttribute("displayCandidateLine5", Order=21)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("displayLineInfo", Namespace="http://www.evoting.ch/xmlns/config/6")]
+        public System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo> DisplayCandidateLine5
+        {
+            get
+            {
+                return _displayCandidateLine5;
+            }
+            set
+            {
+                _displayCandidateLine5 = value;
+            }
+        }
+        
+        /// <summary>
+        /// <para xml:lang="en">Gets a value indicating whether the DisplayCandidateLine5 collection is empty.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DisplayCandidateLine5Specified
+        {
+            get
+            {
+                return ((this.DisplayCandidateLine5 != null) 
+                            && (this.DisplayCandidateLine5.Count != 0));
             }
         }
     }

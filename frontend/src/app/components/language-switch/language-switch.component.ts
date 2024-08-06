@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { Component, Inject } from '@angular/core';
 import { ALL_TRANSLATIONS, TranslationsMap } from '../../models/translations';
 import { TranslationContext } from '../../services/translation/translation.context';

@@ -1,4 +1,7 @@
-﻿using EVoting.Schemas;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using EVoting.Schemas;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Xml.Schema;
@@ -12,6 +15,8 @@ using System.ComponentModel.DataAnnotations;
 using Ech0228_1_0;
 using EchDeliveryGeneration.Post;
 using Voting.Stimmunterlagen.OfflineClient.Shared.ContestConfiguration;
+using EchDeliveryGeneration.Validation;
+using EchDeliveryGeneration.Models;
 
 namespace EchDeliveryGeneration;
 
@@ -20,22 +25,31 @@ public class EchDeliveryGenerator
     private readonly ILogger<EchDeliveryGenerator> _logger;
     private readonly Ech0045Reader _ech0045Reader;
     private readonly PostDataTransformer _postDataTransformer;
+    private readonly PostSignatureValidator _postSignatureValidator;
 
     private const string PostConfigXmlNamespace = "http://www.evoting.ch/xmlns/config";
     private const string PostPrintXmlNamespace = "http://www.evoting.ch/xmlns/print";
     private const string Ech0045XmlNamespace = "http://www.ech.ch/xmlns/eCH-0045/4";
 
-    public EchDeliveryGenerator(ILogger<EchDeliveryGenerator> logger, Ech0045Reader ech0045Reader, PostDataTransformer postDataTransformer)
+    public EchDeliveryGenerator(
+        ILogger<EchDeliveryGenerator> logger,
+        Ech0045Reader ech0045Reader,
+        PostDataTransformer postDataTransformer,
+        PostSignatureValidator postSignatureValidator)
     {
         _logger = logger;
         _ech0045Reader = ech0045Reader;
         _postDataTransformer = postDataTransformer;
+        _postSignatureValidator = postSignatureValidator;
     }
 
-    public async Task<Delivery> GenerateDelivery(
-        IReadOnlyCollection<string> files)
+    public async Task<EchDeliveryGeneratorResult> GenerateDelivery(
+        IReadOnlyCollection<string> files,
+        PostSignatureValidationData? postSignatureValidationData)
     {
         var delivery = new Delivery();
+        var postSignatureValidationResult = new PostSignatureValidationResult(PostSignatureValidationResultCodes.Skipped);
+        postSignatureValidationData ??= new();
 
         var config = new List<EVoting.Config.Configuration>();
         var votingCardLists = new List<EVoting.Print.VotingCardList>();
@@ -55,25 +69,26 @@ public class EchDeliveryGenerator
                     xmlTypeRef.Contains(PostConfigXmlNamespace))
                 {
                     config.Add(EVotingXmlSerializer.DeserializeXml<EVoting.Config.Configuration>(xr));
+                    postSignatureValidationData.PostConfigPath = file;
                 }
 
                 xmlTypeRef = xr.GetAttribute("xmlns");
-                if (!string.IsNullOrEmpty(xmlTypeRef) &&
-                    xmlTypeRef.Contains(PostPrintXmlNamespace))
+                if (!string.IsNullOrEmpty(xmlTypeRef))
                 {
-                    votingCardLists.Add(EVotingXmlSerializer.DeserializeXml<EVoting.Print.VotingCardList>(xr));
-                }
+                    if (xmlTypeRef.Contains(PostPrintXmlNamespace))
+                    {
+                        votingCardLists.Add(EVotingXmlSerializer.DeserializeXml<EVoting.Print.VotingCardList>(xr));
+                        postSignatureValidationData.PostPrintPath = file;
+                    }
+                    else if (xmlTypeRef.Contains(Ech0045XmlNamespace))
+                    {
+                        stream.Dispose();
 
-                xmlTypeRef = xr.GetAttribute("xmlns:eCH-0045");
-                if (!string.IsNullOrEmpty(xmlTypeRef) &&
-                    xmlTypeRef.Contains(Ech0045XmlNamespace))
-                {
-                    stream.Dispose();
+                        // to deserialize the xml, the file stream needs to start from the beginning.
+                        using var resettedStream = File.OpenRead(file);
 
-                    // to deserialize the xml, the file stream needs to start from the beginning.
-                    using var resettedStream = File.OpenRead(file);
-
-                    echVoterByPersonId = await _ech0045Reader.ReadVoterExtensions(resettedStream);
+                        echVoterByPersonId = await _ech0045Reader.ReadVoterExtensions(resettedStream);
+                    }
                 }
             }
             else if (file.EndsWith(".json"))
@@ -88,10 +103,15 @@ public class EchDeliveryGenerator
         if (jsonConfig == null)
             throw new ValidationException($"{nameof(jsonConfig)} is not provided");
 
+        if (postSignatureValidationData.RequiredFieldsSet())
+        {
+            postSignatureValidationResult = await _postSignatureValidator.Validate(postSignatureValidationData);
+        }
+
         if (votingCardLists.Count > 0)
             delivery = _postDataTransformer.Transform(config, votingCardLists, jsonConfig, echVoterByPersonId);
 
-        return delivery;
+        return new EchDeliveryGeneratorResult(delivery, postSignatureValidationResult);
     }
 
 

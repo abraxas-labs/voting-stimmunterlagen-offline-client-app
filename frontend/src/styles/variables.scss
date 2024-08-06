@@ -8,6 +8,7 @@ $font-size-form-label: 11px;
 
 /** color **/
 $color-key: #005d76;
+$color-key-25: mix(white, $color-key, 75%); // stylelint-disable-line
 $color-secondary: #4cc1ae;
 $color-daren: #3b5063;
 $color-red: #ffd0ce;
@@ -16,10 +17,11 @@ $error-color-dark-hover: lighten(saturate($color-red-dark, 15%), 10%); // stylel
 $color-light-red: #df4b64;
 $color-signal-error: #c60000;
 $color-green: #cce4d9;
-$color-light-red-25: mix(white, $color-light-red, 75); // stylelint-disable-line
+$color-light-red-25: mix(white, $color-light-red, 75%); // stylelint-disable-line
 $color-green-dark: #008a34;
 $color-yellow: #fff4cf;
 $color-yellow-dark: #c38100;
+$color-yellow-dark-25: mix(white, $color-yellow-dark, 75%); // stylelint-disable-line
 $color-blue: #b3daeb;
 $color-blue-dark: #006db6;
 $color-gray: #b9b9b9;

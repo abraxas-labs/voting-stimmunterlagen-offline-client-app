@@ -1,4 +1,7 @@
-﻿using EchDeliveryGeneration.ErrorHandling;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using EchDeliveryGeneration.ErrorHandling;
 using System.Collections.Generic;
 using System.Linq;
 using Ech0045_4_0;
@@ -10,9 +13,12 @@ namespace EchDeliveryGeneration.Post;
 
 public class MajorityElectionMapper
 {
+    private const string DefaultWriteInCodeDesignation = "Andere wählbare Person";
+
     public void MapToEchElection(ElectionInformationType election, EVoting.Print.ElectionType electionTypeSource, EVoting.Config.ElectionInformationType config)
     {
         var candidates = electionTypeSource.Candidate.ToList();
+        var multipleNumberOfMandates = int.TryParse(election.Election.NumberOfMandates, out var numberOfMandates) && numberOfMandates > 1;
 
         if (electionTypeSource.List != null)
         {
@@ -22,15 +28,19 @@ public class MajorityElectionMapper
         }
 
         election.Candidate = candidates
-            .Select(candidate => MapToEchCandidate(candidate, electionTypeSource, config))
+            .Select(candidate => MapToEchCandidate(candidate, electionTypeSource, config, multipleNumberOfMandates))
             .ToList();
 
         election.WriteInCodes = electionTypeSource.WriteInCandidate
-            .Select((writeInCandidate, index) => MapToEchWriteInCodes(index, writeInCandidate))
+            .Select((writeInCandidate, index) => MapToEchWriteInCodes(index, writeInCandidate, multipleNumberOfMandates))
             .ToList();
     }
 
-    private ElectionInformationTypeCandidate MapToEchCandidate(EVoting.Print.CandidateType candidateType, EVoting.Print.ElectionType electionTypeSource, EVoting.Config.ElectionInformationType config)
+    private ElectionInformationTypeCandidate MapToEchCandidate(
+        EVoting.Print.CandidateType candidateType,
+        EVoting.Print.ElectionType electionTypeSource,
+        EVoting.Config.ElectionInformationType config,
+        bool multipleNumberOfMandates)
     {
         var candidateConfig = config.Candidate.SingleOrDefault(x =>
             x.CandidateIdentification == candidateType.CandidateIdentification);
@@ -84,7 +94,7 @@ public class MajorityElectionMapper
                 .Select(x => new CandidateTextInformationTypeCandidateTextInfo
                 {
                     Language = XmlUtil.GetXmlEnumAttributeValueFromEnum(x.Language),
-                    CandidateText = x.CandidateText,
+                    CandidateText = multipleNumberOfMandates ? $"{x.CandidateText} Position {emptyCandidateConfig.PositionOnList}" : x.CandidateText,
                 })
                 .ToList();
 
@@ -117,16 +127,21 @@ public class MajorityElectionMapper
         }
     }
 
-    private ElectionInformationTypeWriteInCodes MapToEchWriteInCodes(int index, EVoting.Print.WriteInCandidateType writeInCandidate)
+    private ElectionInformationTypeWriteInCodes MapToEchWriteInCodes(int index, EVoting.Print.WriteInCandidateType writeInCandidate, bool multipleNumberOfMandates)
     {
+        var position = (index + 1).ToString();
+
         return new ElectionInformationTypeWriteInCodes
         {
-            Position = (index + 1).ToString(),
+            Position = position,
             IndividualWriteInVerificationCode = writeInCandidate.ChoiceReturnCode,
             WriteInCodeDesignation = new List<ElectionInformationTypeWriteInCodesWriteInCodeDesignation>
             {
-                new() { Language = XmlUtil.GetXmlEnumAttributeValueFromEnum(LanguageType.De), CodeDesignationText = "Anderer wählbarer Kandidat"},
-            }
+                new() { Language = XmlUtil.GetXmlEnumAttributeValueFromEnum(LanguageType.De), CodeDesignationText = multipleNumberOfMandates
+                    ? $"{DefaultWriteInCodeDesignation} Position {position}"
+                    : DefaultWriteInCodeDesignation,
+                }
+            },
         };
     }
 }

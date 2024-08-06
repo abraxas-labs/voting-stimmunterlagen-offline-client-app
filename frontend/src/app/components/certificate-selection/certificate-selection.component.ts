@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { finalize } from 'rxjs';
 import { Certificate } from '../../models/certificate.model';

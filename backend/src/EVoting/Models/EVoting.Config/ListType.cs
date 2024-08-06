@@ -14,7 +14,7 @@ namespace EVoting.Config
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "2.1.963.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("listType", Namespace="http://www.evoting.ch/xmlns/config/5")]
+    [System.Xml.Serialization.XmlTypeAttribute("listType", Namespace="http://www.evoting.ch/xmlns/config/6")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ListType
@@ -47,7 +47,7 @@ namespace EVoting.Config
         
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlArrayAttribute("listDescription", Order=2)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("listDescriptionInfo", Namespace="http://www.evoting.ch/xmlns/config/5")]
+        [System.Xml.Serialization.XmlArrayItemAttribute("listDescriptionInfo", Namespace="http://www.evoting.ch/xmlns/config/6")]
         public System.Collections.Generic.List<ListDescriptionInformationTypeListDescriptionInfo> ListDescription
         {
             get
@@ -69,6 +69,11 @@ namespace EVoting.Config
             this._candidatePosition = new System.Collections.Generic.List<CandidatePositionType>();
             this._varListText1 = new System.Collections.Generic.List<VarListTextInfoType>();
             this._varListText2 = new System.Collections.Generic.List<VarListTextInfoType>();
+            this._displayListLine1 = new System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo>();
+            this._displayListLine2 = new System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo>();
+            this._displayListLine3 = new System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo>();
+            this._displayListLine4 = new System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo>();
+            this._displayListLine5 = new System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo>();
         }
         
         /// <summary>
@@ -117,7 +122,7 @@ namespace EVoting.Config
         private System.Collections.Generic.List<VarListTextInfoType> _varListText1;
         
         [System.Xml.Serialization.XmlArrayAttribute("varListText1", Order=6)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("varListTextInfo", Namespace="http://www.evoting.ch/xmlns/config/5")]
+        [System.Xml.Serialization.XmlArrayItemAttribute("varListTextInfo", Namespace="http://www.evoting.ch/xmlns/config/6")]
         public System.Collections.Generic.List<VarListTextInfoType> VarListText1
         {
             get
@@ -147,7 +152,7 @@ namespace EVoting.Config
         private System.Collections.Generic.List<VarListTextInfoType> _varListText2;
         
         [System.Xml.Serialization.XmlArrayAttribute("varListText2", Order=7)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("varListTextInfo", Namespace="http://www.evoting.ch/xmlns/config/5")]
+        [System.Xml.Serialization.XmlArrayItemAttribute("varListTextInfo", Namespace="http://www.evoting.ch/xmlns/config/6")]
         public System.Collections.Generic.List<VarListTextInfoType> VarListText2
         {
             get
@@ -170,6 +175,144 @@ namespace EVoting.Config
             {
                 return ((this.VarListText2 != null) 
                             && (this.VarListText2.Count != 0));
+            }
+        }
+        
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        private System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo> _displayListLine1;
+        
+        [System.ComponentModel.DataAnnotations.RequiredAttribute()]
+        [System.Xml.Serialization.XmlArrayAttribute("displayListLine1", Order=8)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("displayLineInfo", Namespace="http://www.evoting.ch/xmlns/config/6")]
+        public System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo> DisplayListLine1
+        {
+            get
+            {
+                return _displayListLine1;
+            }
+            set
+            {
+                _displayListLine1 = value;
+            }
+        }
+        
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        private System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo> _displayListLine2;
+        
+        [System.Xml.Serialization.XmlArrayAttribute("displayListLine2", Order=9)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("displayLineInfo", Namespace="http://www.evoting.ch/xmlns/config/6")]
+        public System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo> DisplayListLine2
+        {
+            get
+            {
+                return _displayListLine2;
+            }
+            set
+            {
+                _displayListLine2 = value;
+            }
+        }
+        
+        /// <summary>
+        /// <para xml:lang="en">Gets a value indicating whether the DisplayListLine2 collection is empty.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DisplayListLine2Specified
+        {
+            get
+            {
+                return ((this.DisplayListLine2 != null) 
+                            && (this.DisplayListLine2.Count != 0));
+            }
+        }
+        
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        private System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo> _displayListLine3;
+        
+        [System.Xml.Serialization.XmlArrayAttribute("displayListLine3", Order=10)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("displayLineInfo", Namespace="http://www.evoting.ch/xmlns/config/6")]
+        public System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo> DisplayListLine3
+        {
+            get
+            {
+                return _displayListLine3;
+            }
+            set
+            {
+                _displayListLine3 = value;
+            }
+        }
+        
+        /// <summary>
+        /// <para xml:lang="en">Gets a value indicating whether the DisplayListLine3 collection is empty.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DisplayListLine3Specified
+        {
+            get
+            {
+                return ((this.DisplayListLine3 != null) 
+                            && (this.DisplayListLine3.Count != 0));
+            }
+        }
+        
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        private System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo> _displayListLine4;
+        
+        [System.Xml.Serialization.XmlArrayAttribute("displayListLine4", Order=11)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("displayLineInfo", Namespace="http://www.evoting.ch/xmlns/config/6")]
+        public System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo> DisplayListLine4
+        {
+            get
+            {
+                return _displayListLine4;
+            }
+            set
+            {
+                _displayListLine4 = value;
+            }
+        }
+        
+        /// <summary>
+        /// <para xml:lang="en">Gets a value indicating whether the DisplayListLine4 collection is empty.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DisplayListLine4Specified
+        {
+            get
+            {
+                return ((this.DisplayListLine4 != null) 
+                            && (this.DisplayListLine4.Count != 0));
+            }
+        }
+        
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        private System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo> _displayListLine5;
+        
+        [System.Xml.Serialization.XmlArrayAttribute("displayListLine5", Order=12)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("displayLineInfo", Namespace="http://www.evoting.ch/xmlns/config/6")]
+        public System.Collections.Generic.List<DisplayLineInformationTypeDisplayLineInfo> DisplayListLine5
+        {
+            get
+            {
+                return _displayListLine5;
+            }
+            set
+            {
+                _displayListLine5 = value;
+            }
+        }
+        
+        /// <summary>
+        /// <para xml:lang="en">Gets a value indicating whether the DisplayListLine5 collection is empty.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DisplayListLine5Specified
+        {
+            get
+            {
+                return ((this.DisplayListLine5 != null) 
+                            && (this.DisplayListLine5.Count != 0));
             }
         }
     }

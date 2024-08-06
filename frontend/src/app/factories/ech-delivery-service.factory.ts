@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { ElectronService } from '../services/electron.service';
 import { VotingData } from '../models/voting-data';
 import { EchDeliveryShellService } from '../services/shell/ech-delivery-shell.service';

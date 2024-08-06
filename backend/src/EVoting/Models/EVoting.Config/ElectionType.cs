@@ -14,7 +14,7 @@ namespace EVoting.Config
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "2.1.963.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("electionType", Namespace="http://www.evoting.ch/xmlns/config/5")]
+    [System.Xml.Serialization.XmlTypeAttribute("electionType", Namespace="http://www.evoting.ch/xmlns/config/6")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ElectionType
@@ -37,11 +37,51 @@ namespace EVoting.Config
         public ElectionTypeTypeOfElection TypeOfElection { get; set; }
         
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        private System.Collections.Generic.List<ElectionRulesExplanationTypeDisplayLineInfo> _electionRulesExplanation;
+        
+        [System.Xml.Serialization.XmlArrayAttribute("electionRulesExplanation", Order=2)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("displayLineInfo", Namespace="http://www.evoting.ch/xmlns/config/6")]
+        public System.Collections.Generic.List<ElectionRulesExplanationTypeDisplayLineInfo> ElectionRulesExplanation
+        {
+            get
+            {
+                return _electionRulesExplanation;
+            }
+            set
+            {
+                _electionRulesExplanation = value;
+            }
+        }
+        
+        /// <summary>
+        /// <para xml:lang="en">Gets a value indicating whether the ElectionRulesExplanation collection is empty.</para>
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ElectionRulesExplanationSpecified
+        {
+            get
+            {
+                return ((this.ElectionRulesExplanation != null) 
+                            && (this.ElectionRulesExplanation.Count != 0));
+            }
+        }
+        
+        /// <summary>
+        /// <para xml:lang="en">Initializes a new instance of the <see cref="ElectionType" /> class.</para>
+        /// </summary>
+        public ElectionType()
+        {
+            this._electionRulesExplanation = new System.Collections.Generic.List<ElectionRulesExplanationTypeDisplayLineInfo>();
+            this._electionDescription = new System.Collections.Generic.List<ElectionDescriptionInformationTypeElectionDescriptionInfo>();
+            this._referencedElection = new System.Collections.Generic.List<ReferencedElectionInformationType>();
+        }
+        
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         private System.Collections.Generic.List<ElectionDescriptionInformationTypeElectionDescriptionInfo> _electionDescription;
         
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
-        [System.Xml.Serialization.XmlArrayAttribute("electionDescription", Order=2)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("electionDescriptionInfo", Namespace="http://www.evoting.ch/xmlns/config/5")]
+        [System.Xml.Serialization.XmlArrayAttribute("electionDescription", Order=3)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("electionDescriptionInfo", Namespace="http://www.evoting.ch/xmlns/config/6")]
         public System.Collections.Generic.List<ElectionDescriptionInformationTypeElectionDescriptionInfo> ElectionDescription
         {
             get
@@ -55,21 +95,12 @@ namespace EVoting.Config
         }
         
         /// <summary>
-        /// <para xml:lang="en">Initializes a new instance of the <see cref="ElectionType" /> class.</para>
-        /// </summary>
-        public ElectionType()
-        {
-            this._electionDescription = new System.Collections.Generic.List<ElectionDescriptionInformationTypeElectionDescriptionInfo>();
-            this._referencedElection = new System.Collections.Generic.List<ReferencedElectionInformationType>();
-        }
-        
-        /// <summary>
         /// <para xml:lang="en">Minimum inclusive value: 1.</para>
         /// <para xml:lang="en">Maximum inclusive value: 50.</para>
         /// </summary>
         [System.ComponentModel.DataAnnotations.RangeAttribute(typeof(decimal), "1", "50", ConvertValueInInvariantCulture=true)]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
-        [System.Xml.Serialization.XmlElementAttribute("electionPosition", Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute("electionPosition", Order=4)]
         public byte ElectionPosition { get; set; }
         
         /// <summary>
@@ -78,15 +109,15 @@ namespace EVoting.Config
         /// </summary>
         [System.ComponentModel.DataAnnotations.RangeAttribute(typeof(decimal), "1", "120", ConvertValueInInvariantCulture=true)]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
-        [System.Xml.Serialization.XmlElementAttribute("numberOfMandates", Order=4)]
+        [System.Xml.Serialization.XmlElementAttribute("numberOfMandates", Order=5)]
         public byte NumberOfMandates { get; set; }
         
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
-        [System.Xml.Serialization.XmlElementAttribute("writeInsAllowed", Order=5)]
+        [System.Xml.Serialization.XmlElementAttribute("writeInsAllowed", Order=6)]
         public bool WriteInsAllowed { get; set; }
         
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
-        [System.Xml.Serialization.XmlElementAttribute("candidateAccumulation", Order=6)]
+        [System.Xml.Serialization.XmlElementAttribute("candidateAccumulation", Order=7)]
         public ElectionTypeCandidateAccumulation CandidateAccumulation { get; set; }
         
         /// <summary>
@@ -95,13 +126,13 @@ namespace EVoting.Config
         /// </summary>
         [System.ComponentModel.DataAnnotations.RangeAttribute(typeof(decimal), "0", "1", ConvertValueInInvariantCulture=true)]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
-        [System.Xml.Serialization.XmlElementAttribute("minimalCandidateSelectionInList", Order=7)]
+        [System.Xml.Serialization.XmlElementAttribute("minimalCandidateSelectionInList", Order=8)]
         public byte MinimalCandidateSelectionInList { get; set; }
         
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         private System.Collections.Generic.List<ReferencedElectionInformationType> _referencedElection;
         
-        [System.Xml.Serialization.XmlElementAttribute("referencedElection", Order=8)]
+        [System.Xml.Serialization.XmlElementAttribute("referencedElection", Order=9)]
         public System.Collections.Generic.List<ReferencedElectionInformationType> ReferencedElection
         {
             get

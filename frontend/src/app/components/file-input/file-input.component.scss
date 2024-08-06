@@ -1,0 +1,17 @@
+@import 'variables';
+
+.file-path {
+  margin-top: 4px;
+  margin-bottom: 0;
+
+  span {
+    font-size: 10px;
+    color: $color-shadow;
+  }
+
+  i {
+    color: $color-signal-error;
+    padding-left: 5px;
+    cursor: pointer;
+  }
+}

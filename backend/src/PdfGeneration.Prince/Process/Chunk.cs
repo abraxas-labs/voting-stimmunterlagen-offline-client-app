@@ -1,4 +1,7 @@
-﻿namespace PdfGeneration.Prince.Process;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+namespace PdfGeneration.Prince.Process;
 
 using System;
 using Thinktecture.IO;

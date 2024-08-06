@@ -1,332 +1,272 @@
 <?xml version="1.0" encoding="utf-8"?>
-<eCH-0045:voterDelivery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.ech.ch/xmlns/eCH-0045/4 http://www.ech.ch/xmlns/eCH-0045/4/eCH-0045-4-0.xsd"
-    xmlns:eCH-0045="http://www.ech.ch/xmlns/eCH-0045/4">
-    <eCH-0045:deliveryHeader xmlns:eCH-0058="http://www.ech.ch/xmlns/eCH-0058/5">
-        <eCH-0058:senderId>x-test</eCH-0058:senderId>
-        <eCH-0058:messageId>51e7f6b0-1d1d-45ab-8e88-8f7ea2afee50</eCH-0058:messageId>
-        <eCH-0058:messageType>1710185</eCH-0058:messageType>
-        <eCH-0058:sendingApplication>
-            <eCH-0058:manufacturer>VRSG AG</eCH-0058:manufacturer>
-            <eCH-0058:product>EAI.Business.Cerberus</eCH-0058:product>
-            <eCH-0058:productVersion>1.0.7578.2</eCH-0058:productVersion>
-        </eCH-0058:sendingApplication>
-        <eCH-0058:messageDate>2022-09-12T14:26:25.435</eCH-0058:messageDate>
-        <eCH-0058:eventDate>2022-09-12</eCH-0058:eventDate>
-        <eCH-0058:action>1</eCH-0058:action>
-        <eCH-0058:testDeliveryFlag>false</eCH-0058:testDeliveryFlag>
-        <eCH-0058:responseExpected>false</eCH-0058:responseExpected>
-        <eCH-0058:businessCaseClosed>false</eCH-0058:businessCaseClosed>
-    </eCH-0045:deliveryHeader>
-    <eCH-0045:voterList>
-        <eCH-0045:reportingAuthority>
-            <eCH-0045:cantonalRegister>
-                <eCH-0045:registerIdentification>EK</eCH-0045:registerIdentification>
-                <eCH-0045:cantonAbbreviation>SG</eCH-0045:cantonAbbreviation>
-                <eCH-0045:registerName>EK</eCH-0045:registerName>
-            </eCH-0045:cantonalRegister>
-        </eCH-0045:reportingAuthority>
-        <eCH-0045:contest>
-            <eCH-0045:contestDate>2022-11-27</eCH-0045:contestDate>
-            <eCH-0045:contestDescription xmlns:eCH-0155="http://www.ech.ch/xmlns/eCH-0155/4">
-                <eCH-0155:contestDescriptionInfo>
-                    <eCH-0155:language>de</eCH-0155:language>
-                    <eCH-0155:contestDescription>Urnengang vom 27.11.2022</eCH-0155:contestDescription>
-                </eCH-0155:contestDescriptionInfo>
-                <eCH-0155:contestDescriptionInfo>
-                    <eCH-0155:language>fr</eCH-0155:language>
-                    <eCH-0155:contestDescription>Urnengang vom 27.11.2022 (fr)</eCH-0155:contestDescription>
-                </eCH-0155:contestDescriptionInfo>
-                <eCH-0155:contestDescriptionInfo>
-                    <eCH-0155:language>it</eCH-0155:language>
-                    <eCH-0155:contestDescription>Urnengang vom 27.11.2022 (it)</eCH-0155:contestDescription>
-                </eCH-0155:contestDescriptionInfo>
-                <eCH-0155:contestDescriptionInfo>
-                    <eCH-0155:language>rm</eCH-0155:language>
-                    <eCH-0155:contestDescription>Urnengang vom 27.11.2022 (rm)</eCH-0155:contestDescription>
-                </eCH-0155:contestDescriptionInfo>
-            </eCH-0045:contestDescription>
-        </eCH-0045:contest>
-        <eCH-0045:numberOfVoters>4</eCH-0045:numberOfVoters>
-        <eCH-0045:voter>
-            <eCH-0045:person>
-                <eCH-0045:swiss>
-                    <eCH-0045:swissDomesticPerson>
-                        <eCH-0045:personIdentification xmlns:eCH-0044="http://www.ech.ch/xmlns/eCH-0044/4">
-                            <eCH-0044:localPersonId>
-                                <eCH-0044:personIdCategory>Inlandschweizer</eCH-0044:personIdCategory>
-                                <eCH-0044:personId>1111111</eCH-0044:personId>
-                            </eCH-0044:localPersonId>
-                            <eCH-0044:officialName>Imhof</eCH-0044:officialName>
-                            <eCH-0044:firstName>Josef</eCH-0044:firstName>
-                            <eCH-0044:sex>1</eCH-0044:sex>
-                            <eCH-0044:dateOfBirth>
-                                <eCH-0044:yearMonthDay>1947-08-12</eCH-0044:yearMonthDay>
-                            </eCH-0044:dateOfBirth>
-                        </eCH-0045:personIdentification>
-                        <eCH-0045:languageOfCorrespondance>de</eCH-0045:languageOfCorrespondance>
-                        <eCH-0045:placeOfOrigin xmlns:eCH-0011="http://www.ech.ch/xmlns/eCH-0011/8">
-                            <eCH-0011:originName>Au SG</eCH-0011:originName>
-                            <eCH-0011:canton>SG</eCH-0011:canton>
-                        </eCH-0045:placeOfOrigin>
-                    </eCH-0045:swissDomesticPerson>
-                    <eCH-0045:municipality xmlns:eCH-0007="http://www.ech.ch/xmlns/eCH-0007/6">
-                        <eCH-0007:municipalityId>3231</eCH-0007:municipalityId>
-                        <eCH-0007:municipalityName>Au (SG)</eCH-0007:municipalityName>
-                        <eCH-0007:cantonAbbreviation>SG</eCH-0007:cantonAbbreviation>
-                    </eCH-0045:municipality>
-                </eCH-0045:swiss>
-            </eCH-0045:person>
-            <eCH-0045:dataLock>2</eCH-0045:dataLock>
-            <eCH-0045:electoralAddress xmlns:eCH-0010="http://www.ech.ch/xmlns/eCH-0010/6">
-                <eCH-0010:person>
-                    <eCH-0010:mrMrs>2</eCH-0010:mrMrs>
-                    <eCH-0010:firstName>Josef</eCH-0010:firstName>
-                    <eCH-0010:lastName>Imhof</eCH-0010:lastName>
-                </eCH-0010:person>
-                <eCH-0010:addressInformation>
-                    <eCH-0010:street>Musterstr.</eCH-0010:street>
-                    <eCH-0010:houseNumber>1</eCH-0010:houseNumber>
-                    <eCH-0010:town>Au SG</eCH-0010:town>
-                    <eCH-0010:swissZipCode>9434</eCH-0010:swissZipCode>
-                    <eCH-0010:country>
-                        <eCH-0010:countryId>8100</eCH-0010:countryId>
-                        <eCH-0010:countryIdISO2>CH</eCH-0010:countryIdISO2>
-                        <eCH-0010:countryNameShort>CH</eCH-0010:countryNameShort>
-                    </eCH-0010:country>
-                </eCH-0010:addressInformation>
-            </eCH-0045:electoralAddress>
-            <eCH-0045:deliveryAddress xmlns:eCH-0010="http://www.ech.ch/xmlns/eCH-0010/6">
-                <eCH-0010:person>
-                    <eCH-0010:mrMrs>2</eCH-0010:mrMrs>
-                    <eCH-0010:firstName>Josef</eCH-0010:firstName>
-                    <eCH-0010:lastName>Imhof</eCH-0010:lastName>
-                </eCH-0010:person>
-                <eCH-0010:addressInformation>
-                    <eCH-0010:street>Musterstr.</eCH-0010:street>
-                    <eCH-0010:houseNumber>1</eCH-0010:houseNumber>
-                    <eCH-0010:town>Au SG</eCH-0010:town>
-                    <eCH-0010:swissZipCode>9434</eCH-0010:swissZipCode>
-                    <eCH-0010:country>
-                        <eCH-0010:countryId>8100</eCH-0010:countryId>
-                        <eCH-0010:countryIdISO2>CH</eCH-0010:countryIdISO2>
-                        <eCH-0010:countryNameShort>CH</eCH-0010:countryNameShort>
-                    </eCH-0010:country>
-                </eCH-0010:addressInformation>
-            </eCH-0045:deliveryAddress>
-            <eCH-0045:isEvoter>true</eCH-0045:isEvoter>
-            <eCH-0045:domainOfInfluenceInfo>
-                <eCH-0045:domainOfInfluence xmlns:eCH-0155="http://www.ech.ch/xmlns/eCH-0155/4">
-                    <eCH-0155:domainOfInfluenceType>CH</eCH-0155:domainOfInfluenceType>
-                    <eCH-0155:localDomainOfInfluenceIdentification>1</eCH-0155:localDomainOfInfluenceIdentification>
-                    <eCH-0155:domainOfInfluenceName>Bund</eCH-0155:domainOfInfluenceName>
-                </eCH-0045:domainOfInfluence>
-            </eCH-0045:domainOfInfluenceInfo>
-            <eCH-0045:domainOfInfluenceInfo>
-                <eCH-0045:domainOfInfluence xmlns:eCH-0155="http://www.ech.ch/xmlns/eCH-0155/4">
-                    <eCH-0155:domainOfInfluenceType>CT</eCH-0155:domainOfInfluenceType>
-                    <eCH-0155:localDomainOfInfluenceIdentification>2</eCH-0155:localDomainOfInfluenceIdentification>
-                    <eCH-0155:domainOfInfluenceName>St. Gallen</eCH-0155:domainOfInfluenceName>
-                </eCH-0045:domainOfInfluence>
-            </eCH-0045:domainOfInfluenceInfo>
-            <eCH-0045:domainOfInfluenceInfo>
-                <eCH-0045:domainOfInfluence xmlns:eCH-0155="http://www.ech.ch/xmlns/eCH-0155/4">
-                    <eCH-0155:domainOfInfluenceType>MU</eCH-0155:domainOfInfluenceType>
-                    <eCH-0155:localDomainOfInfluenceIdentification>3231</eCH-0155:localDomainOfInfluenceIdentification>
-                    <eCH-0155:domainOfInfluenceName>Au (SG)</eCH-0155:domainOfInfluenceName>
-                </eCH-0045:domainOfInfluence>
-            </eCH-0045:domainOfInfluenceInfo>
-        </eCH-0045:voter>
-        <eCH-0045:voter>
-            <eCH-0045:person>
-                <eCH-0045:swiss>
-                    <eCH-0045:swissDomesticPerson>
-                        <eCH-0045:personIdentification xmlns:eCH-0044="http://www.ech.ch/xmlns/eCH-0044/4">
-                            <eCH-0044:localPersonId>
-                                <eCH-0044:personIdCategory>Inlandschweizer</eCH-0044:personIdCategory>
-                                <eCH-0044:personId>1111112</eCH-0044:personId>
-                            </eCH-0044:localPersonId>
-                            <eCH-0044:officialName>Keller</eCH-0044:officialName>
-                            <eCH-0044:firstName>Marianne</eCH-0044:firstName>
-                            <eCH-0044:sex>2</eCH-0044:sex>
-                            <eCH-0044:dateOfBirth>
-                                <eCH-0044:yearMonthDay>1949-04-08</eCH-0044:yearMonthDay>
-                            </eCH-0044:dateOfBirth>
-                        </eCH-0045:personIdentification>
-                        <eCH-0045:languageOfCorrespondance>de</eCH-0045:languageOfCorrespondance>
-                        <eCH-0045:placeOfOrigin xmlns:eCH-0011="http://www.ech.ch/xmlns/eCH-0011/8">
-                            <eCH-0011:originName>Au SG</eCH-0011:originName>
-                            <eCH-0011:canton>SG</eCH-0011:canton>
-                        </eCH-0045:placeOfOrigin>
-                    </eCH-0045:swissDomesticPerson>
-                    <eCH-0045:municipality xmlns:eCH-0007="http://www.ech.ch/xmlns/eCH-0007/6">
-                        <eCH-0007:municipalityId>3231</eCH-0007:municipalityId>
-                        <eCH-0007:municipalityName>Au (SG)</eCH-0007:municipalityName>
-                        <eCH-0007:cantonAbbreviation>SG</eCH-0007:cantonAbbreviation>
-                    </eCH-0045:municipality>
-                </eCH-0045:swiss>
-            </eCH-0045:person>
-            <eCH-0045:dataLock>2</eCH-0045:dataLock>
-            <eCH-0045:electoralAddress xmlns:eCH-0010="http://www.ech.ch/xmlns/eCH-0010/6">
-                <eCH-0010:person>
-                    <eCH-0010:mrMrs>1</eCH-0010:mrMrs>
-                    <eCH-0010:firstName>Marianne</eCH-0010:firstName>
-                    <eCH-0010:lastName>Keller</eCH-0010:lastName>
-                </eCH-0010:person>
-                <eCH-0010:addressInformation>
-                    <eCH-0010:street>Musterstr.</eCH-0010:street>
-                    <eCH-0010:houseNumber>2</eCH-0010:houseNumber>
-                    <eCH-0010:town>Au SG</eCH-0010:town>
-                    <eCH-0010:swissZipCode>9434</eCH-0010:swissZipCode>
-                    <eCH-0010:country>
-                        <eCH-0010:countryId>8100</eCH-0010:countryId>
-                        <eCH-0010:countryIdISO2>CH</eCH-0010:countryIdISO2>
-                        <eCH-0010:countryNameShort>CH</eCH-0010:countryNameShort>
-                    </eCH-0010:country>
-                </eCH-0010:addressInformation>
-            </eCH-0045:electoralAddress>
-            <eCH-0045:deliveryAddress xmlns:eCH-0010="http://www.ech.ch/xmlns/eCH-0010/6">
-                <eCH-0010:person>
-                    <eCH-0010:mrMrs>1</eCH-0010:mrMrs>
-                    <eCH-0010:firstName>Marianne</eCH-0010:firstName>
-                    <eCH-0010:lastName>Keller</eCH-0010:lastName>
-                </eCH-0010:person>
-                <eCH-0010:addressInformation>
-                    <eCH-0010:street>Musterstr.</eCH-0010:street>
-                    <eCH-0010:houseNumber>2</eCH-0010:houseNumber>
-                    <eCH-0010:town>Au SG</eCH-0010:town>
-                    <eCH-0010:swissZipCode>9434</eCH-0010:swissZipCode>
-                    <eCH-0010:country>
-                        <eCH-0010:countryId>8100</eCH-0010:countryId>
-                        <eCH-0010:countryIdISO2>CH</eCH-0010:countryIdISO2>
-                        <eCH-0010:countryNameShort>CH</eCH-0010:countryNameShort>
-                    </eCH-0010:country>
-                </eCH-0010:addressInformation>
-            </eCH-0045:deliveryAddress>
-            <eCH-0045:isEvoter>true</eCH-0045:isEvoter>
-            <eCH-0045:domainOfInfluenceInfo>
-                <eCH-0045:domainOfInfluence xmlns:eCH-0155="http://www.ech.ch/xmlns/eCH-0155/4">
-                    <eCH-0155:domainOfInfluenceType>CH</eCH-0155:domainOfInfluenceType>
-                    <eCH-0155:localDomainOfInfluenceIdentification>1</eCH-0155:localDomainOfInfluenceIdentification>
-                    <eCH-0155:domainOfInfluenceName>Bund</eCH-0155:domainOfInfluenceName>
-                </eCH-0045:domainOfInfluence>
-            </eCH-0045:domainOfInfluenceInfo>
-            <eCH-0045:domainOfInfluenceInfo>
-                <eCH-0045:domainOfInfluence xmlns:eCH-0155="http://www.ech.ch/xmlns/eCH-0155/4">
-                    <eCH-0155:domainOfInfluenceType>CT</eCH-0155:domainOfInfluenceType>
-                    <eCH-0155:localDomainOfInfluenceIdentification>2</eCH-0155:localDomainOfInfluenceIdentification>
-                    <eCH-0155:domainOfInfluenceName>St. Gallen</eCH-0155:domainOfInfluenceName>
-                </eCH-0045:domainOfInfluence>
-            </eCH-0045:domainOfInfluenceInfo>
-            <eCH-0045:domainOfInfluenceInfo>
-                <eCH-0045:domainOfInfluence xmlns:eCH-0155="http://www.ech.ch/xmlns/eCH-0155/4">
-                    <eCH-0155:domainOfInfluenceType>MU</eCH-0155:domainOfInfluenceType>
-                    <eCH-0155:localDomainOfInfluenceIdentification>3231</eCH-0155:localDomainOfInfluenceIdentification>
-                    <eCH-0155:domainOfInfluenceName>Au (SG)</eCH-0155:domainOfInfluenceName>
-                </eCH-0045:domainOfInfluence>
-            </eCH-0045:domainOfInfluenceInfo>
-        </eCH-0045:voter>
-        <eCH-0045:voter>
-            <eCH-0045:person>
-                <eCH-0045:swissAbroad>
-                    <eCH-0045:swissAbroadPerson>
-                        <eCH-0045:personIdentification xmlns:eCH-0044="http://www.ech.ch/xmlns/eCH-0044/4">
-                            <eCH-0044:localPersonId>
-                                <eCH-0044:personIdCategory>Auslandschweizer</eCH-0044:personIdCategory>
-                                <eCH-0044:personId>9999111</eCH-0044:personId>
-                            </eCH-0044:localPersonId>
-                            <eCH-0044:officialName>Carrasco</eCH-0044:officialName>
-                            <eCH-0044:firstName>Lautaro</eCH-0044:firstName>
-                            <eCH-0044:sex>1</eCH-0044:sex>
-                            <eCH-0044:dateOfBirth>
-                                <eCH-0044:yearMonthDay>1979-09-25</eCH-0044:yearMonthDay>
-                            </eCH-0044:dateOfBirth>
-                        </eCH-0045:personIdentification>
-                        <eCH-0045:languageOfCorrespondance>de</eCH-0045:languageOfCorrespondance>
-                        <eCH-0045:extension>
-                            <postageCode>1</postageCode>
-                            <votingPlace>
-                                <organisation xmlns:eCH-0010="http://www.ech.ch/xmlns/eCH-0010/6">
-                                    <eCH-0010:organisationName>Staatskanzlei</eCH-0010:organisationName>
-                                    <eCH-0010:organisationNameAddOn1>St. Gallen</eCH-0010:organisationNameAddOn1>
+<voterDelivery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.ech.ch/xmlns/eCH-0045/4">
+    <deliveryHeader>
+        <senderId xmlns="http://www.ech.ch/xmlns/eCH-0058/5">ABX-VOTING</senderId>
+        <messageId xmlns="http://www.ech.ch/xmlns/eCH-0058/5">5bad276a0dff40a48f9d8740bc4b6312</messageId>
+        <messageType xmlns="http://www.ech.ch/xmlns/eCH-0058/5">1710967</messageType>
+        <sendingApplication xmlns="http://www.ech.ch/xmlns/eCH-0058/5">
+            <manufacturer>Abraxas Informatik AG</manufacturer>
+            <product>Voting.Stimmunterlagen</product>
+            <productVersion>0.0.0.1+a0</productVersion>
+        </sendingApplication>
+        <messageDate xmlns="http://www.ech.ch/xmlns/eCH-0058/5">2022-09-12T14:26:25.435</messageDate>
+        <action xmlns="http://www.ech.ch/xmlns/eCH-0058/5">1</action>
+        <testDeliveryFlag xmlns="http://www.ech.ch/xmlns/eCH-0058/5">false</testDeliveryFlag>
+    </deliveryHeader>
+    <voterList>
+        <reportingAuthority>
+            <otherRegister>
+                <registerIdentification>SG</registerIdentification>
+                <registerName>SG</registerName>
+            </otherRegister>
+        </reportingAuthority>
+        <contest>
+            <contestDate>2022-11-27</contestDate>
+            <contestDescription>
+                <contestDescriptionInfo xmlns="http://www.ech.ch/xmlns/eCH-0155/4">
+                    <language>de</language>
+                    <contestDescription>Urnengang vom 27.11.2022</contestDescription>
+                </contestDescriptionInfo>
+                <contestDescriptionInfo xmlns="http://www.ech.ch/xmlns/eCH-0155/4">
+                    <language>fr</language>
+                    <contestDescription>Urnengang vom 27.11.2022</contestDescription>
+                </contestDescriptionInfo>
+                <contestDescriptionInfo xmlns="http://www.ech.ch/xmlns/eCH-0155/4">
+                    <language>it</language>
+                    <contestDescription>Urnengang vom 27.11.2022</contestDescription>
+                </contestDescriptionInfo>
+                <contestDescriptionInfo xmlns="http://www.ech.ch/xmlns/eCH-0155/4">
+                    <language>rm</language>
+                    <contestDescription>Urnengang vom 27.11.2022</contestDescription>
+                </contestDescriptionInfo>
+            </contestDescription>
+        </contest>
+        <numberOfVoters>3</numberOfVoters>
+        <voter>
+            <person>
+                <swiss>
+                    <swissDomesticPerson>
+                        <personIdentification>
+                            <localPersonId xmlns="http://www.ech.ch/xmlns/eCH-0044/4">
+                                <personIdCategory>Inlandschweizer</personIdCategory>
+                                <personId>1111111</personId>
+                            </localPersonId>
+                            <officialName xmlns="http://www.ech.ch/xmlns/eCH-0044/4">Imhof</officialName>
+                            <firstName xmlns="http://www.ech.ch/xmlns/eCH-0044/4">Josef</firstName>
+                            <sex xmlns="http://www.ech.ch/xmlns/eCH-0044/4">1</sex>
+                            <dateOfBirth xmlns="http://www.ech.ch/xmlns/eCH-0044/4">
+                                <yearMonthDay>1947-08-12</yearMonthDay>
+                            </dateOfBirth>
+                        </personIdentification>
+                        <languageOfCorrespondance>de</languageOfCorrespondance>
+                        <placeOfOrigin>
+                            <originName xmlns="http://www.ech.ch/xmlns/eCH-0011/8">Au SG</originName>
+                            <canton xmlns="http://www.ech.ch/xmlns/eCH-0011/8">SG</canton>
+                        </placeOfOrigin>
+                    </swissDomesticPerson>
+                    <municipality>
+                        <municipalityId xmlns="http://www.ech.ch/xmlns/eCH-0007/6">3231</municipalityId>
+                        <municipalityName xmlns="http://www.ech.ch/xmlns/eCH-0007/6">Au (SG)</municipalityName>
+                    </municipality>
+                </swiss>
+            </person>
+            <dataLock>2</dataLock>
+            <electoralAddress>
+                <person xmlns="http://www.ech.ch/xmlns/eCH-0010/6">
+                    <mrMrs>2</mrMrs>
+                    <firstName>Josef</firstName>
+                    <lastName>Imhof</lastName>
+                </person>
+                <addressInformation xmlns="http://www.ech.ch/xmlns/eCH-0010/6">
+                    <street>Musterstr.</street>
+                    <houseNumber>1</houseNumber>
+                    <town>Au SG</town>
+                    <swissZipCode>9434</swissZipCode>
+                    <country>
+                        <countryIdISO2>CH</countryIdISO2>
+                        <countryNameShort>CH</countryNameShort>
+                    </country>
+                </addressInformation>
+            </electoralAddress>
+            <isEvoter>true</isEvoter>
+            <domainOfInfluenceInfo>
+                <domainOfInfluence>
+                    <domainOfInfluenceType xmlns="http://www.ech.ch/xmlns/eCH-0155/4">CH</domainOfInfluenceType>
+                    <localDomainOfInfluenceIdentification xmlns="http://www.ech.ch/xmlns/eCH-0155/4">1</localDomainOfInfluenceIdentification>
+                    <domainOfInfluenceName xmlns="http://www.ech.ch/xmlns/eCH-0155/4">Bund</domainOfInfluenceName>
+                </domainOfInfluence>
+            </domainOfInfluenceInfo>
+            <domainOfInfluenceInfo>
+                <domainOfInfluence>
+                    <domainOfInfluenceType xmlns="http://www.ech.ch/xmlns/eCH-0155/4">CT</domainOfInfluenceType>
+                    <localDomainOfInfluenceIdentification xmlns="http://www.ech.ch/xmlns/eCH-0155/4">2</localDomainOfInfluenceIdentification>
+                    <domainOfInfluenceName xmlns="http://www.ech.ch/xmlns/eCH-0155/4">St. Gallen</domainOfInfluenceName>
+                </domainOfInfluence>
+            </domainOfInfluenceInfo>
+            <domainOfInfluenceInfo>
+                <domainOfInfluence>
+                    <domainOfInfluenceType xmlns="http://www.ech.ch/xmlns/eCH-0155/4">MU</domainOfInfluenceType>
+                    <localDomainOfInfluenceIdentification xmlns="http://www.ech.ch/xmlns/eCH-0155/4">3231</localDomainOfInfluenceIdentification>
+                    <domainOfInfluenceName xmlns="http://www.ech.ch/xmlns/eCH-0155/4">AG (SG)</domainOfInfluenceName>
+                </domainOfInfluence>
+            </domainOfInfluenceInfo>
+        </voter>
+        <voter>
+            <person>
+                <swiss>
+                    <swissDomesticPerson>
+                        <personIdentification>
+                            <localPersonId xmlns="http://www.ech.ch/xmlns/eCH-0044/4">
+                                <personIdCategory>Inlandschweizer</personIdCategory>
+                                <personId>1111112</personId>
+                            </localPersonId>
+                            <officialName xmlns="http://www.ech.ch/xmlns/eCH-0044/4">Keller</officialName>
+                            <firstName xmlns="http://www.ech.ch/xmlns/eCH-0044/4">Marianne</firstName>
+                            <sex xmlns="http://www.ech.ch/xmlns/eCH-0044/4">2</sex>
+                            <dateOfBirth xmlns="http://www.ech.ch/xmlns/eCH-0044/4">
+                                <yearMonthDay>1949-04-08</yearMonthDay>
+                            </dateOfBirth>
+                        </personIdentification>
+                        <languageOfCorrespondance>de</languageOfCorrespondance>
+                        <placeOfOrigin>
+                            <originName xmlns="http://www.ech.ch/xmlns/eCH-0011/8">Au SG</originName>
+                            <canton xmlns="http://www.ech.ch/xmlns/eCH-0011/8">SG</canton>
+                        </placeOfOrigin>
+                    </swissDomesticPerson>
+                    <municipality>
+                        <municipalityId xmlns="http://www.ech.ch/xmlns/eCH-0007/6">3231</municipalityId>
+                        <municipalityName xmlns="http://www.ech.ch/xmlns/eCH-0007/6">Au (SG)</municipalityName>
+                    </municipality>
+                </swiss>
+            </person>
+            <dataLock>2</dataLock>
+            <electoralAddress>
+                <person xmlns="http://www.ech.ch/xmlns/eCH-0010/6">
+                    <mrMrs>1</mrMrs>
+                    <firstName>Marianne</firstName>
+                    <lastName>Keller</lastName>
+                </person>
+                <addressInformation xmlns="http://www.ech.ch/xmlns/eCH-0010/6">
+                    <street>Musterstr.</street>
+                    <houseNumber>2</houseNumber>
+                    <town>Au SG</town>
+                    <swissZipCode>9434</swissZipCode>
+                    <country>
+                        <countryIdISO2>CH</countryIdISO2>
+                        <countryNameShort>CH</countryNameShort>
+                    </country>
+                </addressInformation>
+            </electoralAddress>
+            <isEvoter>true</isEvoter>
+            <domainOfInfluenceInfo>
+                <domainOfInfluence>
+                    <domainOfInfluenceType xmlns="http://www.ech.ch/xmlns/eCH-0155/4">CH</domainOfInfluenceType>
+                    <localDomainOfInfluenceIdentification xmlns="http://www.ech.ch/xmlns/eCH-0155/4">1</localDomainOfInfluenceIdentification>
+                    <domainOfInfluenceName xmlns="http://www.ech.ch/xmlns/eCH-0155/4">Bund</domainOfInfluenceName>
+                </domainOfInfluence>
+            </domainOfInfluenceInfo>
+            <domainOfInfluenceInfo>
+                <domainOfInfluence>
+                    <domainOfInfluenceType xmlns="http://www.ech.ch/xmlns/eCH-0155/4">CT</domainOfInfluenceType>
+                    <localDomainOfInfluenceIdentification xmlns="http://www.ech.ch/xmlns/eCH-0155/4">2</localDomainOfInfluenceIdentification>
+                    <domainOfInfluenceName xmlns="http://www.ech.ch/xmlns/eCH-0155/4">St. Gallen</domainOfInfluenceName>
+                </domainOfInfluence>
+            </domainOfInfluenceInfo>
+            <domainOfInfluenceInfo>
+                <domainOfInfluence>
+                    <domainOfInfluenceType xmlns="http://www.ech.ch/xmlns/eCH-0155/4">MU</domainOfInfluenceType>
+                    <localDomainOfInfluenceIdentification xmlns="http://www.ech.ch/xmlns/eCH-0155/4">3231</localDomainOfInfluenceIdentification>
+                    <domainOfInfluenceName xmlns="http://www.ech.ch/xmlns/eCH-0155/4">AG (SG)</domainOfInfluenceName>
+                </domainOfInfluence>
+            </domainOfInfluenceInfo>
+        </voter>
+        <voter>
+            <person>
+                <swissAbroad>
+                    <swissAbroadPerson>
+                        <personIdentification>
+                            <localPersonId xmlns="http://www.ech.ch/xmlns/eCH-0044/4">
+                                <personIdCategory>Auslandschweizer</personIdCategory>
+                                <personId>9999111</personId>
+                            </localPersonId>
+                            <officialName xmlns="http://www.ech.ch/xmlns/eCH-0044/4">Carrasco</officialName>
+                            <firstName xmlns="http://www.ech.ch/xmlns/eCH-0044/4">Lautaro</firstName>
+                            <sex xmlns="http://www.ech.ch/xmlns/eCH-0044/4">1</sex>
+                            <dateOfBirth xmlns="http://www.ech.ch/xmlns/eCH-0044/4">
+                                <yearMonthDay>1979-09-25</yearMonthDay>
+                            </dateOfBirth>
+                        </personIdentification>
+                        <languageOfCorrespondance>de</languageOfCorrespondance>
+                        <extension>
+                            <postageCode xmlns="">1</postageCode>
+                            <votingPlace xmlns="">
+                                <organisation>
+                                    <organisationName xmlns="http://www.ech.ch/xmlns/eCH-0010/6">Staatskanzlei</organisationName>
+                                    <organisationNameAddOn1 xmlns="http://www.ech.ch/xmlns/eCH-0010/6">St. Gallen</organisationNameAddOn1>
                                 </organisation>
-                                <addressInformation xmlns:eCH-0010="http://www.ech.ch/xmlns/eCH-0010/6">
-                                    <eCH-0010:addressLine1>Kanton St. Gallen</eCH-0010:addressLine1>
-                                    <eCH-0010:addressLine2>Staatskanzlein</eCH-0010:addressLine2>
-                                    <eCH-0010:street>Regierungsgebäude</eCH-0010:street>
-                                    <eCH-0010:town>St. Gallen</eCH-0010:town>
-                                    <eCH-0010:swissZipCode>9001</eCH-0010:swissZipCode>
-                                    <eCH-0010:country>
-                                        <eCH-0010:countryIdISO2>CH</eCH-0010:countryIdISO2>
-                                        <eCH-0010:countryNameShort>SWITZERLAND</eCH-0010:countryNameShort>
-                                    </eCH-0010:country>
+                                <addressInformation>
+                                    <addressLine1 xmlns="http://www.ech.ch/xmlns/eCH-0010/6">Kanton St. Gallen</addressLine1>
+                                    <addressLine2 xmlns="http://www.ech.ch/xmlns/eCH-0010/6">Staatskanzlein</addressLine2>
+                                    <street xmlns="http://www.ech.ch/xmlns/eCH-0010/6">Regierungsgebäude</street>
+                                    <town xmlns="http://www.ech.ch/xmlns/eCH-0010/6">St. Gallen</town>
+                                    <swissZipCode xmlns="http://www.ech.ch/xmlns/eCH-0010/6">9001</swissZipCode>
+                                    <country xmlns="http://www.ech.ch/xmlns/eCH-0010/6">
+                                        <countryIdISO2>CH</countryIdISO2>
+                                        <countryNameShort>SWITZERLAND</countryNameShort>
+                                    </country>
                                 </addressInformation>
                             </votingPlace>
-                            <address>
+                            <address xmlns="">
                                 <line1>Lautaro Carrasco</line1>
                                 <line2>Muster-Strasse 61 </line2>
                                 <line3>6020 Innsbruck </line3>
+                                <line4 />
+                                <line5 />
+                                <line6 />
                                 <line7>AUSTRIA</line7>
                             </address>
-                        </eCH-0045:extension>
-                        <eCH-0045:placeOfOrigin xmlns:eCH-0011="http://www.ech.ch/xmlns/eCH-0011/8">
-                            <eCH-0011:originName>Zürich</eCH-0011:originName>
-                            <eCH-0011:canton>ZH</eCH-0011:canton>
-                        </eCH-0045:placeOfOrigin>
-                    </eCH-0045:swissAbroadPerson>
-                    <eCH-0045:dateOfRegistration>2000-01-01</eCH-0045:dateOfRegistration>
-                    <eCH-0045:residenceCountry xmlns:eCH-0008="http://www.ech.ch/xmlns/eCH-0008/3">
-                        <eCH-0008:countryId>8229</eCH-0008:countryId>
-                        <eCH-0008:countryIdISO2>AT</eCH-0008:countryIdISO2>
-                        <eCH-0008:countryNameShort>Österreich</eCH-0008:countryNameShort>
-                    </eCH-0045:residenceCountry>
-                    <eCH-0045:municipality xmlns:eCH-0007="http://www.ech.ch/xmlns/eCH-0007/6">
-                        <eCH-0007:municipalityId>9170</eCH-0007:municipalityId>
-                        <eCH-0007:municipalityName>Auslandschweizer</eCH-0007:municipalityName>
-                    </eCH-0045:municipality>
-                </eCH-0045:swissAbroad>
-            </eCH-0045:person>
-            <eCH-0045:dataLock>2</eCH-0045:dataLock>
-            <eCH-0045:electoralAddress xmlns:eCH-0010="http://www.ech.ch/xmlns/eCH-0010/6">
-                <eCH-0010:person>
-                    <eCH-0010:mrMrs>2</eCH-0010:mrMrs>
-                    <eCH-0010:firstName>Lautaro</eCH-0010:firstName>
-                    <eCH-0010:lastName>Carrasco</eCH-0010:lastName>
-                </eCH-0010:person>
-                <eCH-0010:addressInformation>
-                    <eCH-0010:street>Muster-Strasse</eCH-0010:street>
-                    <eCH-0010:houseNumber>61</eCH-0010:houseNumber>
-                    <eCH-0010:town>Innsbruck</eCH-0010:town>
-                    <eCH-0010:foreignZipCode>6020</eCH-0010:foreignZipCode>
-                    <eCH-0010:country>
-                        <eCH-0010:countryNameShort>AUSTRIA</eCH-0010:countryNameShort>
-                    </eCH-0010:country>
-                </eCH-0010:addressInformation>
-            </eCH-0045:electoralAddress>
-            <eCH-0045:deliveryAddress xmlns:eCH-0010="http://www.ech.ch/xmlns/eCH-0010/6">
-                <eCH-0010:person>
-                    <eCH-0010:mrMrs>2</eCH-0010:mrMrs>
-                    <eCH-0010:firstName>Lautaro</eCH-0010:firstName>
-                    <eCH-0010:lastName>Carrasco</eCH-0010:lastName>
-                </eCH-0010:person>
-                <eCH-0010:addressInformation>
-                    <eCH-0010:street>Muster-Strasse</eCH-0010:street>
-                    <eCH-0010:houseNumber>61</eCH-0010:houseNumber>
-                    <eCH-0010:town>Innsbruck</eCH-0010:town>
-                    <eCH-0010:foreignZipCode>6020</eCH-0010:foreignZipCode>
-                    <eCH-0010:country>
-                        <eCH-0010:countryNameShort>AUSTRIA</eCH-0010:countryNameShort>
-                    </eCH-0010:country>
-                </eCH-0010:addressInformation>
-            </eCH-0045:deliveryAddress>
-            <eCH-0045:isEvoter>true</eCH-0045:isEvoter>
-            <eCH-0045:domainOfInfluenceInfo>
-                <eCH-0045:domainOfInfluence xmlns:eCH-0155="http://www.ech.ch/xmlns/eCH-0155/4">
-                    <eCH-0155:domainOfInfluenceType>CH</eCH-0155:domainOfInfluenceType>
-                    <eCH-0155:localDomainOfInfluenceIdentification>1</eCH-0155:localDomainOfInfluenceIdentification>
-                    <eCH-0155:domainOfInfluenceName>Bund</eCH-0155:domainOfInfluenceName>
-                </eCH-0045:domainOfInfluence>
-            </eCH-0045:domainOfInfluenceInfo>
-        </eCH-0045:voter>
-    </eCH-0045:voterList>
-</eCH-0045:voterDelivery>
+                        </extension>
+                        <placeOfOrigin>
+                            <originName xmlns="http://www.ech.ch/xmlns/eCH-0011/8">Zürich</originName>
+                            <canton xmlns="http://www.ech.ch/xmlns/eCH-0011/8">ZH</canton>
+                        </placeOfOrigin>
+                    </swissAbroadPerson>
+                    <dateOfRegistration>2000-01-01</dateOfRegistration>
+                    <residenceCountry>
+                        <countryIdISO2 xmlns="http://www.ech.ch/xmlns/eCH-0008/3">AT</countryIdISO2>
+                        <countryNameShort xmlns="http://www.ech.ch/xmlns/eCH-0008/3">Österreich</countryNameShort>
+                    </residenceCountry>
+                    <municipality>
+                        <municipalityId xmlns="http://www.ech.ch/xmlns/eCH-0007/6">9170</municipalityId>
+                        <municipalityName xmlns="http://www.ech.ch/xmlns/eCH-0007/6">Auslandschweizer</municipalityName>
+                    </municipality>
+                </swissAbroad>
+            </person>
+            <dataLock>0</dataLock>
+            <electoralAddress>
+                <person xmlns="http://www.ech.ch/xmlns/eCH-0010/6">
+                    <mrMrs>2</mrMrs>
+                    <firstName>Lautaro</firstName>
+                    <lastName>Carrasco</lastName>
+                </person>
+                <addressInformation xmlns="http://www.ech.ch/xmlns/eCH-0010/6">
+                    <street>Muster-Strasse</street>
+                    <houseNumber>61</houseNumber>
+                    <town>Innsbruck</town>
+                    <foreignZipCode>6020</foreignZipCode>
+                    <country>
+                        <countryNameShort>AUSTRIA</countryNameShort>
+                    </country>
+                </addressInformation>
+            </electoralAddress>
+            <isEvoter>true</isEvoter>
+            <domainOfInfluenceInfo>
+                <domainOfInfluence>
+                    <domainOfInfluenceType xmlns="http://www.ech.ch/xmlns/eCH-0155/4">CH</domainOfInfluenceType>
+                    <localDomainOfInfluenceIdentification xmlns="http://www.ech.ch/xmlns/eCH-0155/4">1</localDomainOfInfluenceIdentification>
+                    <domainOfInfluenceName xmlns="http://www.ech.ch/xmlns/eCH-0155/4">Bund</domainOfInfluenceName>
+                </domainOfInfluence>
+            </domainOfInfluenceInfo>
+        </voter>
+    </voterList>
+</voterDelivery>

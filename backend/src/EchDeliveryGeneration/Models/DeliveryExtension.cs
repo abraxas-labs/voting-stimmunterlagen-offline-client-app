@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using System.Collections.Generic;
 using Ech0155_4_0;
 using Voting.Stimmunterlagen.OfflineClient.Shared.ContestConfiguration;
 

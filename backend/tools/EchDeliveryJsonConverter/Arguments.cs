@@ -1,4 +1,7 @@
-﻿using System;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,6 +24,7 @@ public class Arguments
     private readonly CommandOption _outFile;
     private readonly CommandOption _streamIn;
     private readonly CommandOption _streamOut;
+    private readonly CommandOption _postSignatureValidationFile;
 
     public Stream XmlData => (_streamIn.HasValue())
         ? Console.OpenStandardInput(0x10000)
@@ -46,6 +50,7 @@ public class Arguments
 
     public string? InFile => _inFile.Value();
     public string? OutFile => _outFile.Value();
+    public List<string> PostSignatureValidationFiles => _postSignatureValidationFile.Values.WhereNotNull().ToList();
 
     public List<string> MultipleInFiles => _inFile.Values.WhereNotNull().ToList();
 
@@ -67,6 +72,7 @@ public class Arguments
         _inFile = cla.Option("-i|--in", "XML files that should be converted to json.", CommandOptionType.MultipleValue);
         _streamOut = cla.Option("--outstream", "Write json output to stdout. Use this or '--out filename' for specifying an output file.", CommandOptionType.NoValue);
         _outFile = cla.Option("-o|--out", "File where converted json output should be written to.", CommandOptionType.SingleValue);
+        _postSignatureValidationFile = cla.Option("--postSignatureValidationFile", "Files which are necessary to run the post signature validation per JAR tool.", CommandOptionType.MultipleValue);
 
     }
 

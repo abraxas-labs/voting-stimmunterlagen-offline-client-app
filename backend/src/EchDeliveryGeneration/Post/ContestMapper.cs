@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using System.Linq;
 using Ech0155_4_0;
 using Voting.Lib.Common;
 

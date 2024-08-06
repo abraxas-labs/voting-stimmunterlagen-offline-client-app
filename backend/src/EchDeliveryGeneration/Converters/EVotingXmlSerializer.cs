@@ -1,4 +1,7 @@
-﻿using System;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Xml;
 using System.Xml.Serialization;

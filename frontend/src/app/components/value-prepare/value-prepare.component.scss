@@ -1,9 +1,36 @@
 @import 'variables';
 
-.error-msg {
-  border: solid 1px $color-signal-error;
+.base-msg {
   border-radius: 3px;
+  padding: 10px;
+  margin: 12px 0;
+
+  p {
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
+}
+
+.error-msg {
+  @extend .base-msg;
+
+  border: solid 1px $color-signal-error;
   background: $color-light-red-25;
   color: $color-signal-error;
-  padding: 15px;
+}
+
+.warn-msg {
+  @extend .base-msg;
+
+  border: solid 1px $color-yellow-dark;
+  background: $color-yellow-dark-25;
+  color: $color-yellow-dark;
+}
+
+.success-msg {
+  @extend .base-msg;
+
+  border: solid 1px $color-key;
+  background: $color-key-25;
+  color: $color-key;
 }

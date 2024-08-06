@@ -14,7 +14,7 @@ namespace EVoting.Config
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "2.1.963.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("BallotDescriptionInformationTypeBallotDescriptionInfo", Namespace="http://www.evoting.ch/xmlns/config/5", AnonymousType=true)]
+    [System.Xml.Serialization.XmlTypeAttribute("BallotDescriptionInformationTypeBallotDescriptionInfo", Namespace="http://www.evoting.ch/xmlns/config/6", AnonymousType=true)]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class BallotDescriptionInformationTypeBallotDescriptionInfo
@@ -30,6 +30,7 @@ namespace EVoting.Config
         /// </summary>
         [System.ComponentModel.DataAnnotations.MinLengthAttribute(1)]
         [System.ComponentModel.DataAnnotations.MaxLengthAttribute(255)]
+        [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlElementAttribute("ballotDescriptionLong", Order=1)]
         public string BallotDescriptionLong { get; set; }
         
@@ -39,6 +40,7 @@ namespace EVoting.Config
         /// </summary>
         [System.ComponentModel.DataAnnotations.MinLengthAttribute(1)]
         [System.ComponentModel.DataAnnotations.MaxLengthAttribute(100)]
+        [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlElementAttribute("ballotDescriptionShort", Order=2)]
         public string BallotDescriptionShort { get; set; }
     }

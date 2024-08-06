@@ -1,4 +1,7 @@
-﻿using System;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
@@ -11,7 +14,7 @@ public static class EVotingSchemaLoader
     private static readonly Dictionary<string, string> Schemas = new()
     {
         ["http://www.evoting.ch/xmlns/print/1"] = "evoting-print-1-3.xsd",
-        ["http://www.evoting.ch/xmlns/config/5"] = "evoting-config-5-0.xsd"
+        ["http://www.evoting.ch/xmlns/config/6"] = "evoting-config-6-0.xsd"
     };
 
     public static XmlSchemaSet LoadEVotingSchemas()

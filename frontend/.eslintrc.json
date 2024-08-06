@@ -1,16 +1,27 @@
 {
   "root": true,
+  "ignorePatterns": [
+    "dist/**/*"
+  ],
   "overrides": [
     {
       "files": ["*.ts"],
+      "plugins": ["license-header"],
       "parserOptions": {
-        "project": ["tsconfig.*?.json"],
+        "project": [
+          "app/tsconfig.electron.json",
+          "src/tsconfig.app.json"
+        ],
         "createDefaultProgram": true
       },
-      "extends": ["plugin:@angular-eslint/recommended"],
+      "extends": [
+        "plugin:@angular-eslint/recommended",
+        "plugin:@typescript-eslint/recommended"
+      ],
       "rules": {
         "@angular-eslint/directive-selector": ["error", { "type": "attribute", "prefix": "app", "style": "camelCase" }],
         "@angular-eslint/component-selector": ["error", { "type": "element", "prefix": "app", "style": "kebab-case" }],
+        "license-header/header": ["error", "license-header.js"],
         "quotes": ["error", "single", { "allowTemplateLiterals": true }],
         "max-len": [
           "error",
@@ -22,7 +33,9 @@
         "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/explicit-function-return-type": "error",
         "@typescript-eslint/no-unused-expressions": "error",
-        "@typescript-eslint/no-unused-vars": "error"
+        "@typescript-eslint/no-unused-vars": "error",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/ban-types": "off"
       }
     },
     {

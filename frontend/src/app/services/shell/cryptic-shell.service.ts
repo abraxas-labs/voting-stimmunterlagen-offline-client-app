@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { CommandParameter } from '../../models/shell/command-parameter';

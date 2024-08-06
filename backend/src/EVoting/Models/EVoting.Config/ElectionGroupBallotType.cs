@@ -14,7 +14,7 @@ namespace EVoting.Config
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "2.1.963.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute("electionGroupBallotType", Namespace="http://www.evoting.ch/xmlns/config/5")]
+    [System.Xml.Serialization.XmlTypeAttribute("electionGroupBallotType", Namespace="http://www.evoting.ch/xmlns/config/6")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ElectionGroupBallotType
@@ -49,7 +49,7 @@ namespace EVoting.Config
         
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlArrayAttribute("electionGroupDescription", Order=2)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("electionGroupDescriptionInfo", Namespace="http://www.evoting.ch/xmlns/config/5")]
+        [System.Xml.Serialization.XmlArrayItemAttribute("electionGroupDescriptionInfo", Namespace="http://www.evoting.ch/xmlns/config/6")]
         public System.Collections.Generic.List<ElectionGroupDescriptionInformationTypeElectionGroupDescriptionInfo> ElectionGroupDescription
         {
             get

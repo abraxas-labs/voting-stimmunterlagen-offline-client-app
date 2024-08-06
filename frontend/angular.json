@@ -52,18 +52,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "voting-stimmunterlagen-offline:build"
+            "buildTarget": "voting-stimmunterlagen-offline:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "voting-stimmunterlagen-offline:build:production"
+              "buildTarget": "voting-stimmunterlagen-offline:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "voting-stimmunterlagen-offline:build"
+            "buildTarget": "voting-stimmunterlagen-offline:build"
           }
         },
         "lint": {

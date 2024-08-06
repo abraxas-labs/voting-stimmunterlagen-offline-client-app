@@ -11,10 +11,7 @@ $circumference: 125;
 
   .spinner {
     position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+    inset: 0;
     animation: rotate 3s linear infinite;
 
     & .path {
@@ -69,12 +66,12 @@ $circumference: 125;
   }
 
   50% {
-    stroke-dasharray: 3 / 4 * $circumference, $circumference;
-    stroke-dashoffset: -1 / 4 * $circumference;
+    stroke-dasharray: calc(3 / 4 * $circumference);
+    stroke-dashoffset: calc(-1 / 4 * $circumference);
   }
 
   100% {
-    stroke-dasharray: 3 / 4 * $circumference, $circumference;
+    stroke-dasharray: calc(3 / 4 * $circumference);
     stroke-dashoffset: -$circumference;
   }
 }

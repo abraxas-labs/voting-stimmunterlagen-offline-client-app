@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { Routes } from '@angular/router';
 import { WelcomePageComponent } from './components/welcome-page/welcome-page.component';
 import { SettingsPageComponent } from './components/settings-page/settings-page.component';

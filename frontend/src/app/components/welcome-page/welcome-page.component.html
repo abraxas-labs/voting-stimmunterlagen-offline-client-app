@@ -22,4 +22,15 @@
     </ng-container>
   </div>
 </div>
+
+<div class="post-signature-content">
+  <h3>{{ 'POST_SIGNATURE_VALIDATION.KEYSTORE_SECTION' | translate }}</h3>
+  <app-file-input label="POST_SIGNATURE_VALIDATION.KEYSTORE_CERTIFICATE"
+                  [(path)]="keystoreCertificatePath"
+                  [accept]="allowedKeystoreCertificatePathExtensions"></app-file-input>
+  <app-file-input label="POST_SIGNATURE_VALIDATION.KEYSTORE_PASSWORD"
+                  [(path)]="keystorePasswordPath"
+                  [accept]="allowedKeystorePasswordPathExtensions"></app-file-input>
+</div>
+
 <button *ngIf="enablePreview" class="abra-button-primary" (click)="complete()">{{ 'NEXT_TO_VALIDATE' | translate }}</button>

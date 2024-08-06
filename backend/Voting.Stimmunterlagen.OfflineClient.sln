@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HtmlGeneration", "src\HtmlGeneration\HtmlGeneration.csproj", "{C192A67A-F689-4AF4-8042-F17FC439CC83}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{AE69BBBB-BBC8-4D04-89CA-E81F845C6728}"
+	ProjectSection(SolutionItems) = preProject
+		test\Directory.Build.props = test\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HtmlGeneration.RazorLight.UnitTests", "test\HtmlGeneration.RazorLight.UnitTests\HtmlGeneration.RazorLight.UnitTests.csproj", "{D6876F6A-E975-4F01-911B-B670D1B8ACC6}"
 EndProject
@@ -24,6 +27,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PdfGeneration.UnitTests", "test\PdfGeneration.UnitTests\PdfGeneration.UnitTests.csproj", "{2DE2B169-61B3-4B5A-9B62-329FB77E6C98}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{397662F3-82B8-477A-BC0F-010FAFC08C78}"
+	ProjectSection(SolutionItems) = preProject
+		tools\Directory.Build.props = tools\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VotingCardGenerator", "tools\VotingCardGenerator\VotingCardGenerator.csproj", "{D95FAE5E-617E-40F3-87D7-8EE1C629FB57}"
 EndProject
@@ -60,7 +66,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EchDeliveryGeneration", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EchDeliveryGeneration.IntegrationTests", "test\EchDeliveryGeneration.IntegrationTests\EchDeliveryGeneration.IntegrationTests.csproj", "{89F86A76-2D4A-44D4-B1F3-8747A871FC8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EVoting", "src\EVoting\EVoting.csproj", "{0E0BC7E2-E243-4831-B501-15FBAF0DB29A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EVoting", "src\EVoting\EVoting.csproj", "{0E0BC7E2-E243-4831-B501-15FBAF0DB29A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

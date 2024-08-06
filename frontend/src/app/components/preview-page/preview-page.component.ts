@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { VotingCardService } from '../../services/voting-card.service';
 import { from, Observable, Subscription } from 'rxjs';
@@ -67,7 +73,7 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
     }
     const groupValue = this.context.votingCardGroups[index];
     const municipalityRef = resolveValue(groupValue[0], Ech0228MappingService.VOTING_CARD_BFS.paths);
-    let template: any = pathCombine(
+    const template: any = pathCombine(
       E_VOTING_CONFIG_DIR,
       resolveValue(this.context.ech228.votingCardDelivery.extension.municipalities[municipalityRef], this.context.templateMapping.paths),
     );

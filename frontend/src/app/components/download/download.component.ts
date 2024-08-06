@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { Component, Inject, OnInit } from '@angular/core';
 import { CRYPTIC_SERVICE, CrypticService } from '../../services/cryptic.service';
 import { AppStateService } from '../../services/app-state.service';

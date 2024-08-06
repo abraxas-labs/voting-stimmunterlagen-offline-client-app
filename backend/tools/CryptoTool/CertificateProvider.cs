@@ -1,8 +1,12 @@
-﻿using System;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using Voting.Stimmunterlagen.OfflineClient.Shared.Cryptography;
+using Voting.Stimmunterlagen.OfflineClient.Shared.Cryptography.Certificates;
 
 namespace CryptoTool;
 
@@ -11,8 +15,9 @@ public class CertificateProvider : ICertificateProvider
     private readonly Arguments _arguments;
     private readonly WindowsCertificateService _windowsCertificateService;
 
-    public X509Certificate2? SenderCertificate { get; private set; }
-    public IReadOnlyCollection<X509Certificate2> ReceiverCertificates { get; private set; } = null!;
+    public ICertificate? SenderCertificate { get; private set; }
+
+    public IReadOnlyCollection<ICertificate> ReceiverCertificates { get; private set; } = null!;
 
     public CertificateProvider(Arguments arguments, WindowsCertificateService windowsCertificateService)
     {
@@ -26,11 +31,11 @@ public class CertificateProvider : ICertificateProvider
         ReceiverCertificates = GetReceiverCertificates();
     }
 
-    private X509Certificate2? GetSenderCertificate()
+    private ICertificate? GetSenderCertificate()
     {
         if (!string.IsNullOrWhiteSpace(_arguments.SenderCertificateFile))
         {
-            return new X509Certificate2(_arguments.SenderCertificateFile, _arguments.SenderCertificateFilePassword);
+            return BouncyCastleCertificateParser.ParseP12Certificate(File.ReadAllBytes(_arguments.SenderCertificateFile), _arguments.SenderCertificateFilePassword);
         }
 
         if (string.IsNullOrWhiteSpace(_arguments.SenderCertificateSubject))
@@ -38,15 +43,18 @@ public class CertificateProvider : ICertificateProvider
             return null;
         }
 
-        return _windowsCertificateService
+        var certificate = _windowsCertificateService
                    .GetPrivateSigningCertificates()
                    .FirstOrDefault(c => c.Subject.Equals(_arguments.SenderCertificateSubject, StringComparison.InvariantCultureIgnoreCase))
                ?? throw new InvalidOperationException("Sender certificate subject provided but certificate not found");
+        return new NativeCertificate(certificate);
     }
 
-    private List<X509Certificate2> GetReceiverCertificates()
+    private List<ICertificate> GetReceiverCertificates()
     {
         return _arguments.ReceiverCertificateFiles
-            .ConvertAll(receiverCertificateFile => new X509Certificate2(receiverCertificateFile));
+            .Select(receiverCertificateFile => BouncyCastleCertificateParser.ParsePemCertificate(File.ReadAllBytes(receiverCertificateFile)))
+            .OfType<ICertificate>()
+            .ToList();
     }
 }

@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { Translations } from '../models/translations';
 
 /* eslint-disable */
@@ -63,6 +69,7 @@ export const TRANSLATIONS: Translations = {
   'YES': 'Yes',
   'NO': 'No',
   'CLOSE': 'Close',
+  'DELETE_ALL_FILES': 'Secure deletion of all data',
   'ASC': 'Ascending (abc 123)',
   'DSC': 'Descending (cba 321)',
 
@@ -76,6 +83,17 @@ export const TRANSLATIONS: Translations = {
   'CRYPTO.CHECK_CERTIFICATE': 'Check certificate',
   'CRYPTO.CANNOT_LOAD_CERTIFICATE': 'The certificate could not be loaded. Either the path or the password is wrong',
   'CRYPTO.SIGN_AND_ENCRYPT': 'Sign and encrypt',
+
+  'POST_SIGNATURE_VALIDATION.JAVA_RUNTIME': 'Java Runtime (java.exe for XML Signature Validation Tool)',
+  'POST_SIGNATURE_VALIDATION.SIGNATURE_VALIDATOR': 'XML Signature Validation Tool',
+  'POST_SIGNATURE_VALIDATION.KEYSTORE_SECTION': 'Certificate for XML validation (Print | Config)',
+  'POST_SIGNATURE_VALIDATION.KEYSTORE_CERTIFICATE': 'Keystore',
+  'POST_SIGNATURE_VALIDATION.KEYSTORE_PASSWORD': 'Keystore Password',
+
+  'POST_SIGNATURE_VALIDATION_RESULT.SKIPPED': 'The signature check could not be performed because not all required files were specified.',
+  'POST_SIGNATURE_VALIDATION_RESULT.SUCCESS': 'The signature check was performed successfully.',
+  'POST_SIGNATURE_VALIDATION_RESULT.FILE_NOT_FOUND': 'Files were specified for the signature check, but the following file is no longer found:',
+  'POST_SIGNATURE_VALIDATION_RESULT.ERROR': 'The signature verification has failed:',
 
   'ERROR.GENERIC': 'An error occured',
   'ERROR.VOTER_NOT_FOUND': 'Voter with id',

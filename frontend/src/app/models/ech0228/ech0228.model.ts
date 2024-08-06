@@ -1,3 +1,9 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
 import { ContestData } from './contest.model';
 import { Municipality } from './municipality.model';
 import { VotingCardData } from './voting-card-data.model';

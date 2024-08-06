@@ -1,4 +1,7 @@
-﻿using RazorLight.Razor;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using RazorLight.Razor;
 
 namespace HtmlGeneration.RazorLight.Razor;
 

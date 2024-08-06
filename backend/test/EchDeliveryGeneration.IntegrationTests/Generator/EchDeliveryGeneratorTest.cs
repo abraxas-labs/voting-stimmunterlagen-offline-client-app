@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using System.IO;
@@ -7,6 +10,8 @@ using Voting.Lib.Testing.Utils;
 using Xunit;
 using System.Reflection;
 using System;
+using EchDeliveryGeneration.Validation;
+using FluentAssertions;
 
 namespace EchDeliveryGeneration.IntegrationTests.Generator;
 
@@ -49,8 +54,9 @@ public class EchDeliveryGeneratorTest
             GetTestFilePath(Ech0045File),
         };
 
-        var delivery = await _generator.GenerateDelivery(inputFiles);
-        var serializedDelivery = JsonConvert.SerializeObject(delivery, _jsonSerializerSettings);
+        var generatorResult = await _generator.GenerateDelivery(inputFiles, null);
+        generatorResult.PostSignatureValidationResult.Code.Should().Be(PostSignatureValidationResultCodes.Skipped);
+        var serializedDelivery = JsonConvert.SerializeObject(generatorResult.Delivery, _jsonSerializerSettings);
 
 #if UPDATE_SNAPSHOTS
         var updateSnapshot = true;

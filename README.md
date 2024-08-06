@@ -15,7 +15,7 @@ The generation of e-voting voting cards requires high security standards. For th
 ## Requirements
 
 * NodeJs v16.0.0
-* dotnet 6
+* dotnet 8
 * PrinceXML License (`backend/3rdPartyLibs/prince/[Architecture]/license/license.dat`)
 
 ## Development

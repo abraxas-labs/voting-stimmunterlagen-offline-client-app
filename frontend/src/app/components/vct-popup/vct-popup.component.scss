@@ -1,9 +1,6 @@
 .vct-popup-click-block {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgb(35 35 35 / 35%);
   z-index: 1;
   display: flex;

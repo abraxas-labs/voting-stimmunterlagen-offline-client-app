@@ -1,4 +1,7 @@
-﻿using FluentAssertions;
+﻿// (c) Copyright by Abraxas Informatik AG
+// For license information see LICENSE file
+
+using FluentAssertions;
 using Thinktecture.IO.Adapters;
 using Xunit;
 using PdfGeneration.Prince.Process.Internal;

@@ -1,4 +1,4 @@
-# ✨ Changelog (`v1.18.1`)
+# ✨ Changelog (`v1.22.1`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,89 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v1.18.1
-Previous version ---- v1.17.2
+This version -------- v1.22.1
+Previous version ---- v1.18.1
 Initial version ----- v1.12.12
-Total commits ------- 5
+Total commits ------- 11
 ```
+
+## [v1.22.1] - 2024-07-05
+
+### 🔒 Security
+
+- update voting library
+
+## [v1.22.0] - 2024-07-04
+
+### 🔒 Security
+
+- Migrate to bouncy castle
+- Verify post file signature
+
+## [v1.21.0] - 2024-06-20
+
+### 🔄 Changed
+
+- angular 17 update
+
+## [v1.20.2] - 2024-05-28
+
+### 🔄 Changed
+
+- support new ech-0045 format
+
+## [v1.20.1] - 2024-05-17
+
+### 🔄 Changed
+
+- show position of empty candidates or write ins on multi mandate majority election
+
+## [v1.20.0] - 2024-03-26
+
+### 🆕 Added
+
+- Support post config xml v6
+
+## [v1.19.0] - 2024-03-01
+
+### 🔄 Changed
+
+- update to .net 8
+
+### 🔒 Security
+
+- apply patch policy
+
+## [v1.18.4] - 2024-02-28
+
+### 🔒 Security
+
+- patch for dependency vulnerability CVE-2023-45133 (babel)
+- patch for dependency vulnerability CVE-2023-28154 (webpack)
+- patch for dependency vulnerability CVE-2023-45857 (axios)
+- patch for dependency vulnerability CVE-2023-46234 (browsserify-sign)
+- patch for dependency vulnerability CVE-2023-26159 (follow-redirects)
+- patch for dependency vulnerability CVE-2023-44270 (postcss)
+
+## [v1.18.3] - 2024-02-27
+
+### 🔄 Changed
+
+- Show error message correctly when the import fails
+
+## [v1.18.2] - 2024-02-26
+
+### 🆕 Added
+
+- add SBOM and DependencyTrack integration
+
+### 🔄 Changed
+
+- update ci-cd templates
+
+### ⚠️ Deprecated
+
+- deprecate digital signature
 
 ## [v1.18.1] - 2024-01-18
 
@@ -65,49 +143,29 @@ Total commits ------- 5
 
 - Update eai and lib dependency to deterministic version
 
-## [v1.15.6] - 2023-08-22
-
 ### 🔄 Changed
 
 - Process elections with write ins and without candidates correctly
-
-## [v1.15.5] - 2023-08-17
 
 ### 🔄 Changed
 
 - refactor security and code review findings
 
-## [v1.15.4] - 2023-08-15
-
 ### 🔄 Changed
 
 - skip signing process if certificate is not provided.
-
-## [v1.15.3] - 2023-08-11
-
-### 🔄 Changed
-
-- fix typo in readme, update code docs
-
-## [v1.15.2] - 2023-07-25
 
 ### 🆕 Added
 
 - Deterministic code signing
 
-## [v1.15.1] - 2023-07-24
-
 ### 🔒 Security
 
 - Only accept .p12 certificates as signing certificate
 
-## [v1.15.0] - 2023-07-10
-
 ### 🆕 Added
 
 - Support for large input files (several gb)
-
-## [v1.14.0] - 2023-05-23
 
 ### 🔄 Changed
 
@@ -116,13 +174,9 @@ Total commits ------- 5
 - Ech-0045 upload for swiss abroad addresses
 - Display accumulated candidate in proportional election correctly on the voting card
 
-## [v1.13.5] - 2023-05-22
-
 ### 🔄 Changed
 
 - Deterministic build number
-
-## [v1.13.4] - 2023-04-26
 
 ### ❌ Removed
 
@@ -277,6 +331,69 @@ Total commits ------- 5
 ### 🔒 Security
 
 - integrate dependency check for front- and backend part.
+
+## [v1.15.6] - 2023-08-22
+
+### 🔄 Changed
+
+- Process elections with write ins and without candidates correctly
+
+## [v1.15.5] - 2023-08-17
+
+### 🔄 Changed
+
+- refactor security and code review findings
+
+## [v1.15.4] - 2023-08-15
+
+### 🔄 Changed
+
+- skip signing process if certificate is not provided.
+
+## [v1.15.3] - 2023-08-11
+
+### 🔄 Changed
+
+- fix typo in readme, update code docs
+
+## [v1.15.2] - 2023-07-25
+
+### 🆕 Added
+
+- Deterministic code signing
+
+## [v1.15.1] - 2023-07-24
+
+### 🔒 Security
+
+- Only accept .p12 certificates as signing certificate
+
+## [v1.15.0] - 2023-07-10
+
+### 🆕 Added
+
+- Support for large input files (several gb)
+
+## [v1.14.0] - 2023-05-23
+
+### 🔄 Changed
+
+- Update Post XSD schema
+- Rename chVoteToJsonConverter to EchDeliveryJsonConverter and refactor
+- Ech-0045 upload for swiss abroad addresses
+- Display accumulated candidate in proportional election correctly on the voting card
+
+## [v1.13.5] - 2023-05-22
+
+### 🔄 Changed
+
+- Deterministic build number
+
+## [v1.13.4] - 2023-04-26
+
+### ❌ Removed
+
+- Salutation on swiss abroad voters
 
 ## [v1.13.3] - 2023-04-19
 
