@@ -1,0 +1,2 @@
+backend/3rdPartyLibs/prince/win32/bin/prince.exe filter=lfs diff=lfs merge=lfs -text
+backend/3rdPartyLibs/prince/win64/bin/prince.exe filter=lfs diff=lfs merge=lfs -text

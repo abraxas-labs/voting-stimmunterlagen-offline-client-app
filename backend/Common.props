@@ -15,9 +15,10 @@
     <Version>0.0.0.1</Version>
 
     <MsExtensionsVersion>8.0.0</MsExtensionsVersion>
-    <VotingLibVersion>12.10.1</VotingLibVersion>
+    <VotingLibVersion>12.10.7</VotingLibVersion>
     <ThinktectureVersion>2.5.0</ThinktectureVersion>
-    <VotingOfflineClientSharedVersion>2.1.0</VotingOfflineClientSharedVersion>
+    <VotingOfflineClientSharedVersion>2.1.3</VotingOfflineClientSharedVersion>
+    
   </PropertyGroup>
 
   <ItemGroup>

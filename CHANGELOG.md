@@ -1,4 +1,4 @@
-# ✨ Changelog (`v1.22.1`)
+# ✨ Changelog (`v1.22.3`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v1.22.1
-Previous version ---- v1.18.1
+This version -------- v1.22.3
+Previous version ---- v1.22.1
 Initial version ----- v1.12.12
-Total commits ------- 11
+Total commits ------- 2
 ```
+
+## [v1.22.3] - 2024-08-13
+
+### 🔄 Changed
+
+- enable continuous integration build property for dotnet CLI
+- disable source-link feature for release build to ensure deterministic in trusted build procedure.
+
+## [v1.22.2] - 2024-08-12
+
+### 🔄 Changed
+
+- prevent source revision from being included in release builds to preserve deterministic builds.
 
 ## [v1.22.1] - 2024-07-05
 
@@ -131,13 +144,9 @@ Total commits ------- 11
 
 - Fix async issue in pdf generator
 
-## [v1.17.0] - 2023-08-23
-
 ### 🔄 Changed
 
 - Publish dotnet packages as multi file packages
-
-## [v1.16.0] - 2023-08-22
 
 ### 🔄 Changed
 
@@ -331,6 +340,18 @@ Total commits ------- 11
 ### 🔒 Security
 
 - integrate dependency check for front- and backend part.
+
+## [v1.17.0] - 2023-08-23
+
+### 🔄 Changed
+
+- Publish dotnet packages as multi file packages
+
+## [v1.16.0] - 2023-08-22
+
+### 🔄 Changed
+
+- Update eai and lib dependency to deterministic version
 
 ## [v1.15.6] - 2023-08-22
 
