@@ -1,4 +1,4 @@
-# ✨ Changelog (`v1.22.3`)
+# ✨ Changelog (`v1.22.4`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v1.22.3
-Previous version ---- v1.22.1
+This version -------- v1.22.4
+Previous version ---- v1.22.3
 Initial version ----- v1.12.12
-Total commits ------- 2
+Total commits ------- 1
 ```
+
+## [v1.22.4] - 2024-08-22
+
+### 🔄 Changed
+
+- update create-hashes script to exclude *.deps.json files
 
 ## [v1.22.3] - 2024-08-13
 
@@ -137,8 +143,6 @@ Total commits ------- 2
 ### 🔄 Changed
 
 - hide internal registry information in bug bounty artifact preparation.
-
-## [v1.17.1] - 2023-08-23
 
 ### 🔄 Changed
 
@@ -340,6 +344,12 @@ Total commits ------- 2
 ### 🔒 Security
 
 - integrate dependency check for front- and backend part.
+
+## [v1.17.1] - 2023-08-23
+
+### 🔄 Changed
+
+- Fix async issue in pdf generator
 
 ## [v1.17.0] - 2023-08-23
 
