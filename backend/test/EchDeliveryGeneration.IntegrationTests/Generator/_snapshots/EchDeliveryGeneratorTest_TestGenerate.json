@@ -2848,7 +2848,8 @@
             ]
           },
           "vcteVotingFingerprint": null,
-          "attachmentStations": "56A"
+          "attachmentStations": "56A",
+          "stistat": false
         },
         "3231": {
           "bfs": "3231",
@@ -2891,7 +2892,8 @@
             ]
           },
           "vcteVotingFingerprint": null,
-          "attachmentStations": "56A"
+          "attachmentStations": "56A",
+          "stistat": true
         },
         "1111": {
           "bfs": "1111",
@@ -2934,7 +2936,8 @@
             ]
           },
           "vcteVotingFingerprint": null,
-          "attachmentStations": "ABC"
+          "attachmentStations": "ABC",
+          "stistat": false
         },
         "2222": {
           "bfs": "2222",
@@ -2977,7 +2980,8 @@
             ]
           },
           "vcteVotingFingerprint": null,
-          "attachmentStations": "ABC"
+          "attachmentStations": "ABC",
+          "stistat": false
         },
         "3333": {
           "bfs": "3333",
@@ -3020,7 +3024,8 @@
             ]
           },
           "vcteVotingFingerprint": null,
-          "attachmentStations": ""
+          "attachmentStations": "",
+          "stistat": false
         },
         "4444": {
           "bfs": "4444",
@@ -3063,7 +3068,8 @@
             ]
           },
           "vcteVotingFingerprint": null,
-          "attachmentStations": ""
+          "attachmentStations": "",
+          "stistat": false
         },
         "5555": {
           "bfs": "5555",
@@ -3106,7 +3112,8 @@
             ]
           },
           "vcteVotingFingerprint": null,
-          "attachmentStations": ""
+          "attachmentStations": "",
+          "stistat": false
         },
         "6666": {
           "bfs": "6666",
@@ -3149,7 +3156,8 @@
             ]
           },
           "vcteVotingFingerprint": null,
-          "attachmentStations": ""
+          "attachmentStations": "",
+          "stistat": false
         },
         "7777": {
           "bfs": "7777",
@@ -3192,7 +3200,8 @@
             ]
           },
           "vcteVotingFingerprint": null,
-          "attachmentStations": "ABC"
+          "attachmentStations": "ABC",
+          "stistat": false
         }
       },
       "certificates": [

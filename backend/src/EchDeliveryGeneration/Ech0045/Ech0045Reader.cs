@@ -69,8 +69,13 @@ namespace EchDeliveryGeneration.Ech0045
             throw new InvalidOperationException("Invalid ech-0045 nationality choice type");
         }
 
-        private SwissPersonExtension GetExtension(object extension)
+        private SwissPersonExtension? GetExtension(object? extension)
         {
+            if (extension == null)
+            {
+                return null;
+            }
+
             var extensionChildNodes = extension as XmlNode[]
                 ?? throw new InvalidOperationException("Swiss person extension not set as XML node");
             var extensionNode = extensionChildNodes.FirstOrDefault()?.ParentNode

@@ -207,10 +207,8 @@ public class VoterMapper
                 addressExtension.Line7 = echVoter.SwissAbroadPersonExtensionAddress.Line7;
                 return addressExtension;
             }
-            else
-            {
-                _logger.LogInformation("Voter with id {VoterId} has no Ech-0045 swiss abroad address extension. Fallback address is used", voterType.VoterIdentification);
-            }
+
+            _logger.LogInformation("Voter with id {VoterId} has no Ech-0045 swiss abroad address extension. Fallback address is used", voterType.VoterIdentification);
         }
 
         var mrMrsString = voterType.Person.PhysicalAddress.MrMrs switch

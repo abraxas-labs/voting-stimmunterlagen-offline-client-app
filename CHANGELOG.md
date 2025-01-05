@@ -1,4 +1,4 @@
-# ✨ Changelog (`v1.22.4`)
+# ✨ Changelog (`v1.23.0`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v1.22.4
+This version -------- v1.23.0
 Previous version ---- v1.22.3
 Initial version ----- v1.12.12
-Total commits ------- 1
+Total commits ------- 5
 ```
+
+## [v1.23.0] - 2024-10-18
+
+### 🆕 Added
+
+- add STISTAT flag to municipality
+
+## [v1.22.7] - 2024-10-11
+
+### 🔄 Changed
+
+- optional ech-0045 swiss abroad extensions
+
+## [v1.22.6] - 2024-09-09
+
+### 🔄 Changed
+
+- migrate container registry
+
+## [v1.22.5] - 2024-08-28
+
+### :arrows_counterclockwise: Changed
+
+- update bug bounty template reference
+- patch ci-cd template version, align with new defaults
 
 ## [v1.22.4] - 2024-08-22
 
@@ -124,8 +149,6 @@ Total commits ------- 1
 - Add updated eCH from voting lib
 - Add updated Post models
 
-## [v1.17.3] - 2023-11-30
-
 ### 🔄 Changed
 
 - Frontend code improvements
@@ -137,8 +160,6 @@ Total commits ------- 1
 ### 🔄 Changed
 
 - Change pdf output naming scheme
-
-## [v1.17.2] - 2023-08-24
 
 ### 🔄 Changed
 
@@ -344,6 +365,26 @@ Total commits ------- 1
 ### 🔒 Security
 
 - integrate dependency check for front- and backend part.
+
+## [v1.17.3] - 2023-11-30
+
+### 🔄 Changed
+
+- Frontend code improvements
+
+### 🔒 Security
+
+- Update electron version to 23.3.13
+
+### 🔄 Changed
+
+- Change pdf output naming scheme
+
+## [v1.17.2] - 2023-08-24
+
+### 🔄 Changed
+
+- hide internal registry information in bug bounty artifact preparation.
 
 ## [v1.17.1] - 2023-08-23
 

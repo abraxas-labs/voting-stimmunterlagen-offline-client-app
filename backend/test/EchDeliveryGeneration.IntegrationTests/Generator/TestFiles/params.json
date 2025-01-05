@@ -58,6 +58,7 @@
           "etemplate": "Templates/SG_eVoting_Post_Auslandschweizer.cshtml",
           "pollOpening": "27.11.2022 00:00:00",
           "pollClosing": "28.11.2022 00:00:00",
+          "stistat": true,
           "deliveryType": "A",
           "forwardDeliveryType": "A",
           "returnDeliveryType": "M",
