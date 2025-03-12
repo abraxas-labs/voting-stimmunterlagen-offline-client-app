@@ -17,7 +17,7 @@
     <MsExtensionsVersion>8.0.0</MsExtensionsVersion>
     <VotingLibVersion>12.10.7</VotingLibVersion>
     <ThinktectureVersion>2.5.0</ThinktectureVersion>
-    <VotingOfflineClientSharedVersion>2.2.0</VotingOfflineClientSharedVersion>
+    <VotingOfflineClientSharedVersion>2.2.1</VotingOfflineClientSharedVersion>
     
   </PropertyGroup>
 
