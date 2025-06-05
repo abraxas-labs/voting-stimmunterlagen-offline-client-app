@@ -1,4 +1,4 @@
-# ✨ Changelog (`v1.23.1`)
+# ✨ Changelog (`v1.23.3`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v1.23.1
-Previous version ---- v1.23.0
+This version -------- v1.23.3
+Previous version ---- v1.23.1
 Initial version ----- v1.12.12
-Total commits ------- 1
+Total commits ------- 3
 ```
+
+## [v1.23.3] - 2025-06-04
+
+### 🆕 Added
+
+- add attachment stations to municipality
+
+## [v1.23.2] - 2025-04-11
+
+### 🔄 Changed
+
+- batch encrypt pdfs
 
 ## [v1.23.1] - 2025-03-03
 
@@ -124,25 +136,13 @@ Total commits ------- 1
 
 ## [v1.18.3] - 2024-02-27
 
-### 🔄 Changed
-
-- Show error message correctly when the import fails
-
-## [v1.18.2] - 2024-02-26
-
 ### 🆕 Added
 
-- add SBOM and DependencyTrack integration
+- add attachment stations to municipality
 
 ### 🔄 Changed
 
-- update ci-cd templates
-
-### ⚠️ Deprecated
-
-- deprecate digital signature
-
-## [v1.18.1] - 2024-01-18
+- batch encrypt pdfs
 
 ### ❌ Removed
 
@@ -219,19 +219,3 @@ Total commits ------- 1
 - patch for dependency vulnerability CVE-2023-46234 (browsserify-sign)
 - patch for dependency vulnerability CVE-2023-26159 (follow-redirects)
 - patch for dependency vulnerability CVE-2023-44270 (postcss)
-
-### 🔄 Changed
-
-- Show error message correctly when the import fails
-
-### 🆕 Added
-
-- add SBOM and DependencyTrack integration
-
-### 🔄 Changed
-
-- update ci-cd templates
-
-### ⚠️ Deprecated
-
-- deprecate digital signature

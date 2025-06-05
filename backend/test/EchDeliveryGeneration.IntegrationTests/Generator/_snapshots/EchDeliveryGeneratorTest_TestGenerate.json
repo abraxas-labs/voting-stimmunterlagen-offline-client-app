@@ -2848,6 +2848,7 @@
             ]
           },
           "vcteVotingFingerprint": null,
+          "attachmentStations": "56A",
           "stistat": false
         },
         "3231": {
@@ -2891,6 +2892,7 @@
             ]
           },
           "vcteVotingFingerprint": null,
+          "attachmentStations": "56A",
           "stistat": true
         },
         "1111": {
@@ -2934,6 +2936,7 @@
             ]
           },
           "vcteVotingFingerprint": null,
+          "attachmentStations": "ABC",
           "stistat": false
         },
         "2222": {
@@ -2977,6 +2980,7 @@
             ]
           },
           "vcteVotingFingerprint": null,
+          "attachmentStations": "ABC",
           "stistat": false
         },
         "3333": {
@@ -3020,6 +3024,7 @@
             ]
           },
           "vcteVotingFingerprint": null,
+          "attachmentStations": "",
           "stistat": false
         },
         "4444": {
@@ -3063,6 +3068,7 @@
             ]
           },
           "vcteVotingFingerprint": null,
+          "attachmentStations": "",
           "stistat": false
         },
         "5555": {
@@ -3106,6 +3112,7 @@
             ]
           },
           "vcteVotingFingerprint": null,
+          "attachmentStations": "",
           "stistat": false
         },
         "6666": {
@@ -3149,6 +3156,7 @@
             ]
           },
           "vcteVotingFingerprint": null,
+          "attachmentStations": "",
           "stistat": false
         },
         "7777": {
@@ -3192,6 +3200,7 @@
             ]
           },
           "vcteVotingFingerprint": null,
+          "attachmentStations": "ABC",
           "stistat": false
         }
       },

@@ -14,6 +14,9 @@ import { ElectronService } from '../../services/electron.service';
 import { firstValueFrom } from 'rxjs';
 import { E_VOTING_CONFIG_DIR } from '../../common/path.constants';
 import { pathCombine } from '../../services/utils/path.utils';
+import { DownloadPdfsModel } from '../../models/download-pdfs';
+
+const encryptFilesCountPerJob = 20;
 
 @Component({
   selector: 'app-download',
@@ -81,25 +84,38 @@ export class DownloadComponent implements OnInit {
       return;
     }
 
-    const filePaths = files.map(file => file.filePath);
-    files.forEach(file => (file.status = 'running'));
+    const jobs: DownloadPdfsModel[][] = [];
 
-    const response = await this.encryptFile(
-      filePaths,
-      this.encryptionCertificatePaths,
-      this.selectedCertificatePath,
-      this.selectedCertificatePassword,
-    );
-
-    if (response) {
-      files.forEach(file => (file.status = 'encrypted'));
-    } else {
-      files.forEach(file => (file.status = 'unencrypted'));
-      throw new Error('error while encrypt files');
+    for (let i = 0; i < files.length; i += encryptFilesCountPerJob) {
+      jobs.push(files.slice(i, i + encryptFilesCountPerJob));
     }
 
-    await this.appStateService.update(s => (s.downloadPdfs = this.checkablePdfs.map(c => c.file)));
-    this.cryptFilesIsRunning = false;
+    files.forEach(file => (file.status = 'running'));
+
+    try {
+      for (const jobFiles of jobs) {
+        const filePaths = jobFiles.map(file => file.filePath);
+
+        const response = await this.encryptFile(
+          filePaths,
+          this.encryptionCertificatePaths,
+          this.selectedCertificatePath,
+          this.selectedCertificatePassword,
+        );
+
+        if (response) {
+          jobFiles.forEach(file => (file.status = 'encrypted'));
+        } else {
+          jobFiles.forEach(file => (file.status = 'unencrypted'));
+          // Set all following files (which were not in the job) to unencrypted
+          files.forEach(file => (file.status = file.status === 'running' ? 'unencrypted' : file.status));
+        }
+
+        await this.appStateService.update(s => (s.downloadPdfs = this.checkablePdfs.map(c => c.file)));
+      }
+    } finally {
+      this.cryptFilesIsRunning = false;
+    }
   }
 
   public async openDirectoryPickerDialog(): Promise<void> {

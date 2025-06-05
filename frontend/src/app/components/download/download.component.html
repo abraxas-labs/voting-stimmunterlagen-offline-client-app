@@ -42,8 +42,20 @@
   <button class="abra-button-primary" (click)="isBackQuestionVisible = false">{{ 'NO' | translate }}</button>
 </app-vct-popup>
 <br />
-<button class="abra-button-secondary" (click)="displayEncryptionCertificatesPreview = true">
+<button class="abra-button-secondary" (click)="displayEncryptionCertificatesPreview = true" [disabled]="cryptFilesIsRunning">
   {{ 'CRYPTO.SIGN_AND_ENCRYPT' | translate }}
 </button>
-<button class="abra-button-secondary" (click)="openDirectoryPickerDialog()">{{ 'DOWNLOAD_ALL' | translate }}</button>
-<button class="abra-button-secondary" (click)="isBackQuestionVisible = true">{{ 'BACK_TO_FILE_SELECTION' | translate }}</button>
+<button
+  class="abra-button-secondary"
+  (click)="openDirectoryPickerDialog()"
+  [disabled]="cryptFilesIsRunning"
+>
+  {{ 'DOWNLOAD_ALL' | translate }}
+</button>
+<button
+  class="abra-button-secondary"
+  (click)="isBackQuestionVisible = true"
+  [disabled]="cryptFilesIsRunning"
+>
+  {{ 'BACK_TO_FILE_SELECTION' | translate }}
+</button>
