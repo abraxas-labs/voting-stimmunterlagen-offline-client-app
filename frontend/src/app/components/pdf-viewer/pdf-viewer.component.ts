@@ -4,44 +4,44 @@
  * For license information see LICENSE file.
  */
 
-import { Component, ElementRef, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
 })
-export class PdfViewerComponent {
-  @Input()
-  public pageHeaderTemplate: TemplateRef<any>;
+export class PdfViewerComponent implements OnDestroy {
+  public url?: string;
 
-  @Input()
-  public set pdf(pdf: ArrayBuffer) {
-    this.loadPDF(pdf);
-  }
-
-  @Output()
-  public checkedChange = new EventEmitter<{ index: number; checked: boolean | void }>();
-
-  @Output()
-  public pdfLoaded = new EventEmitter<any>();
+  private _data?: Uint8Array;
 
   @ViewChild('iframe', { static: true }) iframe: ElementRef;
 
-  private loadPDF(innerSrc): void {
-    if (!innerSrc) {
+  @Input()
+  public set data(d: Uint8Array | undefined) {
+    if (this._data === d) {
       return;
     }
-    let fileUrl;
-    if (innerSrc instanceof Blob) {
-      fileUrl = encodeURIComponent(URL.createObjectURL(innerSrc));
-    } else if (innerSrc instanceof Uint8Array) {
-      const blob = new Blob([innerSrc], { type: 'application/pdf' });
-      fileUrl = encodeURIComponent(URL.createObjectURL(blob));
-    } else {
-      throw new Error('pdf inner src is not a blob or uint8 array');
+
+    this.disposeUrl();
+
+    if (!d) {
+      return;
     }
-    let viewerUrl = './assets/pdfjs-dist/web/viewer.html';
-    viewerUrl += `?file=${fileUrl}`;
-    this.iframe.nativeElement.src = viewerUrl;
+
+    const blob = new Blob([d], { type: 'application/pdf' });
+    this.url = URL.createObjectURL(blob);
+    this._data = d;
+  }
+
+  public ngOnDestroy(): void {
+    this.disposeUrl();
+  }
+
+  private disposeUrl(): void {
+    if (this.url) {
+      URL.revokeObjectURL(this.url);
+      delete this.url;
+    }
   }
 }

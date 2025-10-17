@@ -9,6 +9,7 @@ import { LOG_DIR } from '../../common/path.constants';
 import { AppStateService } from '../../services/app-state.service';
 import { ElectronService } from '../../services/electron.service';
 import { TranslationService } from '../../services/translation/translation.service';
+import { pdfDefaultOptions } from 'ngx-extended-pdf-viewer';
 
 @Component({
   selector: 'app-root',
@@ -25,6 +26,9 @@ export class AppComponent implements OnInit {
     private readonly electronService: ElectronService,
     private readonly appStateService: AppStateService,
   ) {
+    // Prevent execution of javascript in the Pdf Viewer.
+    pdfDefaultOptions.enableScripting = false;
+
     translationService.languageChange$.subscribe(() => this.reloadContent());
   }
 

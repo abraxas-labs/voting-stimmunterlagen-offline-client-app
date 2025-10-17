@@ -196,13 +196,13 @@ export class WelcomePageComponent implements OnInit {
   }
 
   private isPostConfig(xmlDom): boolean {
-    const config = 'xmlns="http://www.evoting.ch/xmlns/config/';
-    return xmlDom.includes(config);
+    const config = 'http://www.evoting.ch/xmlns/config/';
+    return xmlDom.includes(`xmlns="${config}`) || xmlDom.includes(`xmlns:config="${config}`);
   }
 
   private isPostVoting(xmlDom): boolean {
-    const config = 'xmlns="http://www.evoting.ch/xmlns/print/';
-    return xmlDom.includes(config);
+    const config = 'http://www.evoting.ch/xmlns/print/';
+    return xmlDom.includes(`xmlns="${config}`) || xmlDom.includes(`xmlns:print="${config}`);
   }
 
   private iseCH0045(xmlDom): boolean {

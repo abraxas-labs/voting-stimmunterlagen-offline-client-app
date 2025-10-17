@@ -30,7 +30,6 @@ export class PreviewPageComponent implements OnInit, OnDestroy {
   public pdfs: Array<Uint8Array | undefined>;
   public previewIndex: number;
   public pdfList = {};
-  public numberOfPages: number;
   public displayCertificateSelection = false;
   public selectedCertificate: string;
   private queueSubscription: Subscription;

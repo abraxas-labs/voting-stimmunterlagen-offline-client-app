@@ -14,7 +14,6 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { PreviewPageComponent } from './preview-page/preview-page.component';
 import { IndeterminateProgressComponent } from './progress/indeterminate-progress.component';
 import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
-import { PdfViewerPageComponent } from './pdf-viewer/pdf-viewer-page.component';
 import { JobOverviewPageComponent } from './job-overview-page/job-overview-page.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { LanguageSwitchComponent } from './language-switch/language-switch.component';
@@ -37,7 +36,6 @@ export const ALL_COMPONENTS = [
   SettingsPageComponent,
   PreviewPageComponent,
   PdfViewerComponent,
-  PdfViewerPageComponent,
   JobOverviewPageComponent,
   BreadcrumbComponent,
   LanguageSwitchComponent,

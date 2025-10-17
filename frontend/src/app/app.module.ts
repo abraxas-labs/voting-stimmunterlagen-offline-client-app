@@ -48,6 +48,7 @@ import { SettingsService } from './services/settings.service';
 import { TranslationContextFactory } from './services/translation/translation-context.factory';
 import { HttpClientModule } from '@angular/common/http';
 import { LogService } from './services/log.service';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 import localeDe from '@angular/common/locales/de';
 import localeEn from '@angular/common/locales/en';
@@ -65,6 +66,7 @@ registerLocaleData(localeEn);
     FormsModule,
     AbraStepNavigationModule,
     AbraNavigationModule,
+    NgxExtendedPdfViewerModule,
   ],
   providers: [
     { provide: ALL_TRANSLATIONS, useValue: { de, en } as TranslationsMap },

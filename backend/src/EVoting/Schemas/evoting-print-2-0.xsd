@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:print="http://www.evoting.ch/xmlns/print/2" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.evoting.ch/xmlns/print/2" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.0">
+	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+	<xs:simpleType name="identifierType">
+		<xs:restriction base="xs:token">
+			<xs:maxLength value="50"/>
+			<xs:minLength value="1"/>
+			<xs:pattern value="[\w\-_]{1,50}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="votingCardList">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="contest" type="print:contestType"/>
+				<xs:element ref="ds:Signature" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="contestType">
+		<xs:sequence>
+			<xs:element name="contestIdentification" type="print:identifierType"/>
+			<xs:element name="votingCard" type="print:votingCardType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="votingCardType">
+		<xs:sequence>
+			<xs:element name="voterIdentification" type="print:identifierType"/>
+			<xs:element name="votingCardId" type="xs:string"/>
+			<xs:element name="startVotingKey" type="xs:string"/>
+			<xs:element name="ballotCastingKey" type="xs:string"/>
+			<xs:element name="voteCastReturnCode" type="xs:string"/>
+			<xs:element name="election" type="print:electionType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="vote" type="print:voteType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="electionType">
+		<xs:sequence>
+			<xs:element name="electionIdentification" type="print:identifierType"/>
+			<xs:element name="list" type="print:listType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="emptyList" type="print:emptyListType"/>
+			<xs:element name="candidate" type="print:candidateType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="writeInPosition" type="print:writeInPositionType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="writeInPositionType">
+		<xs:sequence>
+			<xs:element name="writeInPositionIdentification" type="print:identifierType"/>
+			<xs:element name="choiceReturnCode" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="listType">
+		<xs:sequence>
+			<xs:element name="listIdentification" type="print:identifierType"/>
+			<xs:element name="choiceReturnCode" type="xs:string"/>
+			<xs:element name="candidate" type="print:candidateListType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="candidateListType">
+		<xs:sequence>
+			<xs:element name="candidateListIdentification" type="print:identifierType"/>
+			<xs:element name="choiceReturnCode" type="xs:string" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="emptyListType">
+		<xs:sequence>
+			<xs:element name="emptyListIdentification" type="print:identifierType"/>
+			<xs:element name="choiceReturnCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="emptyPosition" type="print:emptyPositionType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="emptyPositionType">
+		<xs:sequence>
+			<xs:element name="emptyPositionIdentification" type="print:identifierType"/>
+			<xs:element name="choiceReturnCode" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="candidateType">
+		<xs:sequence>
+			<xs:element name="candidateIdentification" type="print:identifierType"/>
+			<xs:element name="choiceReturnCode" type="xs:string" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="voteType">
+		<xs:sequence>
+			<xs:element name="voteIdentification" type="print:identifierType"/>
+			<xs:element name="question" type="print:questionType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="questionType">
+		<xs:sequence>
+			<xs:element name="questionIdentification" type="print:identifierType"/>
+			<xs:element name="answer" type="print:answerType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="answerType">
+		<xs:sequence>
+			<xs:element name="answerIdentification" type="print:identifierType"/>
+			<xs:element name="choiceReturnCode" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

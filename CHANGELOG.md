@@ -1,4 +1,4 @@
-# ✨ Changelog (`v1.23.3`)
+# ✨ Changelog (`v1.25.0`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v1.23.3
-Previous version ---- v1.23.1
+This version -------- v1.25.0
+Previous version ---- v1.23.3
 Initial version ----- v1.12.12
-Total commits ------- 3
+Total commits ------- 7
 ```
+
+## [v1.25.0] - 2025-10-16
+
+### 🆕 Added
+
+- support post config v7 and print v2 xml
+
+## [v1.24.0] - 2025-09-25
+
+### 🆕 Added
+
+- support eCH-0045 v6 import
+
+## [v1.23.7] - 2025-08-28
+
+### 🔄 Changed
+
+- bump Voting.Stimmunterlagen.OfflineClient.Shared.Cryptography to 2.2.4
+
+## [v1.23.6] - 2025-08-08
+
+### 🔄 Changed
+
+- add mono-repository support to report dependencies for independent front- and backend projects.
+
+## [v1.23.5] - 2025-07-25
+
+### 🔒 Security
+
+- update pdf.js due to security vulnerability
+- explicitly prevent script execution in pdf.js
+
+## [v1.23.4] - 2025-07-11
+
+### 🆕 Added
+
+- add return address addition to e-voting template
 
 ## [v1.23.3] - 2025-06-04
 
@@ -84,57 +121,30 @@ Total commits ------- 3
 
 ## [v1.22.0] - 2024-07-04
 
-### 🔒 Security
+### 🆕 Added
 
-- Migrate to bouncy castle
-- Verify post file signature
-
-## [v1.21.0] - 2024-06-20
-
-### 🔄 Changed
-
-- angular 17 update
-
-## [v1.20.2] - 2024-05-28
-
-### 🔄 Changed
-
-- support new ech-0045 format
-
-## [v1.20.1] - 2024-05-17
-
-### 🔄 Changed
-
-- show position of empty candidates or write ins on multi mandate majority election
-
-## [v1.20.0] - 2024-03-26
+- support post config v7 and print v2 xml
 
 ### 🆕 Added
 
-- Support post config xml v6
-
-## [v1.19.0] - 2024-03-01
+- support eCH-0045 v6 import
 
 ### 🔄 Changed
 
-- update to .net 8
+- bump Voting.Stimmunterlagen.OfflineClient.Shared.Cryptography to 2.2.4
+
+### 🔄 Changed
+
+- add mono-repository support to report dependencies for independent front- and backend projects.
 
 ### 🔒 Security
 
-- apply patch policy
+- update pdf.js due to security vulnerability
+- explicitly prevent script execution in pdf.js
 
-## [v1.18.4] - 2024-02-28
+### 🆕 Added
 
-### 🔒 Security
-
-- patch for dependency vulnerability CVE-2023-45133 (babel)
-- patch for dependency vulnerability CVE-2023-28154 (webpack)
-- patch for dependency vulnerability CVE-2023-45857 (axios)
-- patch for dependency vulnerability CVE-2023-46234 (browsserify-sign)
-- patch for dependency vulnerability CVE-2023-26159 (follow-redirects)
-- patch for dependency vulnerability CVE-2023-44270 (postcss)
-
-## [v1.18.3] - 2024-02-27
+- add return address addition to e-voting template
 
 ### 🆕 Added
 
@@ -181,41 +191,3 @@ Total commits ------- 3
 ### 🔒 Security
 
 - update voting library
-
-### 🔒 Security
-
-- Migrate to bouncy castle
-- Verify post file signature
-
-### 🔄 Changed
-
-- angular 17 update
-
-### 🔄 Changed
-
-- support new ech-0045 format
-
-### 🔄 Changed
-
-- show position of empty candidates or write ins on multi mandate majority election
-
-### 🆕 Added
-
-- Support post config xml v6
-
-### 🔄 Changed
-
-- update to .net 8
-
-### 🔒 Security
-
-- apply patch policy
-
-### 🔒 Security
-
-- patch for dependency vulnerability CVE-2023-45133 (babel)
-- patch for dependency vulnerability CVE-2023-28154 (webpack)
-- patch for dependency vulnerability CVE-2023-45857 (axios)
-- patch for dependency vulnerability CVE-2023-46234 (browsserify-sign)
-- patch for dependency vulnerability CVE-2023-26159 (follow-redirects)
-- patch for dependency vulnerability CVE-2023-44270 (postcss)

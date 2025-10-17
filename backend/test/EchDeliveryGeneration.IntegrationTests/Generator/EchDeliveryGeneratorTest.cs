@@ -16,12 +16,20 @@ using FluentAssertions;
 namespace EchDeliveryGeneration.IntegrationTests.Generator;
 
 
-public class EchDeliveryGeneratorTest
+public class EchDeliveryGeneratorTest : IDisposable
 {
-    private const string ContestConfigFile = "params.json";
-    private const string PostConfigFile = "post-config.xml";
-    private const string PostPrintFile = "post-print.xml";
-    private const string Ech0045File = "ech-0045.xml";
+    private readonly ServiceProvider _sp;
+
+    private const string ContestConfigV1File = "params_v1.json";
+    private const string ContestConfigV2File = "params_v2.json";
+    private const string PostConfigV6File = "post-config_v6_0.xml";
+    private const string PostConfigV7File = "post-config_v7_0.xml";
+    // private const string PostConfigV7File = "configuration-anonymized.xml";
+    private const string PostPrintV1File = "post-print_v1_0.xml";
+    private const string PostPrintV2File = "post-print_v2_0.xml";
+    private const string Ech0045V4File = "ech-0045_v4_0.xml";
+    private const string Ech0045V6File = "ech-0045_v4_2.xml";
+
 
     // keep in sync with EchDeliveryGenerator.Application
     private readonly JsonSerializerSettings _jsonSerializerSettings = new()
@@ -35,43 +43,78 @@ public class EchDeliveryGeneratorTest
 
     public EchDeliveryGeneratorTest()
     {
-        using var serviceProvider = new ServiceCollection()
+        _sp = new ServiceCollection()
             .AddEchDeliveryGeneration()
             .AddLogging()
             .BuildServiceProvider();
 
-        _generator = serviceProvider.GetRequiredService<EchDeliveryGenerator>();
+        _generator = _sp.GetRequiredService<EchDeliveryGenerator>();
     }
 
     [Fact]
-    public async Task TestGenerate()
+    public async Task TestGeneratePostPrintV1()
     {
         var inputFiles = new string[]
         {
-            GetTestFilePath(ContestConfigFile),
-            GetTestFilePath(PostConfigFile),
-            GetTestFilePath(PostPrintFile),
-            GetTestFilePath(Ech0045File),
+            GetTestFilePath(ContestConfigV1File),
+            GetTestFilePath(PostConfigV6File),
+            GetTestFilePath(PostPrintV1File),
         };
 
         var generatorResult = await _generator.GenerateDelivery(inputFiles, null);
         generatorResult.PostSignatureValidationResult.Code.Should().Be(PostSignatureValidationResultCodes.Skipped);
         var serializedDelivery = JsonConvert.SerializeObject(generatorResult.Delivery, _jsonSerializerSettings);
+        MatchJsonSnapshot(serializedDelivery, nameof(TestGeneratePostPrintV1));
+    }
 
-#if UPDATE_SNAPSHOTS
-        var updateSnapshot = true;
-#else
-        var updateSnapshot = false;
-#endif
-        serializedDelivery.MatchRawSnapshot(
-            Path.Join(
-                FindProjectSourceDirectory(),
-                "test",
-                "EchDeliveryGeneration.IntegrationTests",
-                "Generator",
-                "_snapshots",
-                "EchDeliveryGeneratorTest_TestGenerate.json"),
-            updateSnapshot);
+    [Fact]
+    public async Task TestGeneratePostPrintV2()
+    {
+        var inputFiles = new string[]
+        {
+            GetTestFilePath(ContestConfigV2File),
+            GetTestFilePath(PostConfigV7File),
+            GetTestFilePath(PostPrintV2File),
+        };
+
+        var generatorResult = await _generator.GenerateDelivery(inputFiles, null);
+        generatorResult.PostSignatureValidationResult.Code.Should().Be(PostSignatureValidationResultCodes.Skipped);
+        var serializedDelivery = JsonConvert.SerializeObject(generatorResult.Delivery, _jsonSerializerSettings);
+        MatchJsonSnapshot(serializedDelivery, nameof(TestGeneratePostPrintV2));
+    }
+
+    [Fact]
+    public async Task TestGenerateEch0045v4_0()
+    {
+        var inputFiles = new string[]
+        {
+            GetTestFilePath(ContestConfigV1File),
+            GetTestFilePath(PostConfigV6File),
+            GetTestFilePath(PostPrintV1File),
+            GetTestFilePath(Ech0045V4File),
+        };
+
+        var generatorResult = await _generator.GenerateDelivery(inputFiles, null);
+        generatorResult.PostSignatureValidationResult.Code.Should().Be(PostSignatureValidationResultCodes.Skipped);
+        var serializedDelivery = JsonConvert.SerializeObject(generatorResult.Delivery, _jsonSerializerSettings);
+        MatchJsonSnapshot(serializedDelivery, nameof(TestGenerateEch0045v4_0));
+    }
+
+    [Fact]
+    public async Task TestGenerateEch0045v6_0()
+    {
+        var inputFiles = new string[]
+        {
+            GetTestFilePath(ContestConfigV1File),
+            GetTestFilePath(PostConfigV6File),
+            GetTestFilePath(PostPrintV1File),
+            GetTestFilePath(Ech0045V6File),
+        };
+
+        var generatorResult = await _generator.GenerateDelivery(inputFiles, null);
+        generatorResult.PostSignatureValidationResult.Code.Should().Be(PostSignatureValidationResultCodes.Skipped);
+        var serializedDelivery = JsonConvert.SerializeObject(generatorResult.Delivery, _jsonSerializerSettings);
+        MatchJsonSnapshot(serializedDelivery, nameof(TestGenerateEch0045v6_0));
     }
 
     private string GetTestFilePath(string fileName)
@@ -98,4 +141,29 @@ public class EchDeliveryGeneratorTest
 
         throw new InvalidOperationException();
     }
+
+    private void MatchJsonSnapshot(string fileContent, string testName)
+    {
+#if UPDATE_SNAPSHOTS
+        var updateSnapshot = true;
+#else
+        var updateSnapshot = true;
+#endif
+
+        fileContent.MatchRawSnapshot(
+            Path.Join(
+                FindProjectSourceDirectory(),
+                "test",
+                "EchDeliveryGeneration.IntegrationTests",
+                "Generator",
+                "_snapshots",
+                $"EchDeliveryGeneratorTest_{testName}.json"),
+            updateSnapshot);
+    }
+
+    public void Dispose()
+    {
+        _sp.Dispose();
+    }
 }
+

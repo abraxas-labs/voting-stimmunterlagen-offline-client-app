@@ -25,10 +25,3 @@ To start developing components in the webapp, use `npm run start` in `frontend`.
 ## Build executable
 
 Run `./build.sh` to build the package to `frontend/packages`.
-
-## Dependencies
-
-### PDF.js
-
-PDF.js is not included as a node module because it does not ship the default [viewer files](https://github.com/mozilla/pdf.js/issues/11274).
-The pdfjs bundle can be downloaded from [here](https://mozilla.github.io/pdf.js/getting_started/) and is included per `frontend/src/assets/pdfjs-dist`.

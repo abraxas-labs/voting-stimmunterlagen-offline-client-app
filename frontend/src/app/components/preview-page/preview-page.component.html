@@ -18,8 +18,7 @@
     <div *ngIf="!pdfList[previewIndex]" class="center">
       <app-spinner></app-spinner>
     </div>
-    <app-pdf-viewer *ngIf="pdfList[previewIndex]" [pdf]="pdfList[previewIndex]" (pdfLoaded)="numberOfPages = $event.numPages">
-    </app-pdf-viewer>
+    <app-pdf-viewer *ngIf="pdfList[previewIndex]" [data]="pdfList[previewIndex]"></app-pdf-viewer>
   </div>
 </div>
 <div class="space">
