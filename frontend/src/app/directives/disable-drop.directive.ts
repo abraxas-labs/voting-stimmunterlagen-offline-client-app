@@ -8,6 +8,7 @@ import { HostListener, Directive } from '@angular/core';
 
 @Directive({
   selector: '[appDisableDrop]',
+  standalone: false,
 })
 export class DisableDropDirective {
   @HostListener('window:dragover', ['$event'])

@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { contextBridge, ipcRenderer } from 'electron';
+import { contextBridge, ipcRenderer, webUtils  } from 'electron';
 
 /**
  * The preload script runs before. It has access to web APIs
@@ -25,11 +25,24 @@ contextBridge.exposeInMainWorld('backend', {
   copyFile: (sourcePath, targetPath) => ipcRenderer.invoke('copyFile', sourcePath, targetPath),
   readFile: path => ipcRenderer.invoke('readFile', path),
   showFolderPickerDialog: () => ipcRenderer.invoke('showFolderPickerDialog'),
-
+  showItemInFolder: (filePath) => ipcRenderer.invoke('showItemInFolder', filePath),
+  openPath: (path) => ipcRenderer.invoke('openPath', path),
   getUserDataPathSync: () => ipcRenderer.sendSync('getUserDataPathSync'),
   getOsArchSync: () => ipcRenderer.sendSync('getOsArchSync'),
   isProdSync: () => ipcRenderer.sendSync('isProdSync'),
   getAppVersionSync: () => ipcRenderer.sendSync('getAppVersionSync'),
+
+  /**
+   * getPathForFile is implemented inline in the preload script instead of passing through IPC
+   * because File objects cannot be serialized and sent through IPC channels due to object serialization limitations.
+   * webUtils.getPathForFile must be called in the renderer context where the File object is available.
+   * See:
+   * - https://www.electronjs.org/docs/latest/tutorial/ipc#object-serialization
+   * - https://www.electronjs.org/docs/latest/breaking-changes#removed-filepath
+   */
+  getPathForFile (file: File): string {
+    return webUtils.getPathForFile(file);
+  },
 
   // add listener by using:     removeListener = emitter(fn);
   // remove listener by using:  removeListener()

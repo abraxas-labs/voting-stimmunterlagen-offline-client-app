@@ -10,5 +10,6 @@ import { Component } from '@angular/core';
   selector: 'app-bar',
   templateUrl: './app-bar.component.html',
   styleUrls: ['./app-bar.component.scss'],
+  standalone: false,
 })
 export class AppBarComponent {}

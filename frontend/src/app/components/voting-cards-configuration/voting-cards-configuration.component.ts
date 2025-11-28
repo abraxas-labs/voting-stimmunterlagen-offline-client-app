@@ -17,6 +17,7 @@ import { StepActionsService } from '../../services/step-actions.service';
   selector: 'app-voting-cards-configuration',
   templateUrl: './voting-cards-configuration.component.html',
   styleUrls: ['./voting-cards-configuration.component.scss'],
+  standalone: false,
 })
 export class VotingCardsConfigurationComponent implements OnInit {
   public groupOptionsValue = [

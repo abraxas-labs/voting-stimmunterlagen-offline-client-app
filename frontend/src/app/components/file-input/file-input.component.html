@@ -1,11 +1,13 @@
 <div class="abra-form-group file-group">
   <label>{{ label | translate }}</label>
   <input type="file"
-         (change)="changePath($event.target.files[0])"
-         [accept]="accept"
-         #fileInput />
-  <p class="file-path" *ngIf="path">
-    <span>{{ path }}</span>
-    <i class="fa fa-close" (click)="changePath()"></i>
-  </p>
+    (change)="changePath($event.target.files[0])"
+    [accept]="accept"
+    #fileInput />
+  @if (path) {
+    <p class="file-path">
+      <span>{{ path }}</span>
+      <i class="fa fa-close" (click)="changePath()"></i>
+    </p>
+  }
 </div>

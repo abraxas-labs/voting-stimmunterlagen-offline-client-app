@@ -12,6 +12,7 @@ import { TranslationService } from '../../services/translation/translation.servi
 @Component({
   selector: 'app-language-switch',
   templateUrl: './language-switch.component.html',
+  standalone: false,
 })
 export class LanguageSwitchComponent {
   public languages: string[] = [];

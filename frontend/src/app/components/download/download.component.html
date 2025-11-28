@@ -1,17 +1,31 @@
 <h2>{{ 'ROUTES./download' | translate }}</h2>
 <input type="checkbox" [ngModel]="allChecked" (click)="toggleAllChecked()" [disabled]="cryptFilesIsRunning" />
-<div *ngFor="let checkablePdf of checkablePdfs">
-  <input
-    type="checkbox"
-    [ngModel]="checkablePdf.checked"
-    (change)="togglePdfChecked(checkablePdf)"
-    [disabled]="checkablePdf.file.status === 'encrypted' || cryptFilesIsRunning"
-  />
-  <app-spinner *ngIf="checkablePdf.file.status === 'running'" [size]="'13px'"></app-spinner>
-  <span *ngIf="checkablePdf.file.status === 'unencrypted'" class="fa fa-unlock"></span>
-  <span *ngIf="checkablePdf.file.status === 'encrypted'" class="fa fa-lock"></span>
-  <a [href]="'file:///' + checkablePdf.file.filePath" download>{{ checkablePdf.file.fileName }}</a>
-</div>
+@for (checkablePdf of checkablePdfs; track checkablePdf) {
+  <div>
+    <input
+      type="checkbox"
+      [ngModel]="checkablePdf.checked"
+      (change)="togglePdfChecked(checkablePdf)"
+      [disabled]="checkablePdf.file.status === 'encrypted' || cryptFilesIsRunning"
+      />
+    @if (checkablePdf.file.status === 'running') {
+      <app-spinner [size]="'13px'"></app-spinner>
+    }
+    @if (checkablePdf.file.status === 'unencrypted') {
+      <span class="fa fa-unlock"></span>
+    }
+    @if (checkablePdf.file.status === 'encrypted') {
+      <span class="fa fa-lock"></span>
+    }
+    <span
+      class="download-link"
+      (click)="downloadSingleFile(checkablePdf)"
+      [class.disabled]="cryptFilesIsRunning"
+      title="Click to download file">
+      {{ checkablePdf.file.fileName }}
+    </span>
+  </div>
+}
 
 <app-vct-popup [(visible)]="displayEncryptionCertificatesPreview">
   <app-certificate-preview [certificatePaths]="encryptionCertificatePaths"></app-certificate-preview>
@@ -26,13 +40,14 @@
     [(certificatePassword)]="selectedCertificatePassword"
     (certificateSubjectChange)="selectedCertificateSubject = $event"
   ></app-certificate-selection>
-  <button
-    class="abra-button-primary"
-    (click)="encryptFiles()"
-    *ngIf="!!selectedCertificatePath && !!selectedCertificatePassword && !!selectedCertificateSubject"
-  >
-    {{ 'CRYPTO.SIGN_AND_ENCRYPT' | translate }}
-  </button>
+  @if (!!selectedCertificatePath && !!selectedCertificatePassword && !!selectedCertificateSubject) {
+    <button
+      class="abra-button-primary"
+      (click)="encryptFiles()"
+      >
+      {{ 'CRYPTO.SIGN_AND_ENCRYPT' | translate }}
+    </button>
+  }
 </app-vct-popup>
 
 <app-vct-popup [(visible)]="isBackQuestionVisible">
@@ -49,13 +64,13 @@
   class="abra-button-secondary"
   (click)="openDirectoryPickerDialog()"
   [disabled]="cryptFilesIsRunning"
->
+  >
   {{ 'DOWNLOAD_ALL' | translate }}
 </button>
 <button
   class="abra-button-secondary"
   (click)="isBackQuestionVisible = true"
   [disabled]="cryptFilesIsRunning"
->
+  >
   {{ 'BACK_TO_FILE_SELECTION' | translate }}
 </button>

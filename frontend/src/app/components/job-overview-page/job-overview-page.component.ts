@@ -15,6 +15,7 @@ import { AppStateStep } from '../../models/app-state.model';
   selector: 'app-job-overview-page',
   templateUrl: './job-overview-page.component.html',
   styleUrls: ['./job-overview-page.component.scss'],
+  standalone: false,
 })
 export class JobOverviewPageComponent implements OnInit, OnDestroy {
   public isLoading = true;

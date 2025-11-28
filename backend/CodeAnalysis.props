@@ -4,16 +4,4 @@
         <TreatWarningsAsErrors Condition="'$(Configuration)' == 'Release'">true</TreatWarningsAsErrors>
         <MSBuildTreatWarningsAsErrors Condition="'$(Configuration)' == 'Release'">true</MSBuildTreatWarningsAsErrors>
     </PropertyGroup>
-
-    <ItemGroup>
-        <!-- Exclude from duplication (CPD) -->
-        <SonarQubeSetting Include="sonar.cpd.exclusions">
-            <Value>**/*.cshtml, **/Program.cs, **/Argument.cs, **/Arguments.cs, **/DataAccess/Entities/**</Value>
-        </SonarQubeSetting>
-
-        <!-- Exclude from static code analysis -->
-        <SonarQubeSetting Include="sonar.exclusions">
-            <Value>**/3rdPartyTools/**,**/3rdPartyLibs/**</Value>
-        </SonarQubeSetting>
-    </ItemGroup>
 </Project>

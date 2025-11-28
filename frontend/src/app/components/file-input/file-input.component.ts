@@ -5,11 +5,13 @@
  */
 
 import { Component, Input, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
+import { ElectronService } from '../../services/electron.service';
 
 @Component({
   selector: 'app-file-input',
   templateUrl: './file-input.component.html',
   styleUrl: './file-input.component.scss',
+  standalone: false,
 })
 export class FileInputComponent {
   @Input()
@@ -27,8 +29,14 @@ export class FileInputComponent {
   @ViewChild('fileInput')
   public fileInputRef: ElementRef;
 
-  public changePath(file?: File): void {
-    const path = file?.path ?? '';
+  constructor(private readonly electronService: ElectronService) {}
+
+  public async changePath(file?: File): Promise<void> {
+    let path = '';
+
+    if (file) {
+      path = await this.electronService.getPathForFile(file);
+    }
 
     if (path === this.path) {
       return;

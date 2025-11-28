@@ -11,6 +11,7 @@ import { ImportStatus } from '../../models/import-status';
   selector: 'app-select-files',
   templateUrl: './select-files.component.html',
   styleUrls: ['./select-files.component.scss'],
+  standalone: false,
 })
 export class SelectFilesComponent {
   public canDrop: boolean | null;

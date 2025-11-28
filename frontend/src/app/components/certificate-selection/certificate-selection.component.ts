@@ -8,11 +8,13 @@ import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { finalize } from 'rxjs';
 import { Certificate } from '../../models/certificate.model';
 import { CRYPTIC_SERVICE, CrypticService } from '../../services/cryptic.service';
+import { ElectronService } from '../../services/electron.service';
 
 @Component({
   selector: 'app-certificate-selection',
   templateUrl: './certificate-selection.component.html',
   styleUrls: ['./certificate-selection.component.scss'],
+  standalone: false,
 })
 export class CertificateSelectionComponent {
   @Input() certificatePath: string;
@@ -27,7 +29,10 @@ export class CertificateSelectionComponent {
   public certificates: Certificate[] = [];
   public certificateSubject: string;
 
-  constructor(@Inject(CRYPTIC_SERVICE) private readonly crypticService: CrypticService) {}
+  constructor(
+    @Inject(CRYPTIC_SERVICE) private readonly crypticService: CrypticService,
+    private readonly electronService: ElectronService,
+  ) {}
 
   public changeCertificatePassword(password: string): void {
     this.changeCertificateSubject('');
@@ -35,10 +40,11 @@ export class CertificateSelectionComponent {
     this.certificatePasswordChange.emit(password);
   }
 
-  public changeCertificatePath(file: File): void {
+  public async changeCertificatePath(file: File): Promise<void> {
+    const filePath = (await this.electronService.getPathForFile(file)) || '';
     this.changeCertificateSubject('');
-    this.certificatePath = file.path;
-    this.certificatePathChange.emit(file.path);
+    this.certificatePath = filePath;
+    this.certificatePathChange.emit(filePath);
   }
 
   public changeCertificateSubject(subject: string): void {

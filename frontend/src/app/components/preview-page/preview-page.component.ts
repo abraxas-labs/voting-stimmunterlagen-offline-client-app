@@ -23,6 +23,7 @@ import { VotingCardData } from '../../models/ech0228/voting-card-data.model';
   selector: 'app-preview-page',
   templateUrl: './preview-page.component.html',
   styleUrls: ['./preview-page.component.scss'],
+  standalone: false,
 })
 export class PreviewPageComponent implements OnInit, OnDestroy {
   public isLoading = false;

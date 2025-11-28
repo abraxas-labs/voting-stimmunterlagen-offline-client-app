@@ -1,4 +1,4 @@
-@import 'variables_old';
+@use 'variables_old' as *;
 
 .center {
   text-align: center;
@@ -47,8 +47,7 @@
     flex: 1;
     align-items: center;
     max-width: 300px;
-    align-self: center;
-    justify-self: center;
+    place-self: center;
   }
 
   .header {

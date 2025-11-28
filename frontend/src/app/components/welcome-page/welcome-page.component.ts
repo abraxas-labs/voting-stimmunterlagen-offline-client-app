@@ -20,6 +20,7 @@ import { pathCombine } from '../../services/utils/path.utils';
   selector: 'app-welcome-page',
   templateUrl: './welcome-page.component.html',
   styleUrls: ['./welcome-page.component.scss'],
+  standalone: false,
 })
 export class WelcomePageComponent implements OnInit {
   public readonly allowedKeystoreCertificatePathExtensions = '.p12';
@@ -105,12 +106,13 @@ export class WelcomePageComponent implements OnInit {
       });
   }
 
-  public async copyFile(file): Promise<void> {
+  public async copyFile(file: File): Promise<void> {
+    const sourceFilePath = await this.electronService.getPathForFile(file);
     await this.electronService.createDirectory(this.filePath);
-    await this.electronService.copyFile(file.path, pathCombine(this.filePath, file.name));
+    await this.electronService.copyFile(sourceFilePath, pathCombine(this.filePath, file.name));
   }
 
-  public async fileCheck(jobs?): Promise<void> {
+  public async fileCheck(jobs?: FileInputListModel[]): Promise<void> {
     const fileJobs = jobs || this.fileList.filter(fileElement => fileElement.fileType === 'OPEN');
     if (fileJobs.length === 0) {
       return;
@@ -135,24 +137,6 @@ export class WelcomePageComponent implements OnInit {
     this.zipHandling();
   }
 
-  public changeKeystoreCertificatePath(file?: File): void {
-    if (!file || !file.path) {
-      this.keystoreCertificatePath = '';
-      return;
-    }
-
-    this.keystoreCertificatePath = file.path;
-  }
-
-  public changeKeystorePasswordPath(file?: File): void {
-    if (!file || !file.path) {
-      this.keystorePasswordPath = '';
-      return;
-    }
-
-    this.keystorePasswordPath = file.path;
-  }
-
   private isZip(file: File): boolean {
     const validZipType = ['application/x-zip-compressed', 'application/zip'];
     return !!validZipType.find(zipType => zipType === file.type);
@@ -171,7 +155,7 @@ export class WelcomePageComponent implements OnInit {
       return;
     }
     filesObject.isRunning = true;
-    this.votingPropertyService.prepareProperty(filesObject.file).subscribe(() => {
+    this.votingPropertyService.prepareProperty(filesObject.filePath).subscribe(() => {
       filesObject.isRunning = false;
       filesObject.filePath = JSON_CONFIG_FILE;
     });

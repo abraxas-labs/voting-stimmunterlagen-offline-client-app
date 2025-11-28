@@ -7,30 +7,38 @@
     (fileChanged)="addFiles($event)"
   ></app-select-files>
   <div class="flex1 list">
-    <ng-container *ngFor="let group of fileGrouped">
+    @for (group of fileGrouped; track group) {
       <div class="list-title">
         {{ 'FILE_CATEGORY_' + group.name | translate }}
       </div>
-      <div class="list-item flex" *ngFor="let item of group.values" (click)="logger(item)">
-        <div [title]="item.file.name" class="flex1 filename">{{ item.file.name }}</div>
-        <span *ngIf="item.isRunning"><app-spinner [size]="'13px'"></app-spinner></span>
-        <div title="entfernen" class="remove fa fa-times" (click)="removeElement(item.file.name)"></div>
-      </div>
-      <button *ngIf="group.name === 'CRYPT'" class="abra-button-primary decrypt-button" (click)="displayCertificateSelection = true">
-        {{ 'FILE_DECRYPT' | translate }}
-      </button>
-    </ng-container>
+      @for (item of group.values; track item) {
+        <div class="list-item flex" (click)="logger(item)">
+          <div [title]="item.file.name" class="flex1 filename">{{ item.file.name }}</div>
+          @if (item.isRunning) {
+            <span><app-spinner [size]="'13px'"></app-spinner></span>
+          }
+          <div title="entfernen" class="remove fa fa-times" (click)="removeElement(item.file.name)"></div>
+        </div>
+      }
+      @if (group.name === 'CRYPT') {
+        <button class="abra-button-primary decrypt-button" (click)="displayCertificateSelection = true">
+          {{ 'FILE_DECRYPT' | translate }}
+        </button>
+      }
+    }
   </div>
 </div>
 
 <div class="post-signature-content">
   <h3>{{ 'POST_SIGNATURE_VALIDATION.KEYSTORE_SECTION' | translate }}</h3>
   <app-file-input label="POST_SIGNATURE_VALIDATION.KEYSTORE_CERTIFICATE"
-                  [(path)]="keystoreCertificatePath"
-                  [accept]="allowedKeystoreCertificatePathExtensions"></app-file-input>
+    [(path)]="keystoreCertificatePath"
+  [accept]="allowedKeystoreCertificatePathExtensions"></app-file-input>
   <app-file-input label="POST_SIGNATURE_VALIDATION.KEYSTORE_PASSWORD"
-                  [(path)]="keystorePasswordPath"
-                  [accept]="allowedKeystorePasswordPathExtensions"></app-file-input>
+    [(path)]="keystorePasswordPath"
+  [accept]="allowedKeystorePasswordPathExtensions"></app-file-input>
 </div>
 
-<button *ngIf="enablePreview" class="abra-button-primary" (click)="complete()">{{ 'NEXT_TO_VALIDATE' | translate }}</button>
+@if (enablePreview) {
+  <button class="abra-button-primary" (click)="complete()">{{ 'NEXT_TO_VALIDATE' | translate }}</button>
+}

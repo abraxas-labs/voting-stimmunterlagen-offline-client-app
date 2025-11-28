@@ -1,3 +1,5 @@
-<div class="breadcrumb-item" *ngFor="let item of breadcrumbService.items$ | async" (click)="breadcrumbService.navigate(item)">
-  {{ item.title }}
-</div>
+@for (item of breadcrumbService.items$ | async; track item) {
+  <div class="breadcrumb-item" (click)="breadcrumbService.navigate(item)">
+    {{ item.title }}
+  </div>
+}

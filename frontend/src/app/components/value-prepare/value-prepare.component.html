@@ -1,29 +1,45 @@
 <h2>{{ 'ROUTES./prepare' | translate }}</h2>
 
-<div *ngIf="hasErrors && !isRunning" class="error-msg">
-  <span class="fa fa-exclamation-circle"></span>
-  <span>
-    {{ 'ERROR.' + errorValue?.errorCode | translate }} {{ errorValue?.relatedId }}
-    {{ isNotFoundError ? ('ERROR.NOT_FOUND' | translate) : '' }}</span
-  >
-  <span *ngIf="!errorValue">{{ 'ERROR.GENERIC' | translate }}</span>
-</div>
-<div *ngIf="!hasErrors && !isRunning">
-  {{ 'NUMBER_OF_VALIDATION' | translate }}: {{ countOfVotingCards }}
-</div>
-<div *ngIf="!!postSignatureValidationResult"
-     [class.warn-msg]="!postSignatureValidationSuccess"
-     [class.success-msg]="postSignatureValidationSuccess">
-  <p>{{ 'POST_SIGNATURE_VALIDATION_RESULT.' + postSignatureValidationResult.code | translate }}</p>
-  <p *ngIf="postSignatureValidationResult.message"><i>{{ postSignatureValidationResult.message }}</i></p>
-</div>
-<span *ngIf="isRunning"><app-spinner></app-spinner></span>
-<br />
-<div>
-  <button class="abra-button-primary" *ngIf="!hasErrors && !isRunning" [routerLink]="['/voting-cards-configuration']">
-    {{ 'NEXT_TO_VOTING_CARDS_CONFIGURATION' | translate }}
-  </button>
-  <button class="abra-button-secondary" *ngIf="(hasErrors || !postSignatureValidationSuccess) && !isRunning" [routerLink]="['/welcome']">
-    {{ 'BACK_TO_FILE_SELECTION' | translate }}
-  </button>
-</div>
+@if (hasErrors && !isRunning) {
+  <div class="error-msg">
+    <span class="fa fa-exclamation-circle"></span>
+    <span>
+      {{ 'ERROR.' + errorValue?.errorCode | translate }} {{ errorValue?.relatedId }}
+      {{ isNotFoundError ? ('ERROR.NOT_FOUND' | translate) : '' }}</span
+      >
+      @if (!errorValue) {
+        <span>{{ 'ERROR.GENERIC' | translate }}</span>
+      }
+    </div>
+  }
+  @if (!hasErrors && !isRunning) {
+    <div>
+      {{ 'NUMBER_OF_VALIDATION' | translate }}: {{ countOfVotingCards }}
+    </div>
+  }
+  @if (!!postSignatureValidationResult) {
+    <div
+      [class.warn-msg]="!postSignatureValidationSuccess"
+      [class.success-msg]="postSignatureValidationSuccess">
+      <p>{{ 'POST_SIGNATURE_VALIDATION_RESULT.' + postSignatureValidationResult.code | translate }}</p>
+      @if (postSignatureValidationResult.message) {
+        <p><i>{{ postSignatureValidationResult.message }}</i></p>
+      }
+    </div>
+  }
+  @if (isRunning) {
+    <span><app-spinner></app-spinner></span>
+  }
+  <br />
+  <div>
+    @if (!hasErrors && !isRunning) {
+      <button class="abra-button-primary" [routerLink]="['/voting-cards-configuration']">
+        {{ 'NEXT_TO_VOTING_CARDS_CONFIGURATION' | translate }}
+      </button>
+    }
+    @if ((hasErrors || !postSignatureValidationSuccess) && !isRunning) {
+      <button class="abra-button-secondary" [routerLink]="['/welcome']">
+        {{ 'BACK_TO_FILE_SELECTION' | translate }}
+      </button>
+    }
+  </div>

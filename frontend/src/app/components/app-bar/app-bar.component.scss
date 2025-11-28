@@ -1,5 +1,5 @@
-@import 'variables';
-@import 'button';
+@use 'variables' as *;
+@use 'button' as *;
 
 .abra-header {
   background: $color-primary;

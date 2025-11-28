@@ -88,6 +88,7 @@ public class EchDeliveryGenerator
         }
 
         var delivery = _postDataTransformer.Transform(dataTransformerContext);
+        postSignatureValidationData.PostPrintVersion = dataTransformerContext.PostPrintVersion;
 
         if (postSignatureValidationData.RequiredFieldsSet())
         {

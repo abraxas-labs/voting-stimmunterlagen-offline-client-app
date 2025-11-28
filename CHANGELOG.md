@@ -1,4 +1,4 @@
-# ✨ Changelog (`v1.25.0`)
+# ✨ Changelog (`v1.26.1`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v1.25.0
-Previous version ---- v1.23.3
+This version -------- v1.26.1
+Previous version ---- v1.25.0
 Initial version ----- v1.12.12
-Total commits ------- 7
+Total commits ------- 4
 ```
+
+## [v1.26.1] - 2025-11-18
+
+### 🔄 Changed
+
+- fix empty list mapping in post print v2
+
+## [v1.26.0] - 2025-11-14
+
+### 🔄 Changed
+
+- update angular to 20.3.6 and dependencies to latest patch versions
+
+## [v1.25.1] - 2025-11-12
+
+### 🔄 Changed
+
+- add compatibility for xml sign tool v1.4 and updated system properties in v1.5
+- align xml signature tool system properties with v1.5 notation
+- update `-Ddirect.trust.keystore.location` to `-Ddirect-trust.keystore.location`
+- update `-Ddirect.trust.keystore.password.location` to `-Ddirect-trust.password.location`
 
 ## [v1.25.0] - 2025-10-16
 
@@ -98,28 +119,14 @@ Total commits ------- 7
 
 ### 🔄 Changed
 
-- update create-hashes script to exclude *.deps.json files
-
-## [v1.22.3] - 2024-08-13
+- fix empty list mapping in post print v2
 
 ### 🔄 Changed
 
-- enable continuous integration build property for dotnet CLI
-- disable source-link feature for release build to ensure deterministic in trusted build procedure.
-
-## [v1.22.2] - 2024-08-12
-
-### 🔄 Changed
-
-- prevent source revision from being included in release builds to preserve deterministic builds.
-
-## [v1.22.1] - 2024-07-05
-
-### 🔒 Security
-
-- update voting library
-
-## [v1.22.0] - 2024-07-04
+- add compatibility for xml sign tool v1.4 and updated system properties in v1.5
+- align xml signature tool system properties with v1.5 notation
+- update `-Ddirect.trust.keystore.location` to `-Ddirect-trust.keystore.location`
+- update `-Ddirect.trust.keystore.password.location` to `-Ddirect-trust.password.location`
 
 ### 🆕 Added
 
@@ -174,20 +181,3 @@ Total commits ------- 7
 
 - update bug bounty template reference
 - patch ci-cd template version, align with new defaults
-
-### 🔄 Changed
-
-- update create-hashes script to exclude *.deps.json files
-
-### 🔄 Changed
-
-- enable continuous integration build property for dotnet CLI
-- disable source-link feature for release build to ensure deterministic in trusted build procedure.
-
-### 🔄 Changed
-
-- prevent source revision from being included in release builds to preserve deterministic builds.
-
-### 🔒 Security
-
-- update voting library

@@ -14,6 +14,7 @@ import { pathCombine } from '../../services/utils/path.utils';
   selector: 'app-certificate-preview',
   templateUrl: './certificate-preview.component.html',
   styleUrls: ['./certificate-preview.component.scss'],
+  standalone: false,
 })
 export class CertificatePreviewComponent implements OnInit {
   @Input()

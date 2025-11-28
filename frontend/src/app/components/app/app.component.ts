@@ -15,6 +15,7 @@ import { pdfDefaultOptions } from 'ngx-extended-pdf-viewer';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   public showContent = false;

@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 .flying-focus {
   outline: none;
 }
@@ -106,8 +108,8 @@ textarea {
       margin-left: 15px;
 
       &::before {
-        @extend .fa;
-        @extend .fa-paperclip;
+        @extend .fa !optional;
+        @extend .fa-paperclip !optional;
 
         margin-right: 5px;
       }
@@ -129,8 +131,8 @@ textarea {
     }
 
     > span::before {
-      @extend .fa;
-      @extend .fa-paperclip;
+      @extend .fa !optional;
+      @extend .fa-paperclip !optional;
 
       margin-right: 5px;
     }

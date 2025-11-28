@@ -5,7 +5,7 @@
     <PackageReference Include="Voting.Lib.Ech.Ech0045_6_0" Version="$(VotingLibVersion)" />
     <PackageReference Include="Voting.Lib.Ech.Ech0228_1_0" Version="$(VotingLibVersion)" />
     <PackageReference Include="Voting.Stimmunterlagen.OfflineClient.Shared" Version="$(VotingOfflineClientSharedVersion)" />
-    <PackageReference Include="CsvHelper" Version="31.0.2" />
+    <PackageReference Include="CsvHelper" Version="33.1.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -11,6 +11,7 @@ import { trigger, style, state, animate, transition } from '@angular/animations'
   selector: 'app-fab',
   templateUrl: './fab.component.html',
   styleUrls: ['./fab.component.scss'],
+  standalone: false,
   animations: [
     trigger('fabAnimation', [
       state(

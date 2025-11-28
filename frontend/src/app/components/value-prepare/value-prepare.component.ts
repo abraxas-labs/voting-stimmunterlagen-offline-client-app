@@ -17,6 +17,7 @@ import { POST_SIGNATURE_VALIDATION_SUCCESS, PostSignatureValidationResult } from
   selector: 'app-value-prepare',
   templateUrl: './value-prepare.component.html',
   styleUrls: ['./value-prepare.component.scss'],
+  standalone: false,
 })
 export class ValuePrepareComponent implements OnInit {
   private readonly uploads: UploadFileMetadata[];

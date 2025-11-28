@@ -14,5 +14,10 @@ export class Job implements JobMetadata {
   public failed: boolean;
   public outputFilename: string;
 
-  constructor(public layoutPath: string, public model: any, public range: JobRange, public voter?: any) {}
+  constructor(
+    public layoutPath: string,
+    public model: any,
+    public range: JobRange,
+    public voter?: any,
+  ) {}
 }

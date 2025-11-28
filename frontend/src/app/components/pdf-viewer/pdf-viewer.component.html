@@ -1,2 +1,4 @@
-<ngx-extended-pdf-viewer [showToolbar]="false" *ngIf="url" [src]="url">
-</ngx-extended-pdf-viewer>
+@if (url) {
+  <ngx-extended-pdf-viewer [showToolbar]="false" [src]="url">
+  </ngx-extended-pdf-viewer>
+}

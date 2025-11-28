@@ -16,7 +16,10 @@ import { APP_STATE_FILE } from '../common/path.constants';
 export class AppStateService {
   private stateValue: AppState;
 
-  constructor(private readonly router: Router, private readonly electronService: ElectronService) {}
+  constructor(
+    private readonly router: Router,
+    private readonly electronService: ElectronService,
+  ) {}
 
   public get state(): AppState {
     if (!this.stateValue) {

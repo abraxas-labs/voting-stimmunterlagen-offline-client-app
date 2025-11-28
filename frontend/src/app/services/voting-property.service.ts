@@ -23,12 +23,12 @@ export class VotingPropertyService {
     @Inject(SECURE_DELETE_SERVICE) private readonly secureDeleteService: SecureDeleteService,
   ) {}
 
-  public prepareProperty(zip: File): Observable<PropertyData | undefined> {
+  public prepareProperty(zipPath: string): Observable<PropertyData | undefined> {
     this.property = undefined;
     return this.clearProperty().pipe(
       switchMap(() => from(this.electronService.createDirectory(E_VOTING_CONFIG_DIR))),
       switchMap(() => {
-        return this.unzipFolder(zip).pipe(
+        return this.unzipFolder(zipPath).pipe(
           map(success => {
             if (!success) {
               throwError(() => 'error on unzip');
@@ -48,8 +48,8 @@ export class VotingPropertyService {
     return this.secureDeleteService.deleteDirectory(E_VOTING_CONFIG_DIR, true);
   }
 
-  private unzipFolder(zip): Observable<boolean> {
-    return this.zipService.unzip(zip.path, E_VOTING_CONFIG_DIR);
+  private unzipFolder(zipPath: string): Observable<boolean> {
+    return this.zipService.unzip(zipPath, E_VOTING_CONFIG_DIR);
   }
 
   private readProperty(): Observable<PropertyData> {

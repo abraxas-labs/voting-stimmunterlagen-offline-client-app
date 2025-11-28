@@ -1,4 +1,4 @@
-<ng-container *ngIf="showContent">
+@if (showContent) {
   <app-bar></app-bar>
   <div class="main">
     <app-navigation>
@@ -8,4 +8,4 @@
       <router-outlet></router-outlet>
     </div>
   </div>
-</ng-container>
+}

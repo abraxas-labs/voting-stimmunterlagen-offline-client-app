@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { ipcMain, app, dialog } from 'electron';
+import { ipcMain, app, dialog, shell } from 'electron';
 import * as fs from 'fs';
 import * as pathModule from 'path';
 import { ChildProcess, ChildProcessWithoutNullStreams, spawn } from 'child_process';
@@ -20,7 +20,8 @@ export function initIpcHandlers() {
   ipcMain.handle('copyFile', handleCopyFile);
   ipcMain.handle('readFile', handleReadFile);
   ipcMain.handle('showFolderPickerDialog', handleShowFolderPickerDialog);
-
+  ipcMain.handle('showItemInFolder', handleShowItemInFolder);
+  ipcMain.handle('openPath', handleOpenPath);
   ipcMain.on('getUserDataPathSync', handleGetUserDataPathSync);
   ipcMain.on('getOsArchSync', handleGetOsArchSync);
   ipcMain.on('isProdSync', handleIsProdSync);
@@ -63,7 +64,13 @@ async function handleCopyFile(e, sourcePath, targetPath): Promise<void> {
     return;
   }
 
-  await fs.promises.copyFile(sourcePath, targetPath);
+  if (fs.existsSync(targetPath)) {
+    console.log(`Overwriting existing file: ${targetPath}`);
+  }
+
+  // Use FICLONE for better performance, falls back to regular copy if not supported
+  // This will overwrite existing files in the destination
+  await fs.promises.copyFile(sourcePath, targetPath, fs.constants.COPYFILE_FICLONE);
 }
 
 function handleReadFile(e, path): Promise<string> {
@@ -78,6 +85,50 @@ function handleReadFile(e, path): Promise<string> {
 function handleShowFolderPickerDialog(e): string {
   const result = dialog.showOpenDialogSync({ properties: ['openDirectory'] });
   return result[0];
+}
+
+async function handleShowItemInFolder(e, filePath: string): Promise<void> {
+  try {
+    // Check if the file exists before trying to show it
+    if (!fs.existsSync(filePath)) {
+      console.error(`File does not exist: ${filePath}`);
+      throw new Error(`File not found: ${filePath}`);
+    }
+    // Use Electron's shell.showItemInFolder to reveal the file in the system file explorer
+    shell.showItemInFolder(filePath);
+  } catch (error) {
+    console.error('Error showing item in folder:', error);
+    throw error;
+  }
+}
+
+async function handleOpenPath(e, path: string): Promise<void> {
+  try {
+    // Check if the path exists before trying to open it
+    if (!fs.existsSync(path)) {
+      console.error(`Path does not exist: ${path}`);
+      throw new Error(`Path not found: ${path}`);
+    }
+
+    const stats = fs.statSync(path);
+
+    // Only allow opening directories
+    if (stats.isDirectory()) {
+      shell.openPath(path);
+      return;
+    }
+
+    // Block all file access for security reasons
+    if (stats.isFile()) {
+      console.error(`Blocked attempt to open file: ${path}`);
+      throw new Error(`Opening files is not allowed for security reasons. Only directories can be opened.`);
+    }
+
+    throw new Error(`Path is neither a file nor a directory: ${path}`);
+  } catch (error) {
+    console.error('Error opening path:', error);
+    throw error;
+  }
 }
 
 function handleGetUserDataPathSync(e): void {

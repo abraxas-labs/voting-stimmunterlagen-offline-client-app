@@ -22,6 +22,7 @@ const encryptFilesCountPerJob = 20;
   selector: 'app-download',
   templateUrl: './download.component.html',
   styleUrls: ['./download.component.scss'],
+  standalone: false,
 })
 export class DownloadComponent implements OnInit {
   public outputPdfs = [];
@@ -130,6 +131,30 @@ export class DownloadComponent implements OnInit {
 
     for (const checkablePdf of this.checkablePdfs) {
       await this.electronService.copyFile(checkablePdf.file.filePath, pathCombine(path, checkablePdf.file.fileName));
+    }
+
+    await this.electronService.openPath(path);
+  }
+
+  public async downloadSingleFile(checkablePdf: FileCheckable): Promise<void> {
+    try {
+      const path = await this.electronService.showFolderPickerDialog();
+      if (!path) {
+        return; // User cancelled the dialog
+      }
+
+      // copy file to selected path
+      const targetPath = pathCombine(path, checkablePdf.file.fileName);
+      await this.electronService.copyFile(checkablePdf.file.filePath, targetPath);
+
+      // Show the file in the system file explorer
+      try {
+        await this.electronService.showItemInFolder(targetPath);
+      } catch (showError) {
+        console.warn('Could not show item in folder:', showError);
+      }
+    } catch (error) {
+      console.error('Error downloading file:', error);
     }
   }
 

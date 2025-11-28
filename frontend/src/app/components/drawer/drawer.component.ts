@@ -11,6 +11,7 @@ import { NavigationEnd, Router } from '@angular/router';
   selector: 'app-drawer',
   templateUrl: './drawer.component.html',
   styleUrls: ['./drawer.component.scss'],
+  standalone: false,
 })
 export class DrawerComponent {
   public currentRouting = '/';

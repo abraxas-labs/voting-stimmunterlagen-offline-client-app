@@ -30,7 +30,7 @@
     "scss/at-else-if-parentheses-space-before": "always",
     "scss/at-function-parentheses-space-before": "never",
     "scss/at-if-closing-brace-newline-after": "always-last-in-chain",
-    "scss/at-import-no-partial-leading-underscore": true,
+    "scss/load-no-partial-leading-underscore": true,
     "scss/at-mixin-argumentless-call-parentheses": "always",
     "scss/at-mixin-parentheses-space-before": "never",
     "scss/dollar-variable-colon-newline-after": "always-multi-line",

@@ -18,7 +18,10 @@ import { EchDeliveryGeneratorResult } from '../../models/ech-delivery-generator-
 
 @Injectable()
 export class EchDeliveryShellService<T> implements EchDeliveryService<T> {
-  public constructor(private readonly electronService: ElectronService, private readonly logService: LogService) {}
+  public constructor(
+    private readonly electronService: ElectronService,
+    private readonly logService: LogService,
+  ) {}
 
   public importDataFromPaths(
     filePaths: string[],

@@ -10,6 +10,7 @@ import { Component, HostBinding, Input, OnInit } from '@angular/core';
   selector: 'app-step-navigation-item',
   templateUrl: './step-navigation-item.component.html',
   styleUrls: ['./step-navigation-item.component.scss'],
+  standalone: false,
 })
 export class AbraStepNavigationItemComponent implements OnInit {
   @Input() public active = false;

@@ -16,6 +16,11 @@ public class ProportionalElectionMapper
     public void MapToEchElection(ElectionInformationType election, EVoting.Print_2_0.ElectionType electionTypeSource, EVoting.Config_7_0.ElectionInformationType config)
     {
         election.List = electionTypeSource.List.Select(list => MapToEchList(list, config)).ToList();
+
+        if (electionTypeSource.EmptyList != null && config.EmptyList != null)
+        {
+            election.List.Add(MapToEchList(electionTypeSource.EmptyList, config));
+        }
     }
 
     private ElectionInformationTypeList MapToEchList(EVoting.Print_2_0.ListType listSource, EVoting.Config_7_0.ElectionInformationType config)
@@ -55,11 +60,9 @@ public class ProportionalElectionMapper
             }
         }
 
-        var isEmptyList = config.EmptyList != null;
-
         return new ElectionInformationTypeList
         {
-            IsEmptyList = isEmptyList,
+            IsEmptyList = false,
             ListDescription = listDescriptionList,
             ListIdentification = listSource.ListIdentification,
             ListIndentureNumber = sourceConfig.ListIndentureNumber,
@@ -70,24 +73,21 @@ public class ProportionalElectionMapper
             },
             ListUnionBallotText = listUnionDescriptionList,
             CandidatePosition = listSource.Candidate
-                .Select(c => MapToEchCandidate(c, config, sourceConfig, isEmptyList))
+                .Select(c => MapToEchCandidate(c, config, sourceConfig))
                 // a candidate must only appear once, even if they are accumulated. If it is accumulated there are multiple choice codes available on a single candidate.
                 .DistinctBy(c => c.CandidateReferenceOnPosition)
                 .ToList(),
         };
     }
 
-    private ElectionInformationTypeListCandidatePosition MapToEchCandidate(EVoting.Print_2_0.CandidateListType candidateListType, EVoting.Config_7_0.ElectionInformationType config, EVoting.Config_7_0.ListType sourceConfig, bool isEmptyList)
+    private ElectionInformationTypeListCandidatePosition MapToEchCandidate(EVoting.Print_2_0.CandidateListType candidateListType, EVoting.Config_7_0.ElectionInformationType config, EVoting.Config_7_0.ListType sourceConfig)
     {
         var listCandidatesChoiceCodes = new List<NamedCodeType>();
         var candidateListConfiguration = sourceConfig.CandidatePosition.FirstOrDefault(x =>
             x.CandidateListIdentification == candidateListType.CandidateListIdentification)
             ?? throw new TransformationException(TransformationErrorCode.CandidateNotFound, candidateListType.CandidateListIdentification);
 
-        var candidateOccurrences = 1;
-
-        if (!isEmptyList)
-            candidateOccurrences = sourceConfig.CandidatePosition.Count(x =>
+        var candidateOccurrences = sourceConfig.CandidatePosition.Count(x =>
                 x.CandidateIdentification == candidateListConfiguration.CandidateIdentification);
 
         foreach (var choiceCode in candidateListType.ChoiceReturnCode)
@@ -107,5 +107,65 @@ public class ProportionalElectionMapper
             Occurences = candidateOccurrences.ToString(),
             IndividualCandidateVerificationCode = listCandidatesChoiceCodes,
         };
+    }
+
+    private ElectionInformationTypeList MapToEchList(EVoting.Print_2_0.EmptyListType listSource, EVoting.Config_7_0.ElectionInformationType config)
+    {
+        if (config.EmptyList.ListIdentification != listSource.EmptyListIdentification)
+        {
+            throw new TransformationException(TransformationErrorCode.ListNotFound, listSource.EmptyListIdentification);
+        }
+
+        var sourceConfig = config.EmptyList;
+
+        var listDescriptionList = sourceConfig.ListDescription.Select(description => new ListDescriptionInformationTypeListDescriptionInfo
+        {
+            Language = XmlUtil.GetXmlEnumAttributeValueFromEnum(description.Language),
+            ListDescription = description.ListDescription,
+            ListDescriptionShort = description.ListDescriptionShort,
+        }).ToList();
+
+        return new ElectionInformationTypeList
+        {
+            IsEmptyList = true,
+            ListDescription = listDescriptionList,
+            ListIdentification = listSource.EmptyListIdentification,
+            ListIndentureNumber = sourceConfig.ListIndentureNumber,
+            ListOrderOfPrecedence = sourceConfig.ListOrderOfPrecedence.ToString(),
+            IndividualListVerificationCodes = new List<NamedCodeType>
+            {
+                new() { CodeDesignation = EchDeliveryGenerationConstants.ChoiceCode, CodeValue = listSource.ChoiceReturnCode}
+            },
+            CandidatePosition = MapToEchCandidatePosition(listSource, config, sourceConfig),
+        };
+    }
+
+    private List<ElectionInformationTypeListCandidatePosition> MapToEchCandidatePosition(EVoting.Print_2_0.EmptyListType listType, EVoting.Config_7_0.ElectionInformationType config, EVoting.Config_7_0.EmptyListType sourceConfig)
+    {
+        var positions = new List<ElectionInformationTypeListCandidatePosition>();
+
+        foreach (var emptyPosition in listType.EmptyPosition)
+        {
+            var emptyPositionConfig = sourceConfig.EmptyPosition.FirstOrDefault(p => p.EmptyPositionIdentification == emptyPosition.EmptyPositionIdentification)
+                ?? throw new TransformationException(TransformationErrorCode.CandidateNotFound, emptyPosition.EmptyPositionIdentification);
+
+            positions.Add(new ElectionInformationTypeListCandidatePosition
+            {
+                CandidateIdentification = emptyPosition.EmptyPositionIdentification,
+                CandidateReferenceOnPosition = "99." + emptyPositionConfig.PositionOnList.ToString("00"),
+                PositionOnList = emptyPositionConfig.PositionOnList.ToString(),
+                Occurences = "1",
+                IndividualCandidateVerificationCode = new List<NamedCodeType>
+                {
+                    new NamedCodeType()
+                    {
+                        CodeDesignation = EchDeliveryGenerationConstants.ChoiceCode,
+                        CodeValue = emptyPosition.ChoiceReturnCode,
+                    }
+                },
+            });
+        }
+
+        return positions;
     }
 }

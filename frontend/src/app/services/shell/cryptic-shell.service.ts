@@ -16,7 +16,10 @@ import { Certificate } from '../../models/certificate.model';
 
 @Injectable()
 export class CrypticShellService implements CrypticService {
-  constructor(private readonly electronService: ElectronService, private readonly logService: LogService) {}
+  constructor(
+    private readonly electronService: ElectronService,
+    private readonly logService: LogService,
+  ) {}
 
   public getSenderCertificates(certificatePath: string, certificatePassword: string): Observable<Certificate[]> {
     const parameters = [

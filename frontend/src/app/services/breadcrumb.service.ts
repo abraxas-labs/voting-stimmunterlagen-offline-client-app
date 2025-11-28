@@ -17,7 +17,10 @@ const URL_SEGEMENT_SEPARATOR = '/';
 export class BreadcrumbService {
   private _items = new ReplaySubject<Array<NavigationItem>>(1);
 
-  constructor(private readonly router: Router, private readonly translationService: TranslationService) {
+  constructor(
+    private readonly router: Router,
+    private readonly translationService: TranslationService,
+  ) {
     router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((navigationEnd: NavigationEnd) => {
       this._createItems(navigationEnd.urlAfterRedirects);
     });

@@ -1,6 +1,7 @@
 ﻿// (c) Copyright by Abraxas Informatik AG
 // For license information see LICENSE file
 
+using EchDeliveryGeneration.Post;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -67,9 +68,20 @@ namespace EchDeliveryGeneration.Validation
         {
             var sb = new StringBuilder();
 
-            // It is ensured that all path parameters are files which exist on the file system.
-            sb.Append($"-Ddirect.trust.keystore.location=\"{data.KeystoreCertificatePath}\" ");
-            sb.Append($"-Ddirect.trust.keystore.password.location=\"{data.KeystorePasswordPath}\" ");
+            // Set system properties based on PostPrintVersion
+            if (data.PostPrintVersion == PostPrintVersion.V1)
+            {
+                // Version V1 is compatible with XML Sign Tool [1.4,1.5)
+                sb.Append($"-Ddirect.trust.keystore.location=\"{data.KeystoreCertificatePath}\" ");
+                sb.Append($"-Ddirect.trust.keystore.password.location=\"{data.KeystorePasswordPath}\" ");
+            }
+            else
+            {
+                // Version V2+ is compatible with XML Sign Tool [1.5,)
+                sb.Append($"-Ddirect-trust.keystore.location=\"{data.KeystoreCertificatePath}\" ");
+                sb.Append($"-Ddirect-trust.password.location=\"{data.KeystorePasswordPath}\" ");
+            }
+
             sb.Append($"-jar \"{data.ValidatorPath}\" ");
 
             switch (validationType)

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   
   <ItemGroup>
-    <PackageReference Include="Didstopia.PDFSharp" Version="1.0.0-beta7" />
+    <PackageReference Include="Didstopia.PDFSharp" Version="1.0.0-beta8" />
   </ItemGroup>
   
   <ItemGroup>

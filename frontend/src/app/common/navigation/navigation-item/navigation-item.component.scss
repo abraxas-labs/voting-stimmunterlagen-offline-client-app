@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables' as *;
 
 .navigation-item {
   font-size: $font-size-h2;

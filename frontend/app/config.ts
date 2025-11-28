@@ -11,7 +11,7 @@ export const config = {
     pathname: 'http://localhost:4200',
   },
   prodUrl: {
-    pathname: path.join(__dirname, 'index.html'),
+    pathname: path.join(__dirname, 'browser', 'index.html'),
     protocol: 'file:',
     slashes: true,
   },

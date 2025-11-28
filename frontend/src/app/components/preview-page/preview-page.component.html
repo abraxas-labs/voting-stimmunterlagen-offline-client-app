@@ -2,23 +2,28 @@
 <h2>{{ 'PREVIEW_TITLE' | translate }}</h2>
 <div class="flex">
   <div class="group-navigation">
-    <ng-container *ngIf="context.votingCardGroups">
-      <div
-        class="navigation-element"
-        [ngClass]="{ 'element-focus': previewIndex === i }"
-        (click)="setPreview(i)"
-        *ngFor="let vot of context.votingCardGroups; let i = index"
-      >
-        {{ getGroupDescription(vot[0]) || ('ROUTES./preview' | translate) + ' ' + i }}
-        <span [hidden]="pdfList[i]"><app-spinner [size]="'13px'"></app-spinner></span>
-      </div>
-    </ng-container>
+    @if (context.votingCardGroups) {
+      @for (vot of context.votingCardGroups; track vot; let i = $index) {
+        <div
+          class="navigation-element"
+          [ngClass]="{ 'element-focus': previewIndex === i }"
+          (click)="setPreview(i)"
+          >
+          {{ getGroupDescription(vot[0]) || ('ROUTES./preview' | translate) + ' ' + i }}
+          <span [hidden]="pdfList[i]"><app-spinner [size]="'13px'"></app-spinner></span>
+        </div>
+      }
+    }
   </div>
   <div class="flex1">
-    <div *ngIf="!pdfList[previewIndex]" class="center">
-      <app-spinner></app-spinner>
-    </div>
-    <app-pdf-viewer *ngIf="pdfList[previewIndex]" [data]="pdfList[previewIndex]"></app-pdf-viewer>
+    @if (!pdfList[previewIndex]) {
+      <div class="center">
+        <app-spinner></app-spinner>
+      </div>
+    }
+    @if (pdfList[previewIndex]) {
+      <app-pdf-viewer [data]="pdfList[previewIndex]"></app-pdf-viewer>
+    }
   </div>
 </div>
 <div class="space">

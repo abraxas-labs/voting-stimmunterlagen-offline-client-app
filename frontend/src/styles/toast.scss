@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables' as *;
 
 // stylelint-disable-next-line
 #vrsgToastContainer {
@@ -52,11 +52,11 @@
   }
 
   .vrsg-toast-close {
-    @extend .fa;
-    @extend .fa-times;
-
     cursor: pointer;
     opacity: 0.5;
+
+    @extend .fa !optional;
+    @extend .fa-times !optional;
   }
 
   &:hover {
@@ -95,8 +95,8 @@ div#vrsgToastContainer:hover .time-line {
   background-color: $color-red;
 
   .vrsg-toast-icon {
-    @extend .fa;
-    @extend .fa-times-circle;
+    @extend .fa !optional;
+    @extend .fa-times-circle !optional;
   }
 
   .time-line {
@@ -109,8 +109,8 @@ div#vrsgToastContainer:hover .time-line {
   background-color: $color-yellow;
 
   .vrsg-toast-icon {
-    @extend .fa;
-    @extend .fa-exclamation-circle;
+    @extend .fa !optional;
+    @extend .fa-exclamation-circle !optional;
   }
 
   .time-line {
@@ -123,8 +123,8 @@ div#vrsgToastContainer:hover .time-line {
   background-color: $color-blue;
 
   .vrsg-toast-icon {
-    @extend .fa;
-    @extend .fa-info-circle;
+    @extend .fa !optional;
+    @extend .fa-info-circle !optional;
   }
 
   .time-line {
@@ -137,8 +137,8 @@ div#vrsgToastContainer:hover .time-line {
   background-color: $color-green;
 
   .vrsg-toast-icon {
-    @extend .fa;
-    @extend .fa-check-circle;
+    @extend .fa !optional;
+    @extend .fa-check-circle !optional;
   }
 
   .time-line {

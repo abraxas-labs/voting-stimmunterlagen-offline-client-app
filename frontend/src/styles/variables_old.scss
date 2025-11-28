@@ -1,4 +1,5 @@
-@import 'variables';
+@use 'sass:color';
+@use 'variables' as *;
 
 /** button **/
 $button-radius: 5px;
@@ -6,17 +7,17 @@ $button-radius: 5px;
 // Colors
 $primary-color: #3c6582;
 $primary-color-hover-old: #3288ac;
-$primary-color-hover: lighten(saturate($primary-color, 15%), 10%); // stylelint-disable-line
+$primary-color-hover: color.scale(color.adjust($primary-color, $saturation: 15%), $lightness: 15.9375%); // stylelint-disable-line
 $primary-color-highlight: #b5e2de;
 $error-color-dark: #d2232a;
-$error-color-dark-hover: lighten(saturate($error-color-dark, 15%), 10%); // stylelint-disable-line
+$error-color-dark-hover: color.scale(color.adjust($error-color-dark, $saturation: 15%), $lightness: 15.6923%); // stylelint-disable-line
 $error-color-light: #ffc8b9;
 $warn-color: #ffa000;
-$warn-color-hover: lighten(saturate($warn-color, 15%), 10%); // stylelint-disable-line
+$warn-color-hover: color.scale(color.adjust($warn-color, $saturation: 15%), $lightness: 15.9375%); // stylelint-disable-line
 $info-color: #1c69ce;
-$info-color-hover: lighten(saturate($info-color, 15%), 10%); // stylelint-disable-line
+$info-color-hover: color.scale(color.adjust($info-color, $saturation: 15%), $lightness: 15.9375%); // stylelint-disable-line
 $success-color: #1c9048;
-$success-color-hover: lighten(saturate($success-color, 15%), 10%); // stylelint-disable-line
+$success-color-hover: color.scale(color.adjust($success-color, $saturation: 15%), $lightness: 15.9375%); // stylelint-disable-line
 $local-environment: #936;
 $sta-environment: #5b9bd5;
 $pre-environment: #ffc000;

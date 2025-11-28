@@ -13,5 +13,7 @@
       stroke-width="4"
     ></circle>
   </svg>
-  <span *ngIf="showLabel && !infinite" class="progress">{{ label }}</span>
+  @if (showLabel && !infinite) {
+    <span class="progress">{{ label }}</span>
+  }
 </div>

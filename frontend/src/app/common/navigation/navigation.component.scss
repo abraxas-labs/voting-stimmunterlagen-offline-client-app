@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables' as *;
 
 /** navigation button **/
 .navigation-menu-button {
@@ -81,7 +81,7 @@
 }
 
 /* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
-@media (max-width: 600px) {
+@media (width <= 600px) {
   .navigation {
     position: absolute;
     height: calc(100% - 50px);

@@ -10,5 +10,6 @@ import { Component } from '@angular/core';
   selector: 'app-indeterminate-progress',
   templateUrl: './indeterminate-progress.component.html',
   styleUrls: ['./indeterminate-progress.component.scss'],
+  standalone: false,
 })
 export class IndeterminateProgressComponent {}

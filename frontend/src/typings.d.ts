@@ -13,5 +13,10 @@ interface NodeModule {
 }
 
 interface Window {
-  require: Function;
+  require(module: string): any;
+}
+
+// Electron extends File with path property
+interface File {
+  path?: string;
 }

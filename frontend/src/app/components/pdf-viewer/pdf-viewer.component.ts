@@ -9,6 +9,7 @@ import { Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/cor
 @Component({
   selector: 'app-pdf-viewer',
   templateUrl: './pdf-viewer.component.html',
+  standalone: false,
 })
 export class PdfViewerComponent implements OnDestroy {
   public url?: string;
@@ -29,7 +30,7 @@ export class PdfViewerComponent implements OnDestroy {
       return;
     }
 
-    const blob = new Blob([d], { type: 'application/pdf' });
+    const blob = new Blob([d as BlobPart], { type: 'application/pdf' });
     this.url = URL.createObjectURL(blob);
     this._data = d;
   }

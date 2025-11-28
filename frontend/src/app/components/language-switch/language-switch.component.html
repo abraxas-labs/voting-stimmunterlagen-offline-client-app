@@ -1,7 +1,9 @@
 <div class="abra-form-group">
   <label>{{ 'LANGUAGE_SWITCH.TITLE' | translate }}</label>
-  <div *ngFor="let language of languages" (click)="change(language)">
-    <input type="radio" name="language" value="language" class="abra" [checked]="language === translationContext.language" />
-    <span>{{ 'LANGUAGE.' + language | translate }}</span>
-  </div>
+  @for (language of languages; track language) {
+    <div (click)="change(language)">
+      <input type="radio" name="language" value="language" class="abra" [checked]="language === translationContext.language" />
+      <span>{{ 'LANGUAGE.' + language | translate }}</span>
+    </div>
+  }
 </div>

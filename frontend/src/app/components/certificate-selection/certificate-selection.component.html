@@ -15,12 +15,14 @@
   {{ 'CRYPTO.CHECK_CERTIFICATE' | translate }}
 </button>
 
-<div *ngIf="showCertificateSubject">
-  <ul *ngIf="!!certificateSubject; else invalidCertificateSubjectTemplate">
-    <li>{{ certificateSubject }}</li>
-  </ul>
-
-  <ng-template #invalidCertificateSubjectTemplate>
-    <p>{{ 'CRYPTO.CANNOT_LOAD_CERTIFICATE' | translate }}</p>
-  </ng-template>
-</div>
+@if (showCertificateSubject) {
+  <div>
+    @if (!!certificateSubject) {
+      <ul>
+        <li>{{ certificateSubject }}</li>
+      </ul>
+    } @else {
+      <p>{{ 'CRYPTO.CANNOT_LOAD_CERTIFICATE' | translate }}</p>
+    }
+  </div>
+}

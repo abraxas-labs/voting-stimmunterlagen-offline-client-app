@@ -104,6 +104,18 @@ export class ElectronService {
     return this.backend.showFolderPickerDialog();
   }
 
+  public showItemInFolder(filePath: string): Promise<void> {
+    return this.backend.showItemInFolder(filePath);
+  }
+
+  public openPath(path: string): Promise<void> {
+    return this.backend.openPath(path);
+  }
+
+  public getPathForFile(file: File): Promise<string> {
+    return this.backend.getPathForFile(file);
+  }
+
   public isProd(): boolean {
     return this.backend.isProdSync();
   }

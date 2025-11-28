@@ -13,6 +13,7 @@ import { StepActionsService } from '../../services/step-actions.service';
 @Component({
   selector: 'app-initial-page',
   templateUrl: './initial-page.component.html',
+  standalone: false,
 })
 export class InitialPageComponent implements OnInit {
   public isLoading = true;

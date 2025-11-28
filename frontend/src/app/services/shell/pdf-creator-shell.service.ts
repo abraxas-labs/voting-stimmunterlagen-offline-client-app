@@ -18,7 +18,10 @@ import { ElectronService } from '../electron.service';
 
 @Injectable()
 export class PdfCreatorShellService implements PdfCreatorService {
-  constructor(private readonly electronService: ElectronService, private readonly logService: LogService) {}
+  constructor(
+    private readonly electronService: ElectronService,
+    private readonly logService: LogService,
+  ) {}
 
   public generate(layoutPath: string, model: any): Observable<Uint8Array | undefined> {
     const params = [

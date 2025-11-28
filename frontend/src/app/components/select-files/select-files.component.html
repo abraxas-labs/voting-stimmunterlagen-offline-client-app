@@ -5,9 +5,11 @@
   [class.failed]="status === STATUS.Failed"
   [class.has-files]="files?.length"
   (click)="status !== STATUS.Loading ? filePicker.click() : 0"
->
+  >
   <em [class]="'icon fa ' + (files?.length ? '' : icon)">
-    <span class="file-count" *ngIf="files?.length">{{ files.length }}</span>
+    @if (files?.length) {
+      <span class="file-count">{{ files.length }}</span>
+    }
   </em>
   <input type="file" #filePicker (change)="fileChanged.emit((files = convert($event.target.files)))" class="display-none" multiple />
   <div
@@ -19,7 +21,9 @@
   ></div>
 </div>
 <div class="progress-container">
-  <app-indeterminate-progress *ngIf="status === STATUS.Loading"></app-indeterminate-progress>
+  @if (status === STATUS.Loading) {
+    <app-indeterminate-progress></app-indeterminate-progress>
+  }
 </div>
 <ng-content></ng-content>
 <div class="description" [innerHTML]="description"></div>

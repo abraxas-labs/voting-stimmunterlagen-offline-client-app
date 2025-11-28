@@ -1,11 +1,15 @@
-<div class="vct-popup-click-block" *ngIf="visible"></div>
+@if (visible) {
+  <div class="vct-popup-click-block"></div>
+}
 
-<div class="vct-popup-container" *ngIf="visible">
-  <div class="vct-popup-toolbar">
-    <div class="vct-popup-title">{{ title }}</div>
-    <div class="vct-popup-close fa fa-close" (click)="closePopup()"></div>
+@if (visible) {
+  <div class="vct-popup-container">
+    <div class="vct-popup-toolbar">
+      <div class="vct-popup-title">{{ title }}</div>
+      <div class="vct-popup-close fa fa-close" (click)="closePopup()"></div>
+    </div>
+    <div class="vct-popup-content">
+      <ng-content></ng-content>
+    </div>
   </div>
-  <div class="vct-popup-content">
-    <ng-content></ng-content>
-  </div>
-</div>
+}

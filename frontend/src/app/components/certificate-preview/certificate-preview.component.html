@@ -3,18 +3,21 @@
 </div>
 
 <div class="content">
-  <table *ngIf="certificates.length > 0; else noCertificatesTemplate">
-    <tr>
-      <th>{{ 'CRYPTO.COMMON_NAME' | translate }}</th>
-      <th>{{ 'CRYPTO.THUMBPRINT' | translate }}</th>
-    </tr>
-    <tr *ngFor="let certificate of certificates">
-      <td>{{ certificate.commonName }}</td>
-      <td>{{ certificate.thumbprint }}</td>
-    </tr>
-  </table>
-
-  <ng-template #noCertificatesTemplate>
+  @if (certificates.length > 0) {
+    <table>
+      <tr>
+        <th>{{ 'CRYPTO.COMMON_NAME' | translate }}</th>
+        <th>{{ 'CRYPTO.THUMBPRINT' | translate }}</th>
+      </tr>
+      @for (certificate of certificates; track certificate) {
+        <tr>
+          <td>{{ certificate.commonName }}</td>
+          <td>{{ certificate.thumbprint }}</td>
+        </tr>
+      }
+    </table>
+  } @else {
     <em>{{ 'CRYPTO.NO_CERTIFICATES_FOUND' | translate }}</em>
-  </ng-template>
+  }
+
 </div>

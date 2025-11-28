@@ -14,6 +14,7 @@ import { ElectronService } from '../../services/electron.service';
   selector: 'app-settings-page',
   templateUrl: './settings-page.component.html',
   styleUrls: ['./settings-page.component.scss'],
+  standalone: false,
 })
 export class SettingsPageComponent {
   public readonly allowedJavaRuntimePathExtensions = '.exe';

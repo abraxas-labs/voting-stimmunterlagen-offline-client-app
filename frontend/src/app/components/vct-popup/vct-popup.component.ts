@@ -10,6 +10,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   selector: 'app-vct-popup',
   templateUrl: './vct-popup.component.html',
   styleUrls: ['./vct-popup.component.scss'],
+  standalone: false,
 })
 export class VctPopupComponent {
   @Input() visible = false;

@@ -1,15 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
-$fa-font-path: '~font-awesome/fonts';
+@use 'styles/variables' as vars;
+@use 'styles/variables_old' as vars-old;
+@use 'styles/font';
+@use 'styles/button';
+@use 'styles/input';
+@use 'styles/form';
+@use 'styles/toast';
+@use 'styles/table';
 
-@import 'font-awesome/scss/font-awesome';
-@import 'styles/variables';
-@import 'styles/variables_old';
-@import 'styles/font';
-@import 'styles/button';
-@import 'styles/input';
-@import 'styles/form';
-@import 'styles/toast';
-@import 'styles/table';
+/* Font Awesome imported via CSS to avoid SCSS deprecation warnings */
 
 html,
 body {
@@ -19,11 +18,11 @@ body {
 }
 
 body {
-  color: $font-color;
-  font-size: $font-size;
-  font-family: $font-family;
+  color: vars-old.$font-color;
+  font-size: vars.$font-size;
+  font-family: vars.$font-family;
 
-  @include no-text-selection();
+  @include vars-old.no-text-selection();
 }
 
 h2 {
