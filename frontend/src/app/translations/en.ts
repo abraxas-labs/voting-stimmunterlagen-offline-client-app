@@ -65,7 +65,7 @@ export const TRANSLATIONS: Translations = {
   'NUMBER_OF_PAGES_JOB': 'Number of voter identification cards per job',
   'ERROR_EXIST': 'Error recognized!',
   'NUMBER_OF_VALIDATION': 'Number of voters',
-  'DOWNLOAD_ALL': 'Download all',
+  'DOWNLOAD': 'Download',
   'YES': 'Yes',
   'NO': 'No',
   'CLOSE': 'Close',

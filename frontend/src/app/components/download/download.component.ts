@@ -35,7 +35,9 @@ export class DownloadComponent implements OnInit {
   public selectedCertificateSubject: string;
 
   public checkablePdfs: FileCheckable[];
-  public allChecked = false;
+  public anyUnencryptedPdfChecked = false;
+  public anyPdfChecked = false;
+  public allPdfsChecked = false;
   public cryptFilesIsRunning = false;
 
   public readonly encryptionCertificatePaths: string[];
@@ -55,20 +57,22 @@ export class DownloadComponent implements OnInit {
 
   public async ngOnInit(): Promise<void> {
     await this.appStateService.updateStep(AppStateStep.Download);
-    this.updateAllChecked();
+    this.updateChecked();
   }
 
   public togglePdfChecked(checkablePdf: FileCheckable): void {
     checkablePdf.checked = !checkablePdf.checked;
-    this.updateAllChecked();
+    this.updateChecked();
   }
 
-  public toggleAllChecked(): void {
-    this.allChecked = !this.allChecked;
+  public toggleAllPdfsChecked(): void {
+    this.allPdfsChecked = !this.allPdfsChecked;
 
     for (const checkablePdf of this.checkablePdfs.filter(c => c.file.status === 'unencrypted')) {
-      checkablePdf.checked = this.allChecked;
+      checkablePdf.checked = this.allPdfsChecked;
     }
+
+    this.updateChecked();
   }
 
   public confirmEncryptionCertificates(): void {
@@ -82,6 +86,7 @@ export class DownloadComponent implements OnInit {
     const files = this.checkablePdfs.filter(c => c.checked && c.file.status === 'unencrypted').map(c => c.file);
 
     if (files.length === 0) {
+      this.cryptFilesIsRunning = false;
       return;
     }
 
@@ -116,20 +121,21 @@ export class DownloadComponent implements OnInit {
       }
     } finally {
       this.cryptFilesIsRunning = false;
+      this.updateChecked();
     }
   }
 
   public async openDirectoryPickerDialog(): Promise<void> {
     const path = await this.electronService.showFolderPickerDialog();
-    await this.downloadAll(path);
+    await this.downloadChecked(path);
   }
 
-  public async downloadAll(path: string): Promise<void> {
+  public async downloadChecked(path: string): Promise<void> {
     if (!path) {
       return;
     }
 
-    for (const checkablePdf of this.checkablePdfs) {
+    for (const checkablePdf of this.checkablePdfs.filter(x => x.checked)) {
       await this.electronService.copyFile(checkablePdf.file.filePath, pathCombine(path, checkablePdf.file.fileName));
     }
 
@@ -174,7 +180,9 @@ export class DownloadComponent implements OnInit {
     );
   }
 
-  private updateAllChecked(): void {
-    this.allChecked = this.checkablePdfs.length > 0 && this.checkablePdfs.every(c => c.checked);
+  private updateChecked(): void {
+    this.allPdfsChecked = this.checkablePdfs.length > 0 && this.checkablePdfs.every(c => c.checked);
+    this.anyPdfChecked = this.checkablePdfs.some(c => c.checked);
+    this.anyUnencryptedPdfChecked = this.checkablePdfs.some(c => c.checked && c.file.status === 'unencrypted');
   }
 }

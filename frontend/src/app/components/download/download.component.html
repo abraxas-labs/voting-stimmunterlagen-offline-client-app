@@ -1,5 +1,5 @@
 <h2>{{ 'ROUTES./download' | translate }}</h2>
-<input type="checkbox" [ngModel]="allChecked" (click)="toggleAllChecked()" [disabled]="cryptFilesIsRunning" />
+<input type="checkbox" [ngModel]="allPdfsChecked" (click)="toggleAllPdfsChecked()" [disabled]="cryptFilesIsRunning" />
 @for (checkablePdf of checkablePdfs; track checkablePdf) {
   <div>
     <input
@@ -57,15 +57,19 @@
   <button class="abra-button-primary" (click)="isBackQuestionVisible = false">{{ 'NO' | translate }}</button>
 </app-vct-popup>
 <br />
-<button class="abra-button-secondary" (click)="displayEncryptionCertificatesPreview = true" [disabled]="cryptFilesIsRunning">
+<button
+  class="abra-button-secondary"
+  (click)="displayEncryptionCertificatesPreview = true"
+  [disabled]="!anyUnencryptedPdfChecked || cryptFilesIsRunning"
+  >
   {{ 'CRYPTO.SIGN_AND_ENCRYPT' | translate }}
 </button>
 <button
   class="abra-button-secondary"
   (click)="openDirectoryPickerDialog()"
-  [disabled]="cryptFilesIsRunning"
+  [disabled]="!anyPdfChecked || cryptFilesIsRunning"
   >
-  {{ 'DOWNLOAD_ALL' | translate }}
+  {{ 'DOWNLOAD' | translate }}
 </button>
 <button
   class="abra-button-secondary"
